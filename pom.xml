@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jwolf</groupId>
+    <artifactId>jwolf-micro</artifactId>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+    <inceptionYear>2021</inceptionYear>
+    <name>${artifactId}-${revision}</name>
+
+    <modules>
+        <module>jwolf-common</module>
+        <module>jwolf-auth</module>
+        <module>jwolf-gateway</module>
+        <module>jwolf-manage</module>
+        <module>jwolf-service</module>
+        <module>jwolf-service-api</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <revision>2.0.3</revision>
+        <google.zxing.version>3.4.0</google.zxing.version>
+        <mybatis-plus.version>3.1.1</mybatis-plus.version>
+        <fastjson.version>1.2.49</fastjson.version>
+        <hutool.version>5.7.15</hutool.version>
+        <freemarker.version>2.3.28</freemarker.version>
+        <spring.boot.version>2.5.2</spring.boot.version>
+        <spring.cloud.version>2020.0.3</spring.cloud.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <seata.version>1.4.0</seata.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
+        <nacos.version>2.0.3</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
+        <ksc-nexus3>http://xxx/repository/ksc-maven-mixed/</ksc-nexus3>
+
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <!--定义多环境https://blog.csdn.net/qq_33689414/article/details/81812783-->
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <package.environment>prod</package.environment>
+                <package.nacos.username>nacos-prod@2020</package.nacos.username>
+                <package.nacos.password>nacos-prod@2020</package.nacos.password>
+                <package.nacos.addr>47.108.28.18:8114</package.nacos.addr>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <package.environment>test</package.environment>
+                <package.nacos.username>nacos@2020.</package.nacos.username>
+                <package.nacos.password>nacos@2020.</package.nacos.password>
+                <package.nacos.addr>47.108.28.18:8114</package.nacos.addr>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+    <!--插件仅配置公共maven插件，spring-boot-maven-plugin这个插件分别配置到各个微服务避免common打包出现检测到多个main方法问题及微服务工程依赖不到common.jar问题-->
+    <build>
+        <!--指定打包包名-->
+        <finalName>${project.artifactId}</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <!--开启maven filter功能，打包前将功能中的@xx@变量进行替换，如spring.profiles.active根据当前打包指定的环境进行替换-->
+                <filtering>true</filtering>
+                <includes>
+                    <!--指定需要将resources文件进行打包-->
+                    <include>application.yml</include>
+                    <include>bootstrap.yml</include>
+                    <include>mapper/*.xml</include>
+                    <include>static/**</include>
+                    <include>*.conf</include>
+                    <!--  <include>META-INF/**</include>-->
+                    <include>application-${package.environment}.yml</include>
+                    <include>logback.${package.environment}.xml</include>
+                </includes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                        <skip>true</skip>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <!--依赖仓库，阿里云及ksc-nexus3私服-->
+    <repositories>
+        <repository>
+            <!--从私服的拉取jar包,id,name随意-->
+            <id>xxxx</id>
+            <name>nexus3私服</name>
+            <url>${ksc-nexus3}</url>
+        </repository>
+        <repository>
+            <id>maven-ali</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public//</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!--aliyun插件仓库-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>alimaven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

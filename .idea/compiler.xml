@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="jwolf-service-msg-api" />
+        <module name="jwolf-service-user-api" />
+        <module name="jwolf-auth" />
+        <module name="jwolf-service-payment-api" />
+        <module name="jwolf-gateway" />
+        <module name="jwolf-service-msg" />
+        <module name="jwolf-service-user" />
+        <module name="jwolf-manage" />
+        <module name="jwolf-service-goods-api" />
+        <module name="jwolf-service-payment" />
+        <module name="jwolf-service-goods" />
+        <module name="jwolf-common" />
+        <module name="jwolf-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jwolf-service" target="1.8" />
+      <module name="jwolf-service-goods" target="1.8" />
+      <module name="jwolf-service-message1" target="1.8" />
+      <module name="jwolf-service-payment" target="1.8" />
+      <module name="jwolf-service-user" target="1.8" />
+      <module name="service-message" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="jwolf-auth" options="" />
+      <module name="jwolf-common" options="" />
+      <module name="jwolf-gateway" options="" />
+      <module name="jwolf-manage" options="" />
+      <module name="jwolf-service" options="-parameters" />
+      <module name="jwolf-service-goods" options="" />
+      <module name="jwolf-service-goods-api" options="" />
+      <module name="jwolf-service-message" options="" />
+      <module name="jwolf-service-msg" options="" />
+      <module name="jwolf-service-msg-api" options="" />
+      <module name="jwolf-service-payment" options="" />
+      <module name="jwolf-service-payment-api" options="" />
+      <module name="jwolf-service-user" options="" />
+      <module name="jwolf-service-user-api" options="" />
+      <module name="service-message" options="-parameters" />
+    </option>
+  </component>
+</project>

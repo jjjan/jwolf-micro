@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-auth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-manage" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service-api/jwolf-service-goods-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service-api/jwolf-service-msg-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service-api/jwolf-service-payment-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service-api/jwolf-service-user-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service/jwolf-service-goods" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service/jwolf-service-msg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service/jwolf-service-payment" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jwolf-service/jwolf-service-user" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

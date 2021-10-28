@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-manage/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-service-api/jwolf-service-message-api/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-service-api/jwolf-service-payment-api/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-service-api/jwolf-service-user-api/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-service/jwolf-service-message/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/jwolf-service/jwolf-service-goods/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-service/jwolf-service-payment/pom.xml" />
+        <option value="$PROJECT_DIR$/jwolf-service/jwolf-service-user/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Ali-Check</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
