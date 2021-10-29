@@ -1,0 +1,55 @@
+#连接池配置详见https://blog.csdn.net/MyHerux/article/details/80730690
+spring:
+  datasource:
+    name: prod
+    url: jdbc:mysql://127.0.0.1:3306/vehicle_v2?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+  #redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    timeout: 2000
+    database: 15
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 50
+        #连接池中的最大空闲连接
+        max-idle: 10
+        #连接池中的最小空闲连接
+        min-idle: 10
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+
+  #kafka 参考https://mp.csdn.net/postedit/89450001
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      retries: 3
+      acks: 1    #写完消息文件就发送消息接收成功确认
+      properties:
+        linger:
+          ms: 0   #直接发送消息，默认
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      group-id: jwj2
+      max-poll-records: 100 #每次最多拉取100条
+      fetch-max-wait: 5000ms  #拉取最大等待5s
+      enable-auto-commit: false  #关闭自动提交
+      auto-offset-reset: latest
+      fetch-min-size: 1 #至少拉取1条
+    listener:
+      ack-mode: batch   #默认模式，拉取消息时提交消费确认
+  #elasticsearch配置
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 127.0.0.1:9300
+
+
+
+

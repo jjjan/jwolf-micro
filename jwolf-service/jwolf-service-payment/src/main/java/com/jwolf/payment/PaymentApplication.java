@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Description: TODO
  *
- * @author majun
- * @version 1.0
- * @date 2021-10-28 22:54
+ * @author jwolf
+ * @Date 2021-10-29 22:24
  */
 @SpringBootApplication
 public class PaymentApplication {
