@@ -14,6 +14,8 @@
         <module>jwolf-service-msg-api</module>
         <module>jwolf-service-user-api</module>
         <module>jwolf-service-payment-api</module>
+        <module>jwolf-service-travel-api</module>
+        <module>jwolf-service-activity-api</module>
     </modules>
     <groupId>com.jwolf</groupId>
     <artifactId>jwolf-service-api</artifactId>

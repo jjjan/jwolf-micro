@@ -1,0 +1,54 @@
+version: '3.2'
+services:
+  elasticsearch:
+    image: elasticsearch:7.14.2   #2021.10版本
+    container_name: elasticsearch
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #    - node.name=es01   #集群配置
+  #    - cluster.name=es-cluster
+  #    - bootstrap.memory_lock=true
+  #    - discovery.seed_hosts=es02:9300,es03:9300
+  #    - cluster.initial_master_nodes=es01,es02,es03
+  #    - http.cors.allow-origin="*"
+  #    - http.cors.enabled=true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    user: elasticsearch
+    volumes:
+      - /home/data/es/plugins:/usr/share/elasticsearch/plugins:rw
+      - /home/data/es/data:/usr/share/elasticsearch/data:rw  #需修改宿主机文件权限:chmod 777 /home/data/es/data -R
+      - /home/logs/es:/user/share/elasticsearch/logs:rw
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - esnet
+
+
+  kibana:
+    image: kibana:7.14.2
+    container_name: kibana
+    volumes:
+      - /home/data/kibana/plugins:/usr/share/kibana/plugins:rw
+      - /etc/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:rw   #docker cp kibana:/usr/share/kibana/config/kibana.yml /etc/kibana/kibana
+    environment:
+      - server.host=0.0.0.0
+      - elasticsearch.hosts= [ "http://elasticsearch:9200" ]
+      - xpack.monitoring.ui.container.elasticsearch.enabled=true
+      - i18n.locale=zh-CN
+    ports:
+      - "5601:5601"
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch
+
+networks:
+  esnet:
+    driver: bridge

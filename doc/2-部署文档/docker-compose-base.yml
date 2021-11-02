@@ -1,0 +1,78 @@
+#
+version: "3.2"
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    networks:
+      - jwolf
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=123456
+    command: --default-authentication-plugin=mysql_native_password  #解决MYSQL客户端工具无法远程连接等问题
+    user: root
+    volumes:
+      - /home/data/mysql:/var/lib/mysql
+      - /var/lib/mysql-files:/var/lib/mysql-files
+      - /etc/localtime:/etc/localtime
+      - /etc/my.cnf:/etc/mysql/my.cnf
+
+  nacos:
+    image: nacos/nacos-server
+    container_name: nacos
+    restart: on-failure
+    networks:
+      - jwolf
+    ports:
+      - 8848:8848
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - NACOS_AUTH_ENABLE=true
+      - MYSQL_SERVICE_HOST=mysql   #这里docker dns会解析为mysql容器的jwolf网络IP
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_DB_NAME=nacos
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+    depends_on:
+      - mysql                      #使用mysql储存配置信息，故其依赖于mysql
+
+  redis:
+    image: redis:6.2.6
+    container_name: redis
+    restart: always
+    networks:
+      - jwolf
+    ports:
+      - 6379:6379
+    volumes:
+      - /etc/redis/redis.conf:/usr/local/etc/redis/redis.conf  #容器内不存在/usr/local/etc/redis/redis.conf 可手动创建/etc/redis/redis.conf 与之映射 command 指定该目录
+      - /home/data/redis-data:/data
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    networks:
+      - jwolf
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/nginx:/etc/nginx
+      - /home/logs/nginxLog:/var/log/nginx    #nginx.conf配置日志地址/var/log/nginx 与静态资源目录/home
+      - /home/data/web:/home
+    environment:
+      - TZ=Asia/Shanghai
+
+
+networks:
+  jwolf:
+    driver: bridge
+

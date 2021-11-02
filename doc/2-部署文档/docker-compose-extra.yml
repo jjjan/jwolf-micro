@@ -1,0 +1,84 @@
+#
+version: "3.2"
+services:
+
+  zookeeper:
+    image: bitnami/zookeeper
+    container_name: zookeeper
+    restart: on-failure
+    networks:
+      - jwolf
+    ports:
+      - '2182:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: bitnami/kafka
+    container_name: kafka
+    user: root
+    restart: always
+    networks:
+      - jwolf
+    ports:
+      - 9092:9092
+    volumes:
+      - /etc/kafka/config:/opt/bitnami/kafka/config
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+#https://seata.io/zh-cn/docs/ops/deploy-by-docker.html
+  seata-server:
+    image: seataio/seata-server
+    container_name: seata
+    restart: always
+    ports:
+      - "8091:8091"
+    environment:
+      - SEATA_CONFIG_NAME=file:/root/seata-config/registry
+    volumes:
+      - /etc/seata/config:/root/seata-config
+    networks:
+      - jwolf
+    depends_on:
+      - nacos
+      - mysql
+
+  xxl-job-admin:
+    image: xuxueli/xxl-job-admin:2.3.0
+    container_name: xxl-job-admin
+    restart: on-failure
+    ports:
+      - "8180:8080"
+    environment: # 注意这里是不是-PARAMS=XXX 否则连接不上DB
+      PARAMS: "--spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai \
+        --spring.datasource.username=root  \
+        --spring.datasource.password=123456"
+    volumes:
+      - /home/data/xxl-job-admin:/data/applogs
+    networks:
+      - jwolf
+    depends_on:
+      - mysql
+
+  jenkins:
+    image: 'jenkins/jenkins:lts'
+    container_name: jenkins
+    restart: on-failure
+    ports:
+      - '8280:8080'
+      - '50000:50000'
+    volumes:
+      - '/home/data/jenkins_home:/var/jenkins_home'
+    networks:
+      - jwolf
+
+networks:
+  jwolf:
+    driver: bridge
+

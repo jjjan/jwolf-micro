@@ -7,6 +7,8 @@
         <module>jwolf-service-payment</module>
         <module>jwolf-service-user</module>
         <module>jwolf-service-msg</module>
+        <module>jwolf-service-travel</module>
+        <module>jwolf-service-activity</module>
     </modules>
     <parent>
         <groupId>com.jwolf</groupId>
