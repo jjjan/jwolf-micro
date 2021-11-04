@@ -1,6 +1,6 @@
 #自动装配，暂时使用@Enable开关
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.jwolf.vehicle.common.core.WebConfig
-# com.jwolf.vehicle.common.aop.log.LogConfiguration,\
+# com.jwolf.vehicle.common.LogConfiguration,\
 # com.jwolf.vehicle.common.core.globleexception.GlobalExceptionHandlerConfiguration,\
 # com.jwolf.vehicle.common.core.resttemplate.RestTemplateConfiguration,\

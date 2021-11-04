@@ -43,7 +43,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
         <!--数据库相关及generator，optional=true不让下面两个包传到其它工程-->
         <dependency>
             <groupId>com.baomidou</groupId>

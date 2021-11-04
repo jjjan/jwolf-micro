@@ -21,20 +21,7 @@
     <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.jwolf</groupId>
-            <artifactId>jwolf-common</artifactId>
-            <version>${revision}</version>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
 
     <build>
         <plugins>

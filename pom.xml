@@ -25,6 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <revision>2.0.3</revision>
+        <swagger.version>3.0.0</swagger.version>
         <google.zxing.version>3.4.0</google.zxing.version>
         <mybatis-plus.version>3.1.1</mybatis-plus.version>
         <fastjson.version>1.2.49</fastjson.version>
@@ -113,9 +114,10 @@
                     <include>mapper/*.xml</include>
                     <include>static/**</include>
                     <include>*.conf</include>
-                    <!--  <include>META-INF/**</include>-->
+                    <include>META-INF/**</include>
                     <include>application-${package.environment}.yml</include>
                     <include>logback.${package.environment}.xml</include>
+                    <include>**</include> <!--还是把所有资源文件都打入target吧-->
                 </includes>
             </resource>
         </resources>

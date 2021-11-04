@@ -1,6 +1,6 @@
 package com.jwolf.jwolfgateway.filter;
 
-import util.YmlUtils;
+import com.jwolf.common.util.YmlUtils;
 
 /**
  * Description: TODO
