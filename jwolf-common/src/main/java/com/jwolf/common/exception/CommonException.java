@@ -11,11 +11,12 @@ public class CommonException extends RuntimeException {
     private String errorCode;
     private String errorMsg;
 
-    public CommonException(String errorMsg,Throwable e) {
+    public CommonException(String errorMsg, Throwable e) {
         super(e);
         this.errorCode = ErrorEnum.ERROR.getCode();
         this.errorMsg = errorMsg;
     }
+
     public CommonException(String errorMsg) {
         this.errorCode = ErrorEnum.ERROR.getCode();
         this.errorMsg = errorMsg;
@@ -26,7 +27,8 @@ public class CommonException extends RuntimeException {
         this.errorCode = resEnum.getCode();
         this.errorMsg = resEnum.getMsg();
     }
-     public CommonException(ErrorEnum resEnum) {
+
+    public CommonException(ErrorEnum resEnum) {
         this.errorCode = resEnum.getCode();
         this.errorMsg = resEnum.getMsg();
     }

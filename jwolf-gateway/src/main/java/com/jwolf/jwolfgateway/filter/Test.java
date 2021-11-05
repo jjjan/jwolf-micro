@@ -12,7 +12,7 @@ import com.jwolf.common.util.YmlUtils;
 public class Test {
     public static void main(String[] args) {
 
-       String v1=YmlUtils.getConfig("server.port","222");
-        String v2=YmlUtils.getConfig("serverxx.port");
+        String v1 = YmlUtils.getConfig("server.port", "222");
+        String v2 = YmlUtils.getConfig("serverxx.port");
     }
 }

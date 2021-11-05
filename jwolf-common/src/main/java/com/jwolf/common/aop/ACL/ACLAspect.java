@@ -1,6 +1,7 @@
 package com.jwolf.common.aop.ACL;
 
 import com.jwolf.common.base.entity.ReqUser;
+import com.jwolf.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,7 +10,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
-import com.jwolf.common.util.CommonUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -27,7 +27,6 @@ public class ACLAspect {
     private RedisTemplate redisTemplate;
     @Autowired
     private HttpServletRequest req;
-
 
 
     @Before("@annotation(com.jwolf.permission.NeedPermission)")
@@ -52,8 +51,8 @@ public class ACLAspect {
             PermissionEnum[] permissionEnums = annotation.value();
             if (permissionEnums.length != 0) {
                 Assert.isTrue(true, "无权限");
-                }
             }
+        }
         //5.访问频率限制
         int limitSencond = annotation.rateLimit();
         boolean enableUserLevelRateLimit = annotation.enableUserLevelRateLimit();

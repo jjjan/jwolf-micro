@@ -8,13 +8,13 @@ services:
       - transport.host=localhost
       - network.host=0.0.0.0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #    - node.name=es01   #集群配置
-  #    - cluster.name=es-cluster
-  #    - bootstrap.memory_lock=true
-  #    - discovery.seed_hosts=es02:9300,es03:9300
-  #    - cluster.initial_master_nodes=es01,es02,es03
-  #    - http.cors.allow-origin="*"
-  #    - http.cors.enabled=true
+    #    - node.name=es01   #集群配置
+    #    - cluster.name=es-cluster
+    #    - bootstrap.memory_lock=true
+    #    - discovery.seed_hosts=es02:9300,es03:9300
+    #    - cluster.initial_master_nodes=es01,es02,es03
+    #    - http.cors.allow-origin="*"
+    #    - http.cors.enabled=true
     ports:
       - "9200:9200"
       - "9300:9300"

@@ -21,19 +21,19 @@ scrape_configs:
   - job_name: 'prometheus'
     metrics_path: '/metrics' #默认
     scheme: 'http'  #默认
-#    scrape_interval: 10s    #覆盖全局
-#    static_configs:
-#    - targets: ['localhost:9090']
-#      labels:
-#        instance: xxx
-#安装参考后面的node-exporter
+  #    scrape_interval: 10s    #覆盖全局
+  #    static_configs:
+  #    - targets: ['localhost:9090']
+  #      labels:
+  #        instance: xxx
+  #安装参考后面的node-exporter
   - job_name: 'node-exporter'
     static_configs:
-    - targets: ['localhost:9100']
-#  - job_name: 'cadvisor'
-#    static_configs:
-#    - targets: ['localhost:9111']
+      - targets: ['localhost:9100']
+  #  - job_name: 'cadvisor'
+  #    static_configs:
+  #    - targets: ['localhost:9111']
   - job_name: "jwolf-service-user"
     metrics_path: "/actuator/prometheus"
     static_configs:
-    - targets: ["localhost:8880"]
+      - targets: ["localhost:8880"]

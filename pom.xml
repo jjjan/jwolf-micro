@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>2.0.3</revision>
+        <revision>1.0.0</revision>
         <swagger.version>3.0.0</swagger.version>
         <google.zxing.version>3.4.0</google.zxing.version>
         <mybatis-plus.version>3.1.1</mybatis-plus.version>
@@ -32,7 +32,7 @@
         <hutool.version>5.7.15</hutool.version>
         <freemarker.version>2.3.28</freemarker.version>
         <spring.boot.version>2.5.2</spring.boot.version>
-        <spring.cloud.version>2020.0.3</spring.cloud.version>
+        <spring.cloud.version>2020.0.4</spring.cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <seata.version>1.4.0</seata.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
         <nacos.version>2.0.3</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
@@ -81,7 +81,7 @@
                 <package.environment>prod</package.environment>
                 <package.nacos.username>nacos-prod@2020</package.nacos.username>
                 <package.nacos.password>nacos-prod@2020</package.nacos.password>
-                <package.nacos.addr>47.108.28.18:8114</package.nacos.addr>
+                <package.nacos.addr>192.168.154.137:8848</package.nacos.addr>
             </properties>
         </profile>
         <profile>
@@ -90,7 +90,7 @@
                 <package.environment>test</package.environment>
                 <package.nacos.username>nacos@2020.</package.nacos.username>
                 <package.nacos.password>nacos@2020.</package.nacos.password>
-                <package.nacos.addr>47.108.28.18:8114</package.nacos.addr>
+                <package.nacos.addr>192.168.154.137:8848</package.nacos.addr>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

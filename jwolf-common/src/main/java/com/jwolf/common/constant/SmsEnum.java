@@ -11,7 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum SmsEnum {
-    LOGIN( "SMS_168820407", "登录短信模板"),
+    LOGIN("SMS_168820407", "登录短信模板"),
     ;
     private String templateCode;//短信模板号
     private String descr;//描述

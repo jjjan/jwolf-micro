@@ -21,5 +21,6 @@ public @interface ACL {
     boolean enableUserLevelRateLimit() default false;          //是否启用用户级别的速率限制
 
     boolean mustLogin() default true;                           //是否必须登录
+
     int countLimit() default Integer.MAX_VALUE;                 //访问次数校验
 }

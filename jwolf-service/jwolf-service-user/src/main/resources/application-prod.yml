@@ -1,0 +1,85 @@
+#连接池配置详见https://blog.csdn.net/MyHerux/article/details/80730690
+spring:
+  datasource:
+    name: prod
+    url: jdbc:mysql://172.17.207.136:3306/vehicle_v2?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: kangsichuang2017..
+
+  #redis配置
+  redis:
+    host: 172.17.207.137
+    port: 6379
+    password: redis
+    timeout: 2000
+    database: 15
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 50
+        #连接池中的最大空闲连接
+        max-idle: 10
+        #连接池中的最小空闲连接
+        min-idle: 10
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+
+  #kafka 参考https://mp.csdn.net/postedit/89450001
+  kafka:
+    producer:
+      bootstrap-servers: 172.17.207.136:9092
+      retries: 3
+      acks: 1    #写完消息文件就发送消息接收成功确认
+      properties:
+        linger:
+          ms: 0   #直接发送消息，默认
+    consumer:
+      bootstrap-servers: 172.17.207.136:9092
+      group-id: jwj2
+      max-poll-records: 100 #每次最多拉取100条
+      fetch-max-wait: 5000ms  #拉取最大等待5s
+      enable-auto-commit: false  #关闭自动提交
+      auto-offset-reset: latest
+      fetch-min-size: 1 #至少拉取1条
+    listener:
+      ack-mode: batch   #默认模式，拉取消息时提交消费确认
+
+
+#七牛云存储
+qiniu:
+  accessKey: 0b9qELo6MsZX3vfh_8HCysUF4-piqJkB45ZGRXLi
+  bucketName: jwolf
+  domainOfBucket: http://qiniu.jwolf.cn
+  secretKey: 7z8snKUHXR6h7i2TM4ZDQEbnkldUD1M6vlUfzD8h
+
+#注册中心
+eureka:
+  client: #客户端
+    registry-fetch-interval-seconds: 30  #表示eureka client间隔多久去拉取服务器注册信息,默认为30秒
+    service-url:
+      defaultZone: http://172.17.207.136:8888/eureka/
+  instance: #eureka服务端实例
+    lease-renewal-interval-in-seconds: 60  #eureka client发送心跳给eureka server的频率，默认30秒
+    lease-expiration-duration-in-seconds: 120  #eureka服务器在接受到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
+    prefer-ip-address: true
+
+
+#支付宝同步异步通知/微信异步通知
+alipay:
+  apiGateway: https://openapi.alipay.com/gateway.do
+  appId: 2019070165749352
+  privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCUfe97U0k72UED2hzfl/ThewMHOXoTn8VVj7pdNlJzX9qWwEvFWdm4vQOLi1eOeft/MQIUNX53pt0k9uYNWiIXW3eIeuZy/slgi2+kZDaA9zwsgfgFZL4ycWrYAtxr8GrWMGzLfe40g32Tt9Kn3P1WYWeQJ92iekEmkBrRAuu20L5WitDb2fvOafbHtxWLIsGknoE+o+ufHVHdAUStNsu0jTDSiPyurokOwoPhr+r+Y2p7/gt9+BVvLUBOwJidSCLZT+Me1nfG8T18b3vw3liyMfPhyxllJn5L49wVQF+wKvcE4Z/WvqFbw0X4ZWP57tGDxpB0nv3Ov3gaJhgk/xPRAgMBAAECggEAM31bvlLJ8SPLZI+MNYgWlN031ph6mTVsktes0seUXYdeX6m8XGlkkqeQBCJEMRZhO+B9jQ5jlQ/aXQf0C6s2aQ0BbOTY5gUtRPn0s3dAYwXX6sMCgrRFM26akt6jGhaapTzTbNh08eaqc79pH2YEvqA17gm007M6xilv8wvlOlWrbOt9v+AbhQhBJRc0VLy6lFxoTy84rzAV9E+SjhFhaOB3gLBDwB3hq30yOrIpgPH6BANVupt2+mMcPj6EbCMhLSlZI3v9CnJS9G3Qwl+Ye5BOz8ozEmzsJiU5aLa+X/eGmP6WqUY28MIk7p0xmFbdEvqBx0cbNiUXr0LqJqZgQQKBgQDxVMrNGSLXIHQlXEIaL4MjedFEc05VbFl8ZVR9gOoafoMj38RMnB/JtmpX5wWgQSVydS+uhktHjBznbTLoRQe+AyaMhQHaZqiR9AvjFOGtkqZ648CP3pue/SQGnv727ZNZ8AyCUwu+uVX5BoKov8U2G9kGnR7myDnQG7+akFbX2QKBgQCdhIchKJClWSXLUklnUtMkFgSHynMdNMuYC6iwtuUpC+595uikII2UCauX3dJzKyaGzQjaxu261tzbxD6LOAEowaFo7l+16vy9E0pn+lHpzPOGPTF+WtKUYesbs2DcRqeJP7d7CgDFG+AVnQBj3DHnoKntimRQ3nt/O4eJrE7YuQKBgQC5V0GZWqCjT01kFALAUZUJfdj2FQgoGtpu6vOEn6krR9Y3ivcbTxwqsmnhsI9lkCLOUKmaA5F1FWptYjQipkFX8Nt+N/hAX28/CIrIj5Ty1Rn+b0PIOlKSPB+a5ikyQytTe0RgIp92jqg0ZIecSguPjruSlMDSxRuBdI4miovnoQKBgAcZlCWweGSbkhKKEPjxSMcVnvqn62xjltGxpNbiR44EFanjIJVVSkxj6zIbM4MxbLkiwMVrtgd369iUDeWkjpjRsX7TT8kZYG79UZtCMzMAo/FnDLYPTfKWP0yuVy1WmfKbxp9rIgHAcedHfl8B69Xu7fnhBQiIHrTrb/6Kn7sxAoGBAKSEkTJYN3WLCkcUL0tV7lOvX9qByyfV1+fhub44M2JDdFvzdnTgTS8GI/AG+uNrSTsfYrgWF9qX8U+g3slfodQl50+sZx2CoFQiPcDzlTLPu8owjEUShuCew8msklsph2o5hcmkXXiorofNy2YCv1cyJmanU6HuZVzWvJhgGs3Y
+  zfbPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi5iCyLoX4G2WmtWDH95um7SmGECN9wvuqprx/MZzPq0lhxqVtdjqmabB4fFQi53DcFuyeygGYfoh4nJcvaUm/uUbUorQ+F4x/mhV6W3n/1vrsfKEQSvknObVhZcagzQIwJ78GKZuSGqA1vxjEEj8S4XvcHwFTDqLJrOpfEJFDj4HjS0ifPbWPuSYjVq0OWAWXfi9a8EOMncGFWD4WXBrxOyzCvflyaQarbaRfaok9XVGLLwCVZrwGbnSe1yhuRoMsTi3YgyGidljHZwECwdYpe9NbTjIxCW/5YMkJnsQqeTU+9qWhzvPrlpjtSbw7xhIf/eLNEOEgkLI87t5Rs6LjQIDAQAB
+  returnUrl: http://www.jwanj.cn/vehicle/payment/service-order/alipay/return
+  notifyUrl: http://www.jwanj.cn/vehicle/payment/service-order/alipay/notify
+wxpay:
+  notifyUrl: http://www.jwanj.cn/vehicle/payment/service-order/wxpay/notify
+
+#restTempalte请求超时配置
+restTemplate:
+  connectionRequestTimeout: 3000
+  connectTimeout: 3000
+  readTimeout: 30000
+  maxConnTotal: 20
+  maxConnPerRoute: 10

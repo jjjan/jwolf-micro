@@ -2,8 +2,6 @@ package com.jwolf.common.util;
 
 import org.springframework.util.StringUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

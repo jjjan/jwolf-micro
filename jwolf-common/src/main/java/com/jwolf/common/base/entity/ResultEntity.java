@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class  ResultEntity<T> {
+public class ResultEntity<T> {
 
     private String code;
     private String msg;
@@ -20,7 +20,7 @@ public class  ResultEntity<T> {
 
 
     public static ResultEntity success() {
-        return new ResultEntity("200", "请求成功",null);
+        return new ResultEntity("200", "请求成功", null);
     }
 
     public static ResultEntity success(Object data) {
@@ -32,11 +32,11 @@ public class  ResultEntity<T> {
     }
 
     public static ResultEntity fail(String code, String message) {
-        return new ResultEntity(code, message,null);
+        return new ResultEntity(code, message, null);
     }
 
     public static ResultEntity fail(String message) {
-        return new ResultEntity("5XX", message,null);
+        return new ResultEntity("5XX", message, null);
     }
 
 }

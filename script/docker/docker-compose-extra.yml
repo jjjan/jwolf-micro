@@ -32,7 +32,7 @@ services:
     depends_on:
       - zookeeper
 
-#https://seata.io/zh-cn/docs/ops/deploy-by-docker.html
+  #https://seata.io/zh-cn/docs/ops/deploy-by-docker.html
   seata-server:
     image: seataio/seata-server
     container_name: seata
