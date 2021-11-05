@@ -36,7 +36,7 @@
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <seata.version>1.4.0</seata.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
         <nacos.version>2.0.3</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
-        <ksc-nexus3>http://xxx/repository/ksc-maven-mixed/</ksc-nexus3>
+        <jwolf-nexus3>http://xxx/repository/jwolf-maven-mixed/</jwolf-nexus3>
 
     </properties>
     <dependencyManagement>
@@ -156,13 +156,13 @@
     </build>
 
 
-    <!--依赖仓库，阿里云及ksc-nexus3私服-->
+    <!--依赖仓库，阿里云及jwolf-nexus3私服-->
     <repositories>
         <repository>
             <!--从私服的拉取jar包,id,name随意-->
             <id>xxxx</id>
             <name>nexus3私服</name>
-            <url>${ksc-nexus3}</url>
+            <url>${jwolf-nexus3}</url>
         </repository>
         <repository>
             <id>maven-ali</id>

@@ -1,7 +1,7 @@
 #连接池配置详见https://blog.csdn.net/MyHerux/article/details/80730690
 spring:
   datasource:
-    name: user
+    name: msg
     url: jdbc:mysql://192.168.154.137:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: root
     password: 123456

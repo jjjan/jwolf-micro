@@ -12,6 +12,12 @@
     <groupId>com.jwolf</groupId>
     <artifactId>jwolf-service-payment-api</artifactId>
     <name>${artifactId}-${revision}</name>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
