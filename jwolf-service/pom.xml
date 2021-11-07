@@ -23,7 +23,6 @@
         <dependency>
             <groupId>com.jwolf</groupId>
             <artifactId>jwolf-common</artifactId>
-            <version>${revision}</version>
         </dependency>
 
     </dependencies>

@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-service-goods</artifactId>
     <dependencies>
         <!--elasticsearch搜索引擎,默认引入的ES client端版本为6.8.4,可兼容server端版本为6.2.4,-->

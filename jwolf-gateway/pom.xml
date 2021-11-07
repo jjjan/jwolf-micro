@@ -5,17 +5,16 @@
     <parent>
         <groupId>com.jwolf</groupId>
         <artifactId>jwolf-micro</artifactId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>jwolf-gateway</artifactId>
-    <name>${project.artifactId}-${revision}</name>
+    <name>${project.artifactId}</name>
     <description>网关</description>
 
     <dependencies>
         <dependency>
             <groupId>com.jwolf</groupId>
             <artifactId>jwolf-common</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

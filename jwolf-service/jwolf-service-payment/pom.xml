@@ -9,9 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwolf</groupId>
-    <artifactId>jwolf-service-paymant</artifactId>
-    <name>${project.artifactId}-${revision}</name>
+    <artifactId>jwolf-service-payment</artifactId>
+    <name>${project.artifactId}</name>
     <dependencies>
 
         <dependency>

@@ -5,17 +5,16 @@
     <parent>
         <groupId>com.jwolf</groupId>
         <artifactId>jwolf-micro</artifactId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>jwolf-auth</artifactId>
-    <name>${project.artifactId}-${revision}</name>
+    <name>${project.artifactId}</name>
     <description>认证授权</description>
 
     <dependencies>
         <dependency>
             <groupId>com.jwolf</groupId>
             <artifactId>jwolf-common</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 

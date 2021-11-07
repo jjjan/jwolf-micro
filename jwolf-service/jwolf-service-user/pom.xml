@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jwolf-service-user</artifactId>
-    <name>${project.artifactId}-${revision}</name>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -18,14 +18,17 @@
         <dependency>
             <groupId>com.jwolf</groupId>
             <artifactId>jwolf-service-user-api</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+         <dependency>
+           <groupId>com.taobao.arthas</groupId>
+           <artifactId>arthas-spring-boot-starter</artifactId>
+           <version>${arthas-version}</version>
+         </dependency>
     </dependencies>
 
 </project>
