@@ -5,24 +5,19 @@
     <parent>
         <artifactId>jwolf-service</artifactId>
         <groupId>com.jwolf</groupId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-service-msg</artifactId>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
     <dependencies>
         <!--kafka-->
-       <!-- <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>-->
-        <dependency>
-            <groupId>com.jwolf</groupId>
-            <artifactId>jwolf-common</artifactId>
-            <version>${revision}</version>
-        </dependency>
+        <!-- <dependency>
+             <groupId>org.springframework.kafka</groupId>
+             <artifactId>spring-kafka</artifactId>
+         </dependency>-->
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -31,8 +26,8 @@
         </dependency>
         <dependency>
             <groupId>com.jwolf</groupId>
-            <artifactId>jwolf-service-message-api</artifactId>
-             <version>${revision}</version>
+            <artifactId>jwolf-service-msg-api</artifactId>
+            <version>${revision}</version>
         </dependency>
 
     </dependencies>

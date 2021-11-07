@@ -3,13 +3,12 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.jwolf</groupId>
     <artifactId>jwolf-micro</artifactId>
     <packaging>pom</packaging>
     <version>${revision}</version>
     <inceptionYear>2021</inceptionYear>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
 
     <modules>
         <module>jwolf-common</module>
@@ -21,10 +20,10 @@
     </modules>
 
     <properties>
+        <revision>1.0.0</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>1.0.0</revision>
         <swagger.version>3.0.0</swagger.version>
         <google.zxing.version>3.4.0</google.zxing.version>
         <mybatis-plus.version>3.1.1</mybatis-plus.version>
@@ -35,7 +34,7 @@
         <spring.cloud.version>2020.0.4</spring.cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <seata.version>1.4.0</seata.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
-        <nacos.version>2.0.3</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
+        <nacos.version>1.3.1</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
         <jwolf-nexus3>http://xxx/repository/jwolf-maven-mixed/</jwolf-nexus3>
 
     </properties>
@@ -55,12 +54,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--覆盖springboot nacos引入的默认版本-->
             <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -97,18 +95,45 @@
             </activation>
         </profile>
     </profiles>
+    <!--该父工程没指定springboot父工程，需要手动配置插件管理-->
     <!--插件仅配置公共maven插件，spring-boot-maven-plugin这个插件分别配置到各个微服务避免common打包出现检测到多个main方法问题及微服务工程依赖不到common.jar问题-->
     <build>
+        <pluginManagement>
+            <plugins>
+                 <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <!--指定打包包名-->
-        <finalName>${project.artifactId}</finalName>
-
         <resources>
             <resource>
                 <directory>src/main/resources/</directory>
                 <!--开启maven filter功能，打包前将功能中的@xx@变量进行替换，如spring.profiles.active根据当前打包指定的环境进行替换-->
                 <filtering>true</filtering>
                 <includes>
-                    <!--指定需要将resources文件进行打包-->
+                    <!--指定需要的文件进行打包-->
                     <include>application.yml</include>
                     <include>bootstrap.yml</include>
                     <include>mapper/*.xml</include>
@@ -121,49 +146,29 @@
                 </includes>
             </resource>
         </resources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring.boot.version}</version>
-                    <configuration>
-                        <finalName>${project.build.finalName}</finalName>
-                        <skip>true</skip>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+
         <plugins>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
+
+            <!--顶级父工程不要配置常见，否则common等工程不需要的工程会用该插件打包，Unable to find a single main class 等问题-->
+            <!--<plugin>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+               <configuration>
+                   <excludes>
+                       <exclude>
+                           <groupId>org.projectlombok</groupId>
+                           <artifactId>lombok</artifactId>
+                       </exclude>
+                   </excludes>
+               </configuration>
+           </plugin>-->
         </plugins>
     </build>
 
 
     <!--依赖仓库，阿里云及jwolf-nexus3私服-->
     <repositories>
-        <repository>
-            <!--从私服的拉取jar包,id,name随意-->
-            <id>xxxx</id>
-            <name>nexus3私服</name>
-            <url>${jwolf-nexus3}</url>
-        </repository>
         <repository>
             <id>maven-ali</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public//</url>

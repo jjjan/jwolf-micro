@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.jwolf</groupId>
         <artifactId>jwolf-micro</artifactId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-common</artifactId>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
+    <packaging>jar</packaging>
     <dependencies>
         <!--工具类包，参考https://hutool.cn/docs/#/-->
         <dependency>
@@ -30,14 +30,18 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <!--注册中心配置中心-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
+        <!-- Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${spring-cloud-alibaba.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>${spring-cloud-alibaba.version}</version>
+        </dependency>
+
         <!--WEB-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

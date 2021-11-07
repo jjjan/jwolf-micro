@@ -5,13 +5,12 @@
     <parent>
         <artifactId>jwolf-service-api</artifactId>
         <groupId>com.jwolf</groupId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-service-travel-api</artifactId>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
 
 
 </project>

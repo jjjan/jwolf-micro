@@ -7,9 +7,8 @@
         <artifactId>jwolf-micro</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-auth</artifactId>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
     <description>认证授权</description>
 
     <dependencies>

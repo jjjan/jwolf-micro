@@ -7,9 +7,8 @@
         <artifactId>jwolf-micro</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-gateway</artifactId>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
     <description>网关</description>
 
     <dependencies>

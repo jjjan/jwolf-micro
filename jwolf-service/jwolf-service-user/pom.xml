@@ -5,20 +5,16 @@
     <parent>
         <artifactId>jwolf-service</artifactId>
         <groupId>com.jwolf</groupId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwolf</groupId>
     <artifactId>jwolf-service-user</artifactId>
-    <name>${artifactId}-${revision}</name>
+    <name>${project.artifactId}-${revision}</name>
+    <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>com.jwolf</groupId>
-            <artifactId>jwolf-common</artifactId>
-            <version>${revision}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.jwolf</groupId>
             <artifactId>jwolf-service-user-api</artifactId>
@@ -30,6 +26,6 @@
             <scope>test</scope>
         </dependency>
 
-
     </dependencies>
+
 </project>
