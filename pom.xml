@@ -35,7 +35,7 @@
         <seata.version>1.4.0</seata.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
         <nacos.version>1.3.1</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
         <jwolf-nexus3>http://xxx/repository/jwolf-maven-mixed/</jwolf-nexus3>
-        <arthas-version>3.5.4</arthas-version>
+        <arthas-version>3.4.5</arthas-version>
     </properties>
     <dependencyManagement>
         <dependencies>

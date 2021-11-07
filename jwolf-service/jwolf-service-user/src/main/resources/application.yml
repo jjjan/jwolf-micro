@@ -57,5 +57,11 @@ mybatis-plus:
 
 
 
-
-
+# 3.5.4有BUG. java -jar E:\mysoft\arthas-tunnel-server-3.4.5-fatjar.jar  浏览器localhost:8080 连接地址见tunnel-server+agent-id
+arthas:
+  telnetPort: -1
+  httpPort: -1
+  ip: 127.0.0.1 #0.0.0.0
+  appName: ${spring.application.name}
+  agent-id: 123456
+  tunnel-server: ws://localhost:7777/ws
