@@ -128,7 +128,7 @@ public class CodeGenerator {
         strategy.setTablePrefix("t_");
         strategy.setLogicDeleteFieldName("deleted"); // 逻辑删除字段
         TableFill createTime = new TableFill("create_time", FieldFill.INSERT);
-        TableFill updateTime = new TableFill("update_time", FieldFill.INSERT_UPDATE);
+        TableFill updateTime = new TableFill("update_time", FieldFill.UPDATE);
         strategy.setTableFillList(Lists.newArrayList(createTime, updateTime));// 设置填充自动与规则
         strategy.setVersionFieldName("version"); // 设置乐观锁
         mpg.setStrategy(strategy);

@@ -1,9 +1,6 @@
 package com.jwolf.service.user.api.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,6 +28,7 @@ public class User extends Model {
     /**
      * 主键
      */
+    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     /**
@@ -41,6 +39,7 @@ public class User extends Model {
     /**
      * 密码
      */
+
     private String password;
 
     /**
@@ -81,12 +80,13 @@ public class User extends Model {
     /**
      * 状态
      */
+    @Version
     private Integer status;
 
     /**
      * 修改时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     /**

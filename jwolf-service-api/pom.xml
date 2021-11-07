@@ -27,6 +27,6 @@
             <version>${mybatis-plus.version}</version>
         </dependency>
     </dependencies>
-
+    <!--service-api 同common工程一样，不单独运行，打的jar不需要其他依赖，故这里不配置插件了-->
 
 </project>

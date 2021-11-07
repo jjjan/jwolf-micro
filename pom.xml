@@ -179,6 +179,12 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+         <repository>
+            <id>jboss-repository</id>
+            <name>jboss repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        </repository>
+
     </repositories>
 
     <!--aliyun插件仓库-->
