@@ -1,0 +1,44 @@
+#连接池配置详见https://blog.csdn.net/MyHerux/article/details/80730690
+spring:
+  datasource:
+    name: travel
+    url: jdbc:mysql://192.168.154.139:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+
+
+  #redis配置
+  redis:
+    host: 192.168.154.137
+    port: 6379
+    #password: 123456
+    timeout: 2000
+    database: 0
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制
+        max-active: 10
+        #连接池中的最大空闲连接
+        max-idle: 10
+        #连接池中的最小空闲连接
+        min-idle: 0
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 192.168.154.139:9300
+  elasticsearch:
+    rest:
+      username: user
+      password: 123456
+      uris: http://192.168.154.139:9200
+      read-timeout: 30s
+      sniffer:
+        delay-after-failure: 1m
+        interval: 5m
+      connection-timeout: 1s
+
+

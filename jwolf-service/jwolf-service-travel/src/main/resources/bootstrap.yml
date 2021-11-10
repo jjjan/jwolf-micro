@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: travel
+  profiles:
+    active: travel
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.154.137:8848         #注意不要http://,nacaos使用的是raft协议
+        file-extension: yml                       #后缀
+        namespace: public          #配置命名空间，默认public
+        shared-configs:
+          - data-id: common.yml                #配置所有工程共享的配置，注意里面的配置默认不能动态刷新，需要时可配置自动刷新
+            refresh: true
+        context-path: /nacos
+      discovery:
+        server-addr: 192.168.154.137:8848          #注意不要http://,nacaos使用的是raft协议
+        namespace: public           #服务命名空间，默认public
