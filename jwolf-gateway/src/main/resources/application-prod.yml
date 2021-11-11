@@ -25,30 +25,7 @@ spring:
         max-wait: -1ms
 
 
-  #kafka 参考https://mp.csdn.net/postedit/89450001
-  kafka:
-    producer:
-      bootstrap-servers: 127.0.0.1:9092
-      retries: 3
-      acks: 1    #写完消息文件就发送消息接收成功确认
-      properties:
-        linger:
-          ms: 0   #直接发送消息，默认
-    consumer:
-      bootstrap-servers: 127.0.0.1:9092
-      group-id: jwj2
-      max-poll-records: 100 #每次最多拉取100条
-      fetch-max-wait: 5000ms  #拉取最大等待5s
-      enable-auto-commit: false  #关闭自动提交
-      auto-offset-reset: latest
-      fetch-min-size: 1 #至少拉取1条
-    listener:
-      ack-mode: batch   #默认模式，拉取消息时提交消费确认
-  #elasticsearch配置
-  data:
-    elasticsearch:
-      cluster-name: elasticsearch
-      cluster-nodes: 127.0.0.1:9300
+
 
 
 

@@ -2,17 +2,11 @@ spring:
   profiles:
     active: @package.environment@
   application:
-    name: enterprise
+    name: gateway
   servlet:
     multipart:
       max-file-size: 10MB
-  task:
-    execution:
-      pool:
-        core-size: 4
-        max-size: 4
-        queue-capacity: 500
-        keep-alive: 60s
+
   jackson:
     time-zone: GMT+8
   datasource:
@@ -37,25 +31,31 @@ spring:
       read-only: false
       #验证与数据库连接的有效时间
       validation-timeout: 5000
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false # 开启从注册中心动态创建路由的功能，利用微服务名进行路由,uri即可支持lb://微服务名进行负载均衡调用
+      routes:
+      - id: goods
+        uri: lb://goods
+        predicates:
+        - Path=/jwolf/goods/**
+        filters:
+        - StripPrefix=1
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 1
+            key-resolver: '#{@apiKeyResolver}'
 server:
-  port: 8882
+  port: 8880
 
-#pagehelper分页插件
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
 
-mybatis-plus:
-  type-aliases-package: com.jwolf.goods.entity   # 注意：对应实体类的路径
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  global-config:
-    db-config:
-      id-type: uuid
 
-logging:
-  config: classpath:logback.@package.environment@.xml
+
+
+
 
 
 
