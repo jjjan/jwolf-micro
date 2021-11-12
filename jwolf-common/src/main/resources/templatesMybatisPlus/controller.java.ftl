@@ -51,7 +51,7 @@ import java.util.List;
 
 
     @ApiOperation(value = "根据id查询")
-    @GetMapping("/detail}")
+    @GetMapping("/detail")
     public ResultEntity<${entity}> getById(Long id){
     return ResultEntity.success(${(table.serviceName?substring(1))?uncap_first}.getById(id));
     }

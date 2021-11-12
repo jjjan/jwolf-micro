@@ -45,17 +45,18 @@ public class MybatisPlusConfig {
             @Override
             public void insertFill(MetaObject metaObject) {
                 log.info("auto-fill:createTime");
-                setFieldValByName("createTime", LocalDateTime.now(),metaObject);
+                setFieldValByName("createTime", LocalDateTime.now(), metaObject);
             }
 
             @Override
             public void updateFill(MetaObject metaObject) {
                 log.info("auto-update:updateTime");
-                setFieldValByName("updateTime", LocalDateTime.now(),metaObject);
+                setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
 
             }
         };
     }
+
     //乐观锁 ,字段version,根据ID修改时如果传入了version字段，set version=version+1 where version=xx
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {

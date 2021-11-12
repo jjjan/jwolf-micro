@@ -5,6 +5,8 @@ import com.jwolf.common.base.entity.BasePageSearch;
 import com.jwolf.common.base.entity.ResultEntity;
 import com.jwolf.service.msg.api.entity.Msg;
 import com.jwolf.service.msg.service.IMsgService;
+import com.jwolf.service.user.api.entity.User;
+import com.jwolf.service.user.api.feign.UserFeginClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class MsgController {
 
     @Autowired
     private IMsgService msgService;
+    @Autowired
+    private UserFeginClient userFeginClient;
 
     @ApiOperation(value = "分页查询")
     @GetMapping("/page")
@@ -35,7 +39,7 @@ public class MsgController {
 
 
     @ApiOperation(value = "根据id查询")
-    @GetMapping("/detail}")
+    @GetMapping("/detail")
     public ResultEntity<Msg> getById(Long id) {
         return ResultEntity.success(msgService.getById(id));
     }
@@ -64,5 +68,14 @@ public class MsgController {
         boolean isOK = msgService.updateById(msg);
         return isOK ? ResultEntity.success() : ResultEntity.fail("更新失败,请重试");
     }
+
+    @ApiOperation(value = "查询用户-feign")
+    @GetMapping("/user")
+    public ResultEntity<User> getUserByFeign(Long id) {
+        return ResultEntity.success(userFeginClient.getUserByFeign(id));
+    }
+
+
+
 
 }

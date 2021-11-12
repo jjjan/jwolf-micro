@@ -13,4 +13,5 @@ import com.jwolf.service.msg.api.entity.Msg;
  */
 public interface IMsgService extends IService<Msg> {
 
+
 }

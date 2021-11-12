@@ -34,7 +34,7 @@ public class UserController {
 
 
     @ApiOperation(value = "根据id查询")
-    @GetMapping("/detail}")
+    @GetMapping("/detail")
     public ResultEntity<User> getById(Long id) {
         return ResultEntity.success(userService.getById(id));
     }
@@ -62,5 +62,6 @@ public class UserController {
         boolean isOK = userService.updateById(user);
         return isOK ? ResultEntity.success() : ResultEntity.fail("更新失败,请重试");
     }
+
 
 }

@@ -37,8 +37,9 @@ spring:
       read-only: false
       #验证与数据库连接的有效时间
       validation-timeout: 5000
+
 server:
-  port: 8881
+  port: 8882
 
 #pagehelper分页插件
 pagehelper:
@@ -53,7 +54,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-
 
 
 

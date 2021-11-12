@@ -19,12 +19,30 @@
         <module>jwolf-service-travel</module>
         <module>jwolf-service-activity</module>
     </modules>
+    <dependencyManagement>
+        <dependencies>
+             <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <type>pom</type>
+            <scope>import</scope>
+            <version>3.0.4</version>
+         </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>com.jwolf</groupId>
             <artifactId>jwolf-common</artifactId>
         </dependency>
-
+         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+         </dependency>
+         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+         </dependency>
     </dependencies>
     <build>
         <plugins>
