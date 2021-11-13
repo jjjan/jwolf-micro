@@ -5,10 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(scanBasePackages = "com.jwolf.service")
-@EnableSwagger2
+@EnableOpenApi //EnableSwagger2
 @MapperScan("com.jwolf.service.msg.mapper")
 @EnableDiscoveryClient(autoRegister = false) //暂不启用nacos
 @EnableFeignClients(basePackages ="com.jwolf.service")

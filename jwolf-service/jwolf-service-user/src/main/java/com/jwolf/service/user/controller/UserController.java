@@ -7,6 +7,10 @@ import com.jwolf.service.user.api.entity.User;
 import com.jwolf.service.user.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +22,7 @@ import java.util.List;
  * @author jwolf
  * @since 2021-11-04
  */
-@Api(tags = {"用户表"})
+@Tag(name = "用户表")
 @RestController
 @RequestMapping("/user/user")
 public class UserController {
@@ -26,16 +30,16 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping("/page")
     public ResultEntity<Page<User>> getPageList(BasePageSearch search) {
         return ResultEntity.success(userService.page(search.getPage()));
     }
 
 
-    @ApiOperation(value = "根据id查询")
+    @Operation(summary = "用户详情")
     @GetMapping("/detail")
-    public ResultEntity<User> getById(Long id) {
+    public ResultEntity<User> getById(@Parameter(description="用户id")Long id) {
         return ResultEntity.success(userService.getById(id));
     }
 

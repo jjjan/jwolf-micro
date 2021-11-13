@@ -51,7 +51,8 @@ spring:
 server:
   port: 8880
 
-
+spring.cloud.gateway.api-prefix: /api/v1
+springfox.documentation.swagger-ui.base-url: ${spring.cloud.gateway.api-prefix}
 
 
 
