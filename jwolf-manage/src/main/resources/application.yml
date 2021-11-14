@@ -1,0 +1,15 @@
+xxl:
+  job:
+    accessToken: ''
+    admin.addresses: http://192.168.154.140:8180/xxl-job-admin
+    #admin.addresses: http://127.0.0.1:8080/xxl-job-admin
+    executor:
+      appname: jwolf-manager
+      address: ''
+      ip: ''
+      port: 9993
+      logpath: /var/log/jwolf/xxl-jobhandler
+      logretentiondays: 5
+
+server:
+  port: 8888

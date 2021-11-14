@@ -48,7 +48,7 @@ services:
     depends_on:
       - nacos
       - mysql
-
+#docker run -d --name xxl-job-admin -v /root/application.properties:/application.properties -v /data/applogs:/data/applogs  -p 8088:8080 -e PARAMS='--spring.config.location=/application.properties' xuxueli/xxl-job-admin:2.1.2
   xxl-job-admin:
     image: xuxueli/xxl-job-admin:2.3.0
     container_name: xxl-job-admin
@@ -58,7 +58,9 @@ services:
     environment: # 注意这里是不是-PARAMS=XXX 否则连接不上DB
       PARAMS: "--spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai \
         --spring.datasource.username=root  \
-        --spring.datasource.password=123456"
+        --spring.datasource.password=123456 \
+        --xxl.job.login.username=admin  \
+        --xxl.job.login.password=123456"
     volumes:
       - /home/data/xxl-job-admin:/data/applogs
     networks:

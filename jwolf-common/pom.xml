@@ -52,6 +52,12 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+        <!--spring4all这个也是swagger 3.0-->
+        <!--<dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+            <version>2.0.0.RELEASE</version>
+        </dependency>-->
         <!--数据库相关及generator，optional=true不让下面两个包传到其它工程-->
         <dependency>
             <groupId>com.baomidou</groupId>

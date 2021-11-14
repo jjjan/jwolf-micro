@@ -36,6 +36,7 @@
         <nacos.version>2.0.3</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
         <jwolf-nexus3>http://xxx/repository/jwolf-maven-mixed/</jwolf-nexus3>
         <arthas-version>3.4.5</arthas-version>
+        <xxl-job.version>2.3.0</xxl-job.version>
     </properties>
     <dependencyManagement>
         <dependencies>
