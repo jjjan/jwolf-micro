@@ -29,11 +29,13 @@ services:
       - jwolf
     ports:
       - 8848:8848
+      - 9848:9848    #2.x grpc需要暴露的两个端口
+      - 9849:9849
     environment:
-      - PREFER_HOST_MODE=hostname
+      - PREFER_HOST_MODE=ip
       - MODE=standalone
       - SPRING_DATASOURCE_PLATFORM=mysql
-      - NACOS_AUTH_ENABLE=true
+      - NACOS_AUTH_ENABLE=true    #java client需要账号密码且该账号要设置权限，即便是内置的nacos用户
       - MYSQL_SERVICE_HOST=mysql   #这里docker dns会解析为mysql容器的jwolf网络IP
       - MYSQL_SERVICE_PORT=3306
       - MYSQL_SERVICE_DB_NAME=nacos
@@ -41,6 +43,7 @@ services:
       - MYSQL_SERVICE_PASSWORD=123456
     depends_on:
       - mysql                      #使用mysql储存配置信息，故其依赖于mysql
+
 
   redis:
     image: redis:6.2.6

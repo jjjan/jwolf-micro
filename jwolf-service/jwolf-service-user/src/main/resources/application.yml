@@ -1,67 +1,65 @@
-spring:
-  profiles:
-    active: @package.environment@
-  application:
-    name: user
-  servlet:
-    multipart:
-      max-file-size: 20MB
-  task:
-    execution:
-      pool:
-        core-size: 4
-        max-size: 32
-        queue-capacity: 500
-        keep-alive: 60s
-  jackson:
-    time-zone: GMT+8
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      #自动提交
-      auto-commit: true
-      connection-test-query: SELECT 1
-      #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
-      connection-timeout: 30000
-      # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
-      idle-timeout: 300000
-      #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟
-      max-lifetime: 1800000
-      #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
-      maximum-pool-size: 20
-      #池中维护的最小空闲连接数，如果当连接池空闲连接少于 minimumIdle，
-      #而且总共连接数不大于 maximumPoolSize 时，HikariCP 会尽力补充新的连接。为了性能考虑，不建议设置此值，而是让 HikariCP 把连接池当做固定大小的处理，默认 minimumIdle 与 maximumPoolSize 一样。
-      minimum-idle: 5
-      pool-name: DatebookHikariCP
-      read-only: false
-      #验证与数据库连接的有效时间
-      validation-timeout: 5000
-server:
-  port: 8881
-
-#pagehelper分页插件
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-
-mybatis-plus:
-  type-aliases-package: com.jwolf.service.${spring.application.name}.api.entity   # 注意：对应实体类的路径
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  global-config:
-    db-config:
-      id-type: input
-
-
-
-
-# 3.5.4有BUG. java -jar E:\mysoft\arthas-tunnel-server-3.4.5-fatjar.jar  浏览器localhost:8080 连接地址见tunnel-server+agent-id
-arthas:
-  telnetPort: -1
-  httpPort: -1
-  ip: 127.0.0.1 #0.0.0.0
-  appName: ${spring.application.name}
-  agent-id: 123456
-  tunnel-server: ws://localhost:7777/ws
+#server:
+#  port: 8881
+#
+#spring:
+#  servlet:
+#    multipart:
+#      max-file-size: 20MB
+#  task:
+#    execution:
+#      pool:
+#        core-size: 4
+#        max-size: 32
+#        queue-capacity: 500
+#        keep-alive: 60s
+#  jackson:
+#    time-zone: GMT+8
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      #自动提交
+#      auto-commit: true
+#      connection-test-query: SELECT 1
+#      #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
+#      connection-timeout: 30000
+#      # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
+#      idle-timeout: 300000
+#      #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟
+#      max-lifetime: 1800000
+#      #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
+#      maximum-pool-size: 20
+#      #池中维护的最小空闲连接数，如果当连接池空闲连接少于 minimumIdle，
+#      #而且总共连接数不大于 maximumPoolSize 时，HikariCP 会尽力补充新的连接。为了性能考虑，不建议设置此值，而是让 HikariCP 把连接池当做固定大小的处理，默认 minimumIdle 与 maximumPoolSize 一样。
+#      minimum-idle: 5
+#      pool-name: DatebookHikariCP
+#      read-only: false
+#      #验证与数据库连接的有效时间
+#      validation-timeout: 5000
+#
+#
+##pagehelper分页插件
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
+#
+#mybatis-plus:
+#  type-aliases-package: com.jwolf.service.${spring.application.name}.api.entity   # 注意：对应实体类的路径
+#  mapper-locations: classpath:/mapper/*Mapper.xml
+#  global-config:
+#    db-config:
+#      id-type: input
+#
+#
+#
+#
+## 3.5.4有BUG. java -jar E:\mysoft\arthas-tunnel-server-3.4.5-fatjar.jar  浏览器localhost:8080 连接地址见tunnel-server+agent-id
+#arthas:
+#  telnetPort: -1
+#  httpPort: -1
+#  ip: 127.0.0.1 #0.0.0.0
+#  appName: ${spring.application.name}
+#  agent-id: 123456
+#  tunnel-server: ws://localhost:7777/ws

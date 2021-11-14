@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableOpenApi //EnableSwagger2
 @MapperScan("com.jwolf.service.user.mapper")
-@EnableDiscoveryClient(autoRegister = false) //暂不启用nacos
+@EnableDiscoveryClient(autoRegister = true)
 public class JwolfUserApplication {
 
     public static void main(String[] args) {

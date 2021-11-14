@@ -1,7 +1,7 @@
 package com.jwolf.common.util;
 
+import com.baomidou.mybatisplus.core.toolkit.IOUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
