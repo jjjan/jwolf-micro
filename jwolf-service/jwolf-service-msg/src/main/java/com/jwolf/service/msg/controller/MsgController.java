@@ -9,6 +9,7 @@ import com.jwolf.service.user.api.entity.User;
 import com.jwolf.service.user.api.feign.UserFeginClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * @author jwolf
  * @since 2021-11-05
  */
-@Api(tags = {"消息表"})
+@Tag(name = "消息")
 @RestController
 @RequestMapping("/msg/msg")
 public class MsgController {

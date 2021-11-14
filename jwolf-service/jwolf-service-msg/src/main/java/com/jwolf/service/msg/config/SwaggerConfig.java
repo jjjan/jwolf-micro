@@ -29,8 +29,8 @@ public class SwaggerConfig {
 
         //API描述
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("用户-微服务")
-                .description("用户相关接口")
+                .title("消息-微服务")
+                .description("消息相关接口")
                 .contact(new Contact("jwolf", "http://www.baidu.com", "523083921.qq.com"))
                 .version("1.0.0")
                 .build();
@@ -42,10 +42,9 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .pathMapping("/")
                 .enable(true)
-                .host("localhost:9999/xxx")
                 .select()
                 //.apis(RequestHandlerSelectors.any()) //这个会显示系统相关api
-                .apis(RequestHandlerSelectors.basePackage("com.jwolf.service.user.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.jwolf.service.msg.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Lists.newArrayList(new ApiKey("BASE_TOKEN", "token", "xxxxx")))

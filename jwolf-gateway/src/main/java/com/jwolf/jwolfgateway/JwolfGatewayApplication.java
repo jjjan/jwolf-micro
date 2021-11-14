@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})//不启用redis
 @EnableOpenApi
-@EnableDiscoveryClient(autoRegister = false) //暂不启用nacos
+@EnableDiscoveryClient
 public class JwolfGatewayApplication {
 
     public static void main(String[] args) {

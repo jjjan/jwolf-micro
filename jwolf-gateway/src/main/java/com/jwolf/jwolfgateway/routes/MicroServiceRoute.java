@@ -22,14 +22,14 @@ import java.time.temporal.ChronoUnit;
 
 @Configuration
 @Slf4j
-public class GatewayConfig {
+public class MicroServiceRoute {
     @Autowired
     private RequestRateLimiterGatewayFilterFactory factory;
 
     @Bean
     public RouteLocator customerRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("user", r -> r.path("/jwolf/user/**")
+               .route("user", r -> r.path("/jwolf/user/**")
                         .and()
                         //.between()
                         //.header("xxx")
@@ -47,16 +47,11 @@ public class GatewayConfig {
                                 .filter((exchange, chain) ->{
                                     exchange.getResponse().setStatusCode(HttpStatus.OK);
                                     return chain.filter(exchange);},2)
-                                .requestRateLimiter(config -> config.setRateLimiter(factory.getDefaultRateLimiter())
-                                        .setKeyResolver(factory.getDefaultKeyResolver()).setStatusCode(HttpStatus.BAD_GATEWAY)
-                                )
-                                .prefixPath("")//新增路径过滤器
                                 .stripPrefix(1) //去除前缀/jwolf的过滤器
-                                .addRequestParameter("aaa","bbb")//增加参数过滤器
 
                                )
-                        //.uri("lb://user")) //暂没使用注册中心，直接转发到具体地址
-                        .uri("http://localhost:8881"))
+                        .uri("lb://user")) //暂没使用注册中心，直接转发到具体地址
+                        //.uri("http://localhost:8881"))
                 .route("travel", r -> r.path("/jwolf/travel/**")
                         .and()
                         .after(ZonedDateTime.of(LocalDateTime.now().minusDays(11), ZoneId.systemDefault()))
@@ -89,7 +84,8 @@ public class GatewayConfig {
                                     return chain.filter(exchange);},2)
                                 .stripPrefix(1)
                                )
-                        .uri("http://localhost:8882")) //暂不启动msg服务，以测试重试机制
+                        //.uri("http://localhost:8882")) //暂不启动msg服务，以测试重试机制
+                        .uri("lb://msg")) //暂没使用注册中心，直接转发到具体地址
                 .build();
     }
 

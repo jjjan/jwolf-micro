@@ -1,62 +1,26 @@
-spring:
-  profiles:
-    active: @package.environment@
-  application:
-    name: gateway
-  servlet:
-    multipart:
-      max-file-size: 10MB
-
-  jackson:
-    time-zone: GMT+8
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    hikari:
-      #自动提交
-      auto-commit: true
-      connection-test-query: SELECT 1
-      #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
-      connection-timeout: 30000
-      # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
-      idle-timeout: 300000
-      #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟
-      max-lifetime: 1800000
-      #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
-      maximum-pool-size: 20
-      #池中维护的最小空闲连接数，如果当连接池空闲连接少于 minimumIdle，
-      #而且总共连接数不大于 maximumPoolSize 时，HikariCP 会尽力补充新的连接。为了性能考虑，不建议设置此值，而是让 HikariCP 把连接池当做固定大小的处理，默认 minimumIdle 与 maximumPoolSize 一样。
-      minimum-idle: 5
-      pool-name: DatebookHikariCP
-      read-only: false
-      #验证与数据库连接的有效时间
-      validation-timeout: 5000
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: false # 开启从注册中心动态创建路由的功能，利用微服务名进行路由,uri即可支持lb://微服务名进行负载均衡调用
-      routes:
-      - id: goods
-        uri: lb://goods
-        predicates:
-        - Path=/jwolf/goods/**
-        filters:
-        - StripPrefix=1
-        - name: RequestRateLimiter
-          args:
-            redis-rate-limiter.replenishRate: 1
-            redis-rate-limiter.burstCapacity: 1
-            key-resolver: '#{@apiKeyResolver}'
-server:
-  port: 8880
-
-spring.cloud.gateway.api-prefix: /api/v1
-springfox.documentation.swagger-ui.base-url: ${spring.cloud.gateway.api-prefix}
-
-
-
-
-
-
-
+#spring:
+#  servlet:
+#    multipart:
+#      max-file-size: 10MB
+#
+#  jackson:
+#    time-zone: GMT+8
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: false # 开启从注册中心动态创建路由的功能，利用微服务名进行路由,uri即可支持lb://微服务名进行负载均衡调用
+#      routes:
+#      - id: goods
+#        uri: lb://goods
+#        predicates:
+#        - Path=/jwolf/goods/**
+#        filters:
+#        - StripPrefix=1
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter.replenishRate: 1
+#            redis-rate-limiter.burstCapacity: 1
+#            key-resolver: '#{@apiKeyResolver}'
+#server:
+#  port: 8880

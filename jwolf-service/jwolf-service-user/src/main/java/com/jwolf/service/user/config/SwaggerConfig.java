@@ -42,7 +42,6 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .pathMapping("/")
                 .enable(true)
-                .host("localhost:9999/xxx")
                 .select()
                 //.apis(RequestHandlerSelectors.any()) //这个会显示系统相关api
                 .apis(RequestHandlerSelectors.basePackage("com.jwolf.service.user.controller"))
