@@ -1,9 +1,11 @@
 package com.jwolf.service.user.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwolf.common.base.entity.BasePageSearch;
 import com.jwolf.common.base.entity.ResultEntity;
 import com.jwolf.service.user.api.entity.User;
+import com.jwolf.service.user.config.SentinelHandler;
 import com.jwolf.service.user.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +41,13 @@ public class UserController {
 
     @Operation(summary = "用户详情")
     @GetMapping("/detail")
+    @SentinelResource(value = "testsentinel",
+            blockHandler = "exceptionHandler",
+            blockHandlerClass = SentinelHandler.class,
+            fallback = "fallbackHandler",
+            fallbackClass = SentinelHandler.class)
     public ResultEntity<User> getById(@Parameter(description="用户id")Long id) {
+        int a=1/0;
         return ResultEntity.success(userService.getById(id));
     }
 

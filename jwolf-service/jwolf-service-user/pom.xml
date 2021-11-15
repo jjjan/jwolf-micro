@@ -29,7 +29,11 @@
             <artifactId>arthas-spring-boot-starter</artifactId>
             <version>${arthas-version}</version>
         </dependency>
-
+        <!--sentinel限流熔断等规则持久化到nacos,sentinel-dashboard不负责储存这些规则-->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
 
     </dependencies>
 
