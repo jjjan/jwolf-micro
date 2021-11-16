@@ -40,7 +40,7 @@ public class GatewaySentinelGlobleExceptionHandler implements WebExceptionHandle
                     ServerHttpResponse serverHttpResponse = exchange.getResponse();
                     serverHttpResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
                     serverHttpResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-                    return writeResponse(ResultEntity.fail("500", ""), exchange);
+                    return writeResponse(ResultEntity.fail("500", "xxxxxx"), exchange);
 
                 });
     }

@@ -19,4 +19,36 @@ spring:
         namespace: test
         username: nacos
         password: nacos
+logging:
+  config: classpath:logback.${spring.profiles.active}.xml
 
+#Seata配置从nacos读取
+seata:
+  tx-service-group: ${spring.application.name}
+  enabled: true                       #是否开启seata分布式事务
+  enable-auto-data-source-proxy: true #是否开启数据源代理
+  service:
+    vgroup-mapping:
+      payment: default  #！！！！！！注意这里key不要写${spring.application.name}
+    grouplist:
+      default: 192.168.154.140:8091         #seata-server地址
+
+#与seata-server端保持一致
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      namespace: ${spring.profiles.active}
+      server-addr: ${spring.cloud.nacos.config.server-addr}
+      group: SEATA_GROUP
+      password: ${spring.cloud.nacos.config.username}
+      username: ${spring.cloud.nacos.config.password}
+  config:
+    type: nacos
+    nacos:
+      group: SEATA_GROUP
+      namespace: ${spring.profiles.active}
+      server-addr: ${spring.cloud.nacos.config.server-addr}
+      password: ${spring.cloud.nacos.config.username}
+      username: ${spring.cloud.nacos.config.password}
+  application-id: ${spring.application.name}
