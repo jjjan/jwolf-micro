@@ -3,6 +3,8 @@ spring:
     name: gateway
   profiles:
     active: test
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     nacos:
       config:
@@ -19,4 +21,22 @@ spring:
         namespace: test
         username: nacos
         password: nacos
+
+    sentinel:
+      transport:
+        dashboard: 192.168.154.140:8858
+      enabled: true
+      datasource: #持久化配置指定nacos
+        ds1:
+          nacos:
+            server-addr: 192.168.154.140:8848
+            dataId: ${spring.application.name}
+            groupId: SENTINEL_GROUP
+            namespace: test
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+    loadbalancer:
+      enabled: true
 
