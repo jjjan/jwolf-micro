@@ -44,14 +44,14 @@ public class MybatisPlusConfig {
         return new MetaObjectHandler() {
             @Override
             public void insertFill(MetaObject metaObject) {
-                log.info("auto-fill:createTime");
-                setFieldValByName("createTime", LocalDateTime.now(), metaObject);
+                //log.info("auto-fill:createTime");
+                //setFieldValByName("createTime", LocalDateTime.now(), metaObject);
             }
 
             @Override
             public void updateFill(MetaObject metaObject) {
-                log.info("auto-update:updateTime");
-                setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+                //log.info("auto-update:updateTime");
+               // setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
 
             }
         };

@@ -2,7 +2,7 @@
 spring:
   datasource:
     name: travel
-    url: jdbc:mysql://192.168.154.139:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://192.168.154.140:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: root
     password: 123456
 
@@ -34,7 +34,7 @@ spring:
     rest:
       username: user
       password: 123456
-      uris: http://192.168.154.139:9200
+      uris: https://192.168.154.139:9200
       read-timeout: 30s
       sniffer:
         delay-after-failure: 1m

@@ -46,7 +46,7 @@ services:
   #https://seata.io/zh-cn/docs/ops/deploy-by-docker.html
   seata-server:
     image: seataio/seata-server
-    container_name: seata
+    container_name: seata-server
     restart: always
     ports:
       - "8091:8091"

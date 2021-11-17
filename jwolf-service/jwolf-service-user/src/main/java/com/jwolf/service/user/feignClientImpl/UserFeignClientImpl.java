@@ -1,5 +1,6 @@
 package com.jwolf.service.user.feignClientImpl;
 
+import com.jwolf.service.user.api.entity.User;
 import com.jwolf.service.user.api.feign.UserFeginClient;
 import com.jwolf.service.user.service.IUserService;
 import lombok.SneakyThrows;
@@ -22,5 +23,12 @@ public class UserFeignClientImpl implements UserFeginClient {
     @Override
     public String getUserByFeign(long id) {
         return "feignUser";
+    }
+
+    @Override
+    public boolean updateUser(long id) {
+        //int a=1/0;
+        User user = new User().setId(1L).setNickName("xxxxxx");
+        return userService.updateById(user);
     }
 }

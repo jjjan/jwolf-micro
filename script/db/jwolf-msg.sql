@@ -9,7 +9,7 @@ create table if not exists t_msg
 	sender_id bigint not null comment '发送方ID',
 	receiver_id bigint not null comment '接收方ID',
 	create_time datetime not null,
-	update_time datetime not null,
+	update_time datetime  null,
 	deleted tinyint null,
 	read_num int default 0 null comment '浏览次数'
 )

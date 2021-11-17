@@ -9,4 +9,9 @@ public class  UserFeginClientFallback implements UserFeginClient {
     public String getUserByFeign(long id) {
         return "fallback";
     }
+
+    @Override
+    public boolean updateUser(long id) {
+        return false;
+    }
 }

@@ -38,7 +38,7 @@ spring:
       #验证与数据库连接的有效时间
       validation-timeout: 5000
 server:
-  port: 8880
+  port: 8883
 
 #pagehelper分页插件
 pagehelper:

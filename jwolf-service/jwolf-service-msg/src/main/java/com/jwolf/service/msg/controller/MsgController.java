@@ -76,7 +76,11 @@ public class MsgController {
         return ResultEntity.success(userFeginClient.getUserByFeign(id));
     }
 
-
+    @ApiOperation(value = "测试seata")
+    @GetMapping("/test-seata")
+    public ResultEntity<Boolean> testSeata() {
+        return ResultEntity.success(msgService.insertUserAndMsg());
+    }
 
 
 }
