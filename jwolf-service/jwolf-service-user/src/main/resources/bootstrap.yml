@@ -21,33 +21,36 @@ spring:
         password: nacos
 logging:
   config: classpath:logback.${spring.profiles.active}.xml
-#Seata配置从nacos读取
+#Seata配置,配置seata-server地址等
 seata:
   tx-service-group: ${spring.application.name}
   enabled: true                       #是否开启seata分布式事务
   enable-auto-data-source-proxy: true #是否开启数据源代理
   service:
-    vgroup-mapping:
-      user: default  #！！！！！！注意这里key不要写${spring.application.name}
-    grouplist:
-      default: 192.168.154.140:8091         #seata-server地址
+      vgroup-mapping:
+        user: default  #！！！！！！注意这里key不要写${spring.application.name}
+      grouplist:
+        default: 192.168.154.140:8091         #seata-server地址
+      enable-degrade: false # 降级开关
+      disable-global-transaction: false # 禁用全局事物(默认 false)
 
-#与seata-server端保持一致
-#  registry:
-#    type: nacos
-#    nacos:
-#      application: seata-server
-#      namespace: ${spring.profiles.active}
-#      server-addr: ${spring.cloud.nacos.config.server-addr}
-#      group: SEATA_GROUP
-#      password: ${spring.cloud.nacos.config.username}
-#      username: ${spring.cloud.nacos.config.password}
-#  config:
-#    type: nacos
-#    nacos:
-#      group: SEATA_GROUP
-#      namespace: ${spring.profiles.active}
-#      server-addr: ${spring.cloud.nacos.config.server-addr}
-#      password: ${spring.cloud.nacos.config.username}
-#      username: ${spring.cloud.nacos.config.password}
-#  application-id: ${spring.application.name}
+#seata client端配置，不配置用默认值也可以
+  client:
+      rm:
+        report-retry-count: 5 # 一阶段结果上报TC充实次数(默认5)
+        async-commit-buffer-limit: 10000 # 异步提交缓存队列长度(默认10000)
+        table-meta-check-enable: false # 自动刷新缓存中的表结构
+        report-success-enable: true
+        lock:
+          retry-interval: 10 # 校验或占用全局锁重试间隔(默认10ms)
+          retry-times: 30 # 校验或占用全局锁重试次数(默认30)
+          retry-policy-branch-rollback-on-conflict: true
+      tm:
+        commit-retry-count: 3 # 一阶段全局提交上报 TC 重试次数(默认 1 次, 建议大于 1)
+        rollback-retry-count: 3 # 一阶段全局回滚上报 TC 重试次数(默认 1 次, 建议大于 1)
+      undo:
+        data-validation: true # 二阶段回滚镜像校验(默认 true 开启)
+        log-serialization: jackson # undo 序列化方式(默认 jackson)
+        log-table: undo_log # 自定义undo表名(默认undo_log)
+      log:
+        exception-rate: 100 # 日志异常输出概率(默认 100)
