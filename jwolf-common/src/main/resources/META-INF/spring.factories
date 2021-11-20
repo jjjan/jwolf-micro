@@ -3,4 +3,4 @@
 #com.jwolf.vehicle.common.core.WebConfig
 # com.jwolf.vehicle.common.LogConfiguration,\
 # com.jwolf.vehicle.common.core.globleexception.GlobalExceptionHandlerConfiguration,\
-# com.jwolf.vehicle.common.core.resttemplate.RestTemplateConfiguration,\
+com.jwolf.vehicle.common.core.resttemplate.RestTemplateConfiguration,
