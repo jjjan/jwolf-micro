@@ -34,6 +34,21 @@ services:
       - zookeeper
 
 
+  mongodb:
+      image: mongo:4.1.2
+      container_name: mongodb
+      restart: on-failure
+      environment:
+          - MONGO_DATA_DIR=/data/db
+          - MONGO_LOG_DIR=/data/logs
+          - MONGO_INITDB_ROOT_USERNAME=admin
+          - MONGO_INITDB_ROOT_PASSWORD=123456
+      volumes:
+          - /home/data/mongodb:/data/db
+          - /var/log/mongodb:/data/logs
+      ports:
+          - 27017:27017
+
   jenkins:
     image: 'jenkins/jenkins:lts'
     container_name: jenkins

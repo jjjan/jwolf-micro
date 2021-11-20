@@ -19,8 +19,7 @@ spring:
         namespace: test
         username: nacos
         password: nacos
-logging:
-  config: classpath:logback.${spring.profiles.active}.xml
+
 
 
 #Seata配置从nacos读取

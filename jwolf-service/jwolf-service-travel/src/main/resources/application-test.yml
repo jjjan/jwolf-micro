@@ -30,6 +30,9 @@ spring:
     elasticsearch:
       cluster-name: elasticsearch
       cluster-nodes: 192.168.154.139:9300
+    mongodb:
+      uri: mongodb://root:123456@192.168.154.140:27017/test
+
   elasticsearch:
     rest:
       username: user
@@ -40,5 +43,3 @@ spring:
         delay-after-failure: 1m
         interval: 5m
       connection-timeout: 1s
-
-
