@@ -29,24 +29,20 @@
         <fastjson.version>1.2.49</fastjson.version>
         <hutool.version>5.7.15</hutool.version>
         <freemarker.version>2.3.28</freemarker.version>
-        <spring.boot.version>2.5.2</spring.boot.version>
+        <spring.boot.version>2.4.10</spring.boot.version><!--避免多个版本springboot-->
         <spring.cloud.version>2020.0.4</spring.cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <seata.version>1.4.0</seata.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
-        <nacos.version>2.0.3</nacos.version> <!--覆盖spring-cloud-alibaba.version 2.2.3引入的1.3.0版本-->
+        <shardingsphere.version>4.1.1</shardingsphere.version>
+        <seata.version>1.4.0</seata.version>
+        <nacos.version>2.0.3</nacos.version>
         <jwolf-nexus3>http://xxx/repository/jwolf-maven-mixed/</jwolf-nexus3>
         <arthas-version>3.4.5</arthas-version>
         <xxl-job.version>2.3.0</xxl-job.version>
+        <guava.version>20.0</guava.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -61,7 +57,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!--覆盖springboot nacos引入的默认版本-->
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
@@ -72,6 +74,12 @@
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
                 <version>${seata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
             <!--本地jar版本控制-->
@@ -105,10 +113,13 @@
                 <artifactId>jwolf-service-goods-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
+             <dependency>
                 <groupId>com.jwolf</groupId>
                 <artifactId>jwolf-service-payment-api</artifactId>
+                <version>${project.version}</version>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

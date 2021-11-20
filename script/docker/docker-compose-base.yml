@@ -43,22 +43,23 @@ services:
       - MYSQL_SERVICE_PASSWORD=123456
     depends_on:
       - mysql                      #使用mysql储存配置信息，故其依赖于mysql
+
   #https://seata.io/zh-cn/docs/ops/deploy-by-docker.html
   seata-server:
     image: seataio/seata-server
-    container_name: seata-server
+    container_name: seata
     restart: always
     ports:
       - "8091:8091"
-    environment:
-      - SEATA_CONFIG_NAME=file:/root/seata-config/registry
+    #environment:
+     # - SEATA_CONFIG_NAME=file:/root/seata-config/registry.conf
     volumes:
-      - /etc/seata/config:/root/seata-config
+     #- /etc/seata/config:/root/seata-config
+      - /etc/seata/config/resources:/seata-server/resources
     networks:
       - jwolf
     depends_on:
-      - nacos
-      - mysql
+      - nacos  #使用store.mode=nacos需要
 
 # docker run --name sentinel -d -p 8101:8858 -p 8719:8719 -d bladex/sentinel-dashboard
   sentinel:

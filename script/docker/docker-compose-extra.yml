@@ -12,8 +12,9 @@ services:
       - '2182:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+  #启动失败？删除data/meta.properties
   kafka:
-    image: bitnami/kafka
+    image: bitnami/kafka:2.6.0
     container_name: kafka
     user: root
     restart: always
@@ -22,11 +23,11 @@ services:
     ports:
       - 9092:9092
     volumes:
-      - /etc/kafka/config:/opt/bitnami/kafka/config
+      - /home/data/kafka:/bitnami/kafka
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.154.140:9092  #！！！！向外部暴露的地址！！！,即client端连接需走这个地址
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
