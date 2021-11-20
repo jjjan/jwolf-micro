@@ -1,4 +1,4 @@
-package com.jwolf.service.msg.kafka;
+package com.jwolf.service.msg.mq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -15,12 +15,12 @@ import org.springframework.util.concurrent.ListenableFuture;
 @Component
 @Slf4j
 @EnableScheduling
-public class ProducerConsumerTest {
+public class KafkaProducerConsumerTest {
     @Autowired
     private KafkaTemplate<Integer, String> kafkaTemplate;
 
 
-    @Scheduled(cron = "0/5 * * * * ? ")
+    @Scheduled(cron = "0/50 * * * * ? ")
     public void send() {
         ListenableFuture future = kafkaTemplate.send("test5", "来自kafkaTemplate发送de消息");
         future.addCallback(o -> System.out.println("发送成功"), e -> System.err.println("发送失败," + e.getCause()));

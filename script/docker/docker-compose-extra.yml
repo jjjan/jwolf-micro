@@ -61,6 +61,50 @@ services:
     networks:
       - jwolf
 
+
+
+  rmqnamesrv:
+    image: foxiswho/rocketmq:server
+    container_name: rmqnamesrv
+    restart: on-failure
+    ports:
+      - 9876:9876
+    volumes:
+      - /var/log/rocketmq:/opt/logs
+      - /home/data/rocketmq:/opt/store
+    networks:
+        - jwolf
+  rmqbroker:
+    image: foxiswho/rocketmq:broker
+    container_name: rmqbroker
+    ports:
+      - 10909:10909
+      - 10911:10911
+    volumes:
+      - /var/log/rocketmq:/opt/logs
+      - /home/data/rocketmq:/opt/store
+      - /etc/rocketmq/broker.conf:/etc/rocketmq/broker.conf
+    environment:
+        NAMESRV_ADDR: "rmqnamesrv:9876"
+        JAVA_OPTS: " -Duser.home=/opt"
+        JAVA_OPT_EXT: "-server -Xms128m -Xmx128m -Xmn80m"
+    command: mqbroker -c /etc/rocketmq/broker.conf
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - jwolf
+  rmqconsole:
+    image: styletang/rocketmq-console-ng
+    container_name: rmqconsole
+    ports:
+      - 9000:8080   #web控制台
+    environment:
+        JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - jwolf
+
 networks:
   jwolf:
     driver: bridge
