@@ -26,6 +26,7 @@ import java.util.Map;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -35,23 +36,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .scopes("all")
                 //.accessTokenValiditySeconds(10)
                 //.refreshTokenValiditySeconds(864000)
-                .redirectUris("http://baidu.com","http://localhost:8881/login") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
+                .redirectUris("http://baidu.com", "http://localhost:8881/login") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
                 .autoApprove(false)  // true则自动授权,跳过授权页面点击步骤
                 .and()
-                .withClient("client2")
-                .secret(passwordEncoder().encode("secret2"))
-                .authorizedGrantTypes("authorization_code")
+                .withClient("jwolf-gateway")
+                .secret(passwordEncoder().encode("123456"))
+                .authorizedGrantTypes("password", "refresh_token")
                 .scopes("all")
-                //.accessTokenValiditySeconds(10)
-                //.refreshTokenValiditySeconds(864000)
-                .redirectUris("http://localhost:9602/login")
-                .autoApprove(false);
+                .accessTokenValiditySeconds(30)
+                .refreshTokenValiditySeconds(91);
 
     }
+
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints)  {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         //endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter());
-       TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         List<TokenEnhancer> delegates = new ArrayList<>();
         delegates.add((oAuth2AccessToken, oAuth2Authentication) -> {
             Map<String, Object> infoMap = MapBuilder.<String, Object>create().put("info1", "123").build();
@@ -68,13 +68,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security)  {
+    public void configure(AuthorizationServerSecurityConfigurer security) {
         // 要访问认证服务器tokenKey的时候需要经过身份认证
-        security.tokenKeyAccess("isAuthenticated()");
+        security.allowFormAuthenticationForClients();
+        //security.tokenKeyAccess("isAuthenticated()");
     }
 
     /**
      * 可以使用jdbc,redis,jwt,memory等方式存储token
+     *
      * @return
      */
     @Bean
