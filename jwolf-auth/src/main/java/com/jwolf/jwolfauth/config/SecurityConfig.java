@@ -19,7 +19,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().and().authorizeRequests().anyRequest().authenticated();
+        //http.formLogin().and().authorizeRequests().anyRequest().authenticated();
+        //自定义登录与授权页面
+           http.formLogin()
+                .loginPage("/mylogin") //登录页view,默认/login
+                .loginProcessingUrl("/authentication/form")//与登录页form提交的url一致,
+                .and()
+                .authorizeRequests().antMatchers("/user/**", "/mylogin").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .logout()
+                .logoutUrl("/logout") //默认logout
+                //.logoutSuccessUrl("/xxxx")
+                .deleteCookies("OAUTH2-CLIENT1-SESSIONID")
+                .and()
+                .csrf().disable();
+
     }
 
     @Override

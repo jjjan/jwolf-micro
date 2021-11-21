@@ -74,5 +74,4 @@ security:
       jwt:
         key-uri: ${oauth2-service-url}/oauth/token_key
         key-value: dev #对应认证服务器jwt key的签名
-    sso:
-      login-path: /login
+

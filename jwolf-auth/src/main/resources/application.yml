@@ -1,3 +1,12 @@
 
 server:
   port: 9402
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+security:
+  oauth2:
+    sso:
+      login-path: /mylogin  #默认走框架内部的 /login,不好看
