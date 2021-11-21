@@ -92,6 +92,17 @@ spring:
       ack-mode: batch   #默认模式，拉取消息时提交消费确认
      # ack-mode: manual_immediate
 
+rocketmq:
+  name-server: 192.168.154.140:9876
+  producer:
+    group: test-producer-group
+  consumer:
+    #组名
+    group: default-consumer-group
+    #监听主题
+    topic: default-topic
+
+
 #Seata配置从nacos读取
 seata:
   tx-service-group: ${spring.application.name}

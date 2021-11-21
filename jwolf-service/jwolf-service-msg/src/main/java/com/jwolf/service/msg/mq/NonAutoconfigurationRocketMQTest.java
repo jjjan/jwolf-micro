@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+//@Component
 @Slf4j
 @EnableScheduling
-public class RocketMQProducerConsumerTest {
+public class NonAutoconfigurationRocketMQTest {
 
     private String NAMESVR__ADDR = "192.168.154.140:9876";
 
