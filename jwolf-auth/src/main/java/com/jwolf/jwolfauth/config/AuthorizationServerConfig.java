@@ -1,20 +1,31 @@
 package com.jwolf.jwolfauth.config;
 
+import cn.hutool.core.map.MapBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Configuration
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-    
+    @Autowired
+    private UserDetailsService userDetailsService;
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -39,7 +50,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints)  {
-        endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter());
+        //endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter());
+       TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> delegates = new ArrayList<>();
+        delegates.add((oAuth2AccessToken, oAuth2Authentication) -> {
+            Map<String, Object> infoMap = MapBuilder.<String, Object>create().put("info1", "123").build();
+            ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(infoMap);
+            return oAuth2AccessToken;
+        });
+        //注意jwtAccessTokenConverter一定要在其它增强链最后，它的作用是生成jwt字符串
+        delegates.add(jwtAccessTokenConverter());
+        tokenEnhancerChain.setTokenEnhancers(delegates);
+        endpoints.tokenStore(jwtTokenStore())
+                .userDetailsService(userDetailsService)
+                .tokenEnhancer(tokenEnhancerChain);
+
     }
 
     @Override

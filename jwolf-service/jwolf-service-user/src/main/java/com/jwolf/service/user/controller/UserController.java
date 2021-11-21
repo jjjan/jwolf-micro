@@ -1,23 +1,27 @@
 package com.jwolf.service.user.controller;
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.jwt.JWT;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwolf.common.base.entity.BasePageSearch;
 import com.jwolf.common.base.entity.ResultEntity;
 import com.jwolf.service.user.api.entity.User;
 import com.jwolf.service.user.config.SentinelHandler;
 import com.jwolf.service.user.service.IUserService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -40,10 +44,18 @@ public class UserController {
     public ResultEntity<Page<User>> getPageList(BasePageSearch search) {
         return ResultEntity.success(userService.page(search.getPage()));
     }
-    @Operation(summary = "用户详情测试")
+    @Operation(summary = "用户详情测试,授权服务器返回的jwt token")
     @GetMapping("/detail2")
-    public ResultEntity<User> getById2(@Parameter(description="用户id")Long id) {
-        return ResultEntity.success(userService.getById(id));
+    public ResultEntity<User> getDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2AuthenticationDetails details =(OAuth2AuthenticationDetails) authentication.getDetails();
+        JSONObject claimsJson = JWT.create()
+                .setSigner(null, "dev".getBytes(StandardCharsets.UTF_8))
+                .parse(details.getTokenValue())
+                .getPayload()
+                .getClaimsJson();
+        System.out.println(JSON.toJSONString(claimsJson));
+        return ResultEntity.success(claimsJson);
     }
 
     @Operation(summary = "用户详情")
