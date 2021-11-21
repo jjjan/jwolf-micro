@@ -16,6 +16,10 @@
             <br>
             <button type="submit" class="btn">登 &nbsp;&nbsp; 录</button>
         </form>
+        <form action="/oauth/render" method="post">
+            <button type="submit" class="btn">Gitee登录</button>
+        </form>
+
         <p style="color: red" th:if="${param.error}">用户名或密码错误</p>
     </div>
 </div>

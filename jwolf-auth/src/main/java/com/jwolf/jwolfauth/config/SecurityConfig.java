@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/mylogin") //登录页view,默认/login
                 .loginProcessingUrl("/authentication/form")//与登录页form提交的url一致,
                 .and()
-                .authorizeRequests().antMatchers("/user/**", "/mylogin").permitAll()
+                .authorizeRequests().antMatchers("/oauth/**", "/mylogin").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
