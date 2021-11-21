@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,10 +36,15 @@ public class UserController {
 
     @Operation(summary = "分页查询")
     @GetMapping("/page")
+    @PreAuthorize("hasAnyAuthority('super')")
     public ResultEntity<Page<User>> getPageList(BasePageSearch search) {
         return ResultEntity.success(userService.page(search.getPage()));
     }
-
+    @Operation(summary = "用户详情测试")
+    @GetMapping("/detail2")
+    public ResultEntity<User> getById2(@Parameter(description="用户id")Long id) {
+        return ResultEntity.success(userService.getById(id));
+    }
 
     @Operation(summary = "用户详情")
     @GetMapping("/detail")

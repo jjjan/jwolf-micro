@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @date 2021-11-20 22:27
  */
-@Component
+//@Component
 @EnableScheduling
 public class TestRedis {
     @Autowired

@@ -19,12 +19,13 @@ spring:
         namespace: test
         username: nacos
         password: nacos
+
 logging:
   config: classpath:logback.${spring.profiles.active}.xml
 #Seata配置,配置seata-server地址等
 seata:
   tx-service-group: ${spring.application.name}
-  enabled: true                       #是否开启seata分布式事务
+  enabled: false                       #是否开启seata分布式事务
   enable-auto-data-source-proxy: true #是否开启数据源代理
   service:
       vgroup-mapping:
@@ -54,3 +55,24 @@ seata:
         log-table: undo_log # 自定义undo表名(默认undo_log)
       log:
         exception-rate: 100 # 日志异常输出概率(默认 100)
+---
+server:
+  servlet:
+    session:
+      cookie:
+        # 防止cookie冲突，冲突会导致登录验证不通过，如果不同client端使用相同的cookie名会导致挤掉另一client授权的cookie被覆盖
+        name: OAUTH2-CLIENT1-SESSIONID
+oauth2-service-url: http://localhost:9402
+security:
+  oauth2:
+    client:
+      client-id: client1
+      client-secret: secret1
+      user-authorization-uri: ${oauth2-service-url}/oauth/authorize
+      access-token-uri: ${oauth2-service-url}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${oauth2-service-url}/oauth/token_key
+        key-value: dev #对应认证服务器jwt key的签名
+    sso:
+      login-path: /login
