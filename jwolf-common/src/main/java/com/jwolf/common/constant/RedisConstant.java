@@ -10,5 +10,4 @@ public class RedisConstant {
     public static final String SYSTEM_USER = "system_user";
     public static final String CHAT_ROOM_USER = "chat_room_user";
 
-    public static final String RESOURCE_ROLES_MAP ="resource_roles_map" ;
 }

@@ -21,21 +21,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * 模拟从数据库查询
-     *
      * @return
      */
     private List<User> selectUserFromDB() {
         List<User> userList = new ArrayList<>(8);
-        userList.add(new User("user1", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("super")));
-        userList.add(new User("user2", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("admin")));
-        userList.add(new User("user3", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("common")));
+        userList.add(new User("user1",passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("super")));
+        userList.add(new User("user2",passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("admin")));
+        userList.add(new User("user3",passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("common")));
         return userList;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optionalUser = this.selectUserFromDB().stream().filter(item -> item.getUsername().equals(username)).findAny();
-        if (optionalUser == null) {
+        if (optionalUser==null) {
             throw new UsernameNotFoundException("用户名或密码错误");
         }
         //这里把查到的用户返回就可以了,spring security内部会进行密码比对
