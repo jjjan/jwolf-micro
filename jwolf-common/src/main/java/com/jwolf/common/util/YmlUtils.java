@@ -28,8 +28,11 @@ public class YmlUtils {
         }
         String currentProfile = confMap.get("spring.profiles.active");
         InputStream currentProfileIn = classLoader.getResourceAsStream(String.format("application-%s.yml", currentProfile));
-        fillConfMap(yaml.loadAs(currentProfileIn, Map.class), confMap, null);
-        IOUtils.closeQuietly(currentProfileIn);
+        if (currentProfileIn!=null) {
+           fillConfMap(yaml.loadAs(currentProfileIn, Map.class), confMap, null);
+           IOUtils.closeQuietly(currentProfileIn);
+        }
+
     }
 
     private static void fillConfMap(Map<String, Object> sourceMap, Map<String, String> destinationMap, String key) {
