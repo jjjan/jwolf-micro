@@ -46,7 +46,7 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
-        dsc.setUrl("jdbc:mysql://192.168.154.137:3306/jwolf_" + moduleName + "?useSSL=false&serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://192.168.154.141:3306/jwolf_" + moduleName + "?useSSL=false&serverTimezone=UTC");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");

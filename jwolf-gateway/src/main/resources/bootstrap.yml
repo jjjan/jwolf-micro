@@ -9,7 +9,7 @@ spring:
     nacos:
       config:
         file-extension: yml
-        server-addr: '192.168.154.140:8848'
+        server-addr: @package.host@:8848
         shared-configs:
           - data-id: common.yml                #配置所有工程共享的配置，注意里面的配置默认不能动态刷新，需要时可配置自动刷新
             refresh: true
@@ -17,19 +17,19 @@ spring:
         username: nacos
         password: nacos
       discovery:
-        server-addr: '192.168.154.140:8848'
+        server-addr: @package.host@:8848
         namespace: test
         username: nacos
         password: nacos
 
     sentinel:
       transport:
-        dashboard: 192.168.154.140:8858
+        dashboard: @package.host@:8858
       enabled: true
       datasource: #持久化配置指定nacos
         ds1:
           nacos:
-            server-addr: 192.168.154.140:8848
+            server-addr: @package.host@:8848
             dataId: ${spring.application.name}
             groupId: SENTINEL_GROUP
             namespace: test

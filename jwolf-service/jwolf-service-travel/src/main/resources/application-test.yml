@@ -2,7 +2,7 @@
 spring:
   datasource:
     name: travel
-    url: jdbc:mysql://192.168.154.140:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://@package.host@:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: root
     password: 123456
 
@@ -10,7 +10,7 @@ spring:
 
   #redis配置
   redis:
-    host: 192.168.154.137
+    host: @package.host@
     port: 6379
     #password: 123456
     timeout: 2000
@@ -29,15 +29,15 @@ spring:
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 192.168.154.139:9300
+      cluster-nodes: @package.host@:9300
     mongodb:
-      uri: mongodb://root:123456@192.168.154.140:27017/test
+      uri: mongodb://root:123456@@package.host@:27017/test
 
   elasticsearch:
     rest:
       username: user
       password: 123456
-      uris: https://192.168.154.139:9200
+      uris: https://@package.host@:9200
       read-timeout: 30s
       sniffer:
         delay-after-failure: 1m

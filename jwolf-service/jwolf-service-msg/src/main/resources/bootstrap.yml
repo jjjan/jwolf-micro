@@ -7,7 +7,7 @@ spring:
     nacos:
       config:
         file-extension: yml
-        server-addr: '192.168.154.140:8848'
+        server-addr: @package.host@:8848
         shared-configs:
           - data-id: common.yml                #配置所有工程共享的配置，注意里面的配置默认不能动态刷新，需要时可配置自动刷新
             refresh: true
@@ -15,16 +15,16 @@ spring:
         username: nacos
         password: nacos
       discovery:
-        server-addr: '192.168.154.140:8848'
+        server-addr: @package.host@:8848
         namespace: test
         username: nacos
         password: nacos
 
 #  kafka:
 #    # 以逗号分隔的地址列表，用于建立与Kafka集群的初始连接(kafka 默认的端口号为9092)
-#    bootstrap-servers: 192.168.154.140:9092
+#    bootstrap-servers: @package.host@:9092
 #    producer:
-#      bootstrap-servers: 192.168.154.140:9092
+#      bootstrap-servers: @package.host@:9092
 #      # 发生错误后，消息重发的次数。
 #      retries: 0
 #      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
@@ -43,7 +43,7 @@ spring:
 #        linger:
 #          ms: 0   #直接发送消息，默认
 #    consumer:
-#      bootstrap-servers: 192.168.154.140:9092
+#      bootstrap-servers: @package.host@:9092
 #      # 自动提交的时间间隔 在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
 #      auto-commit-interval: 1S
 #      # 该属性指定了消费者在读取一个没有偏移量的分区或者偏移量无效的情况下该作何处理：
@@ -75,7 +75,7 @@ spring:
           ms: 0   #直接发送消息，默认
       # 值的反序列化方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      bootstrap-servers: 192.168.154.140:9092 # 值的序列化方式
+      bootstrap-servers: @package.host@:9092 # 值的序列化方式
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -87,13 +87,13 @@ spring:
       enable-auto-commit: false  #关闭自动提交
       auto-offset-reset: latest
       fetch-min-size: 1 #至少拉取1条
-      bootstrap-servers: 192.168.154.140:9092
+      bootstrap-servers: @package.host@:9092
     listener:
       ack-mode: batch   #默认模式，拉取消息时提交消费确认
      # ack-mode: manual_immediate
 
 rocketmq:
-  name-server: 192.168.154.140:9876
+  name-server: @package.host@:9876
   producer:
     group: test-producer-group
   consumer:
@@ -112,4 +112,4 @@ seata:
     vgroup-mapping:
       msg: default  #！！！！！！注意这里key不要写${spring.application.name}
     grouplist:
-      default: 192.168.154.140:8091         #seata-server地址
+      default: @package.host@:8091         #seata-server地址

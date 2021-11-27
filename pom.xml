@@ -142,18 +142,18 @@
             <id>prod</id>
             <properties>
                 <package.environment>prod</package.environment>
+                <package.host>192.168.154.141</package.host>
                 <package.nacos.username>nacos-prod@2020</package.nacos.username>
                 <package.nacos.password>nacos-prod@2020</package.nacos.password>
-                <package.nacos.addr>192.168.154.137:8848</package.nacos.addr>
             </properties>
         </profile>
         <profile>
             <id>test</id>
             <properties>
                 <package.environment>test</package.environment>
+                <package.host>192.168.154.141</package.host>
                 <package.nacos.username>nacos@2020.</package.nacos.username>
                 <package.nacos.password>nacos@2020.</package.nacos.password>
-                <package.nacos.addr>192.168.154.137:8848</package.nacos.addr>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

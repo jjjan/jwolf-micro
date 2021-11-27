@@ -1,7 +1,7 @@
 xxl:
   job:
     accessToken: ''
-    admin.addresses: http://192.168.154.140:8180/xxl-job-admin
+    admin.addresses: http://@package.host@:8180/xxl-job-admin
     #admin.addresses: http://127.0.0.1:8080/xxl-job-admin
     executor:
       appname: jwolf-manager

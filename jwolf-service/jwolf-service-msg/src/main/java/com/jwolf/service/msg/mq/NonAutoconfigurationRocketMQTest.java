@@ -20,7 +20,7 @@ import java.util.List;
 @EnableScheduling
 public class NonAutoconfigurationRocketMQTest {
 
-    private String NAMESVR__ADDR = "192.168.154.140:9876";
+    private String NAMESVR__ADDR = "192.168.154.141:9876";
 
     @Scheduled(fixedRate = 10000L)
     public void send() throws Exception {

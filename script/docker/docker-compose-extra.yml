@@ -27,7 +27,7 @@ services:
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.154.140:9092  #！！！！向外部暴露的地址！！！,即client端连接需走这个地址
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.154.141:9092  #！！！！向外部暴露的地址！！！,即client端连接需走这个地址
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:

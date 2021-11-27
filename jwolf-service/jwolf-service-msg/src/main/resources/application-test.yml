@@ -2,13 +2,13 @@
 #spring:
 #  datasource:
 #    name: user
-#    url: jdbc:mysql://192.168.154.140:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+#    url: jdbc:mysql://@package.host@:3306/jwolf_${spring.datasource.name}?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
 #    username: root
 #    password: 123456
 #
 #  #redis配置
 #  redis:
-#    host: 192.168.154.140
+#    host: @package.host@
 #    port: 6379
 #    #password: 123456
 #    timeout: 2000

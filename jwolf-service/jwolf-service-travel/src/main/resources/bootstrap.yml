@@ -7,7 +7,7 @@ spring:
     nacos:
       config:
         file-extension: yml
-        server-addr: '192.168.154.140:8848'
+        server-addr: @package.host@:8848
         shared-configs:
           - data-id: common.yml                #配置所有工程共享的配置，注意里面的配置默认不能动态刷新，需要时可配置自动刷新
             refresh: true
@@ -15,7 +15,7 @@ spring:
         username: nacos
         password: nacos
       discovery:
-        server-addr: '192.168.154.140:8848'
+        server-addr: @package.host@:8848
         namespace: test
         username: nacos
         password: nacos
@@ -31,4 +31,4 @@ spring:
 #    vgroup-mapping:
 #      payment: default  #！！！！！！注意这里key不要写${spring.application.name}
 #    grouplist:
-#      default: 192.168.154.140:8091         #seata-server地址
+#      default: @package.host@:8091         #seata-server地址
