@@ -1,6 +1,7 @@
-package com.jwolf.service.msg.config;
+package com.jwolf.common.config.apidoc;
 
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,15 +23,18 @@ import java.util.List;
  * @description : swagger
  */
 @Configuration
-public class SwaggerConfig {
+public class SwaggerConfiguration {
+    @Value("${spring.application.name}")
+    private String applicationName;
+
     @Bean
     @Profile({"test", "dev"})
     public Docket testApi() {
 
         //API描述
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("消息-微服务")
-                .description("消息相关接口")
+                .title(applicationName+"-微服务")
+                .description(applicationName)
                 .contact(new Contact("jwolf", "http://www.baidu.com", "523083921.qq.com"))
                 .version("1.0.0")
                 .build();
@@ -44,7 +48,7 @@ public class SwaggerConfig {
                 .enable(true)
                 .select()
                 //.apis(RequestHandlerSelectors.any()) //这个会显示系统相关api
-                .apis(RequestHandlerSelectors.basePackage("com.jwolf.service.msg.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.jwolf.service."+applicationName+".controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Lists.newArrayList(new ApiKey("BASE_TOKEN", "token", "xxxxx")))

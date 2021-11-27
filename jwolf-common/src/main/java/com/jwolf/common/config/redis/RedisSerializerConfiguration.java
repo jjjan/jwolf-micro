@@ -1,12 +1,19 @@
 package com.jwolf.common.config.redis;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -20,25 +27,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
    @Bean
    @ConditionalOnMissingBean(RedisTemplate.class)
-   public RedisTemplate<String, Object> redisTemplate(
-       RedisConnectionFactory redisConnectionFactory) {
-       //jackson需要手动实现serializer
-     /* Jackson2JsonRedisSerializer<Object> serializer =
-         new Jackson2JsonRedisSerializer<>(Object.class);
-     ObjectMapper objectMapper =
-         new ObjectMapper()
-             .registerModule(new ParameterNamesModule())
-             .registerModule(new Jdk8Module())
-             .registerModule(new JavaTimeModule());
-     objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-     objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-     serializer.setObjectMapper(objectMapper);*/
-
-     //StringRedisSerializer存入或取出都得手动序列化和反序列化
-     //StringRedisSerializer serializer = new StringRedisSerializer(Charset.forName("UTF-8"));
+   public RedisTemplate<String, Object> fastsonRedisTemplate(RedisConnectionFactory factory) {
      FastJsonRedisSerializer<Object> serializer = new FastJsonRedisSerializer<>(Object.class);
      RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-     redisTemplate.setConnectionFactory(redisConnectionFactory);
+     redisTemplate.setConnectionFactory(factory);
      redisTemplate.setKeySerializer(new StringRedisSerializer());
      redisTemplate.setValueSerializer(serializer);
      redisTemplate.setHashKeySerializer(new StringRedisSerializer());
@@ -46,6 +38,30 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
      redisTemplate.afterPropertiesSet();
      return redisTemplate;
    }
+
+    /**
+     * 如果使用jackson序列化与反序列化，建议与她保持一致，避免采坑@{link {@link com.jwolf.common.config.webmvc.JacksonSerializerConfiguration}}
+     * @param factory
+     * @return
+     */
+    //@Bean
+    @ConditionalOnMissingBean(RedisTemplate.class)
+    public RedisTemplate<String, Object> jacksonRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(factory);
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringRedisSerializer); // key
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
 
 
 

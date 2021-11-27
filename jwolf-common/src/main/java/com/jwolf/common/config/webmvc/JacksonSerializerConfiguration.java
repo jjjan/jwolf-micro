@@ -1,5 +1,4 @@
-/*
-package com.jwolf.service.user.config;
+package com.jwolf.common.config.webmvc;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -33,15 +32,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-*/
 /**
- * 后端->前端全局序列化设置：
+ * 全局jackson序列化/反序列化全局设置，可被覆盖
  * 全局Long转String,LocalDateTime LocalDate LocalTime  java.util.Date序列化与反序列化
  * 可以通过实现WebMvcConfigurer接口
  * @author majun
- * @since 2020-08-21
- *//*
-
+ * @since 2021-11-27
+ */
 @Configuration
 //@Primary
 public class JacksonSerializerConfiguration implements WebMvcConfigurer {
@@ -56,7 +53,7 @@ public class JacksonSerializerConfiguration implements WebMvcConfigurer {
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         for (HttpMessageConverter<?> cvt : converters) {
-            if (cvt instanceof  MappingJackson2HttpMessageConverter) {
+            if (cvt instanceof MappingJackson2HttpMessageConverter) {
                 MappingJackson2HttpMessageConverter converter= (MappingJackson2HttpMessageConverter) cvt;
                 enhanceConvertor(converter);
             }
@@ -76,7 +73,7 @@ public class JacksonSerializerConfiguration implements WebMvcConfigurer {
         //序列化的时候序列对象的所有属性
         objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
         //空值不序列化
-        //objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         //序列化空对象不抛异常
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         //关闭反序列化的时候，没有找到属性的setter报错
@@ -121,4 +118,3 @@ public class JacksonSerializerConfiguration implements WebMvcConfigurer {
     }
 
 }
-*/

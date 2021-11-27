@@ -2,7 +2,6 @@ package com.jwolf.service.msg.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jwolf.common.base.entity.ResultEntity;
 import com.jwolf.service.msg.api.entity.Msg;
 import com.jwolf.service.msg.constant.MsgTypeEnum;
 import com.jwolf.service.msg.mapper.MsgMapper;

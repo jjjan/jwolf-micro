@@ -1,4 +1,4 @@
-package com.jwolf.service.msg.config;//实现feign的请求拦截器并在feign调用配置，@FeignClient(name = "capability-register", fallback = ApiServiceClientFallBack.class ,configuration = XXXXConfiguration.class)
+package com.jwolf.common.config.webmvc;//实现feign的请求拦截器并在feign调用配置，@FeignClient(name = "capability-register", fallback = ApiServiceClientFallBack.class ,configuration = XXXXConfiguration.class)
 
 
 import feign.RequestInterceptor;
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Configuration
-public class FeignRequestInterceptor implements RequestInterceptor {
+public class FeignInterceptorConfiguration implements RequestInterceptor {
  
     @Override
     public void apply(RequestTemplate requestTemplate) {

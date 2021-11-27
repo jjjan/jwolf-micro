@@ -1,13 +1,12 @@
 package com.jwolf.service.msg.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jwolf.common.base.entity.BasePageSearch;
-import com.jwolf.common.base.entity.ResultEntity;
+import com.jwolf.common.entity.BasePageSearch;
+import com.jwolf.common.entity.ResultEntity;
 import com.jwolf.service.msg.api.entity.Msg;
 import com.jwolf.service.msg.service.IMsgService;
 import com.jwolf.service.user.api.entity.User;
 import com.jwolf.service.user.api.feign.UserFeginClient;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.jwolf.common.util;
 
 import cn.hutool.jwt.JWT;
 import com.google.common.collect.Maps;
-import com.jwolf.common.base.entity.ReqUser;
+import com.jwolf.common.entity.ReqUser;
 import com.jwolf.common.exception.CommonException;
 
 import java.nio.charset.StandardCharsets;

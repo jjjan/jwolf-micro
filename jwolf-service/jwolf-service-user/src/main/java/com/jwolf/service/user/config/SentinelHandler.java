@@ -1,7 +1,7 @@
 package com.jwolf.service.user.config;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.jwolf.common.base.entity.ResultEntity;
+import com.jwolf.common.entity.ResultEntity;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

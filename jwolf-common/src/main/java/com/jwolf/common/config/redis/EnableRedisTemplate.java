@@ -19,5 +19,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @ImportAutoConfiguration(RedisSerializerConfiguration.class)
-public @interface EnableRedisCustomSerilizer {
+public @interface EnableRedisTemplate {
 }

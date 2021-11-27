@@ -3,7 +3,7 @@ package com.jwolf.jwolfgateway.config;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.fastjson.JSON;
-import com.jwolf.common.base.entity.ResultEntity;
+import com.jwolf.common.entity.ResultEntity;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

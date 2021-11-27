@@ -1,4 +1,4 @@
-package com.jwolf.service.user.config;
+package com.jwolf.common.config.mybatisplus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
  */
 @Configuration
 @Slf4j
-public class MybatisPlusConfig {
+public class MybatisPlusConfiguration {
     //性能分析拦截器，不建议生产使用 用来观察 SQL 执行情况及执行时长
     @Bean
     @Profile({"dev", "test"})
@@ -37,7 +37,7 @@ public class MybatisPlusConfig {
         return new PaginationInterceptor();
     }
 
-
+    //===========================不建议使用以下配置，并不节省多少工作量，反而感觉变得复杂了=================================
     //自动填充
     @Bean
     public MetaObjectHandler setMetaObjectHandler() {
