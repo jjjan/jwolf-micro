@@ -13,8 +13,8 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @SpringBootApplication
 @MapperScan("com.jwolf.service.user.mapper")
 @EnableDiscoveryClient(autoRegister = true)
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-//@EnableOAuth2Sso
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableOAuth2Sso
 @EnableJwolfCommonConfig
 public class JwolfUserApplication {
 

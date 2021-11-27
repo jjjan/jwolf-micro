@@ -4,6 +4,7 @@ import com.jwolf.common.config.apidoc.EnableSwagger3ApiDoc;
 import com.jwolf.common.config.mybatisplus.EnableMybatisPlus;
 import com.jwolf.common.config.redis.EnableRedisTemplate;
 import com.jwolf.common.config.restTemplate.EnableRestTemplate;
+import com.jwolf.common.config.webmvc.EnableJwolfWebMvc;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.lang.annotation.ElementType;
@@ -25,7 +26,7 @@ import java.lang.annotation.Target;
 //@EnablePermissionAspect 日志与权限在网关统一实现
 //@EnableLogAspect
 @EnableRestTemplate
-@EnableWebMvc
+@EnableJwolfWebMvc
 @EnableSwagger3ApiDoc
 @EnableMybatisPlus
 @EnableRedisTemplate

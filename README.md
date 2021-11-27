@@ -1,3 +1,4 @@
+<span style="color:red;font:bold 50">jwolf-micro v1.0.0</span>
 # 一、项目简介
 jwolf-micro是基于最新主流技术栈实现的一套全栈微服务开源学习型项目。
 
