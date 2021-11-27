@@ -58,7 +58,11 @@ jwolf-micro是基于最新主流技术栈实现的一套全栈微服务开源学
 ├── jwolf-auth
 ├── jwolf-manage
 ├── jwolf-service
+    ├── jwolf-service-xx1
+    ├── jwolf-service-xx2
 ├── jwolf-service-api
+    ├── jwolf-service-xx1-api
+    ├── jwolf-service-xx2-api
 ├── jwolf-manage-ui
 └── script
 
