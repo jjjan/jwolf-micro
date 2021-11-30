@@ -8,7 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 /**
- *认证授权服务器
+ * 认证授权服务器
+ *
  * @author majun
  * @version 1.0
  * @date 2021-11-21 20:59

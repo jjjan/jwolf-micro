@@ -47,6 +47,7 @@
         <xxl-job.version>2.3.0</xxl-job.version>
         <guava.version>20.0</guava.version>
         <springcloud-oauth2.version>2.2.5.RELEASE</springcloud-oauth2.version>
+        <justAuth.version>1.16.5</justAuth.version>
     </properties>
     <dependencyManagement>
         <dependencies>

@@ -9,20 +9,14 @@ import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayParamFlowItem;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.codec.ServerCodecConfigurer;
-import org.springframework.web.reactive.result.view.ViewResolver;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,8 +24,6 @@ import java.util.Set;
  */
 @Configuration
 public class GatewaySentinelConfiguration {
- 
-
 
 
     @Bean
@@ -39,14 +31,14 @@ public class GatewaySentinelConfiguration {
     public GlobalFilter sentinelGatewayFilter() {
         return new SentinelGatewayFilter();
     }
- 
+
     @PostConstruct
     public void doInit() {
-       // initSystemRule();
+        // initSystemRule();
         initCustomizedApis();
         initGatewayRules();
     }
- 
+
     private void initCustomizedApis() {
         Set<ApiDefinition> definitions = new HashSet<>();
         ApiDefinition api1 = new ApiDefinition("user_api")
@@ -63,15 +55,12 @@ public class GatewaySentinelConfiguration {
         definitions.add(api2);
         GatewayApiDefinitionManager.loadApiDefinitions(definitions);
     }
- 
+
     /**
-     *
-     *
      * 自定义网关限流规则（反爬虫机制）
      * 1.对所有api接口通过IP进行限流,每个IP，1秒钟内请求数量大于2，即视为爬虫
      * 2.对小说内容接口访问进行限流，每个IP，1秒钟请求数量大于1，则视为爬虫
-     *
-     * */
+     */
     private void initGatewayRules() {
         Set<GatewayFlowRule> rules = new HashSet<>();
         rules.add(new GatewayFlowRule("user_api")

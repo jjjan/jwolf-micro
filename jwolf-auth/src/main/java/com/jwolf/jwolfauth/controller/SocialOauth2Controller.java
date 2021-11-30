@@ -41,6 +41,7 @@ public class SocialOauth2Controller {
 
     /**
      * 第三方Gitee回调时从根据code->accessToken->userInfo->uuid->查自己的用户表->token->前端首页
+     *
      * @param callback
      * @param response
      */
@@ -58,7 +59,7 @@ public class SocialOauth2Controller {
 //                .execute()
 //                .body();
 //        String userInfo = HttpRequest.get("https://gitee.com/api/v5/user?access_token=TokenInfoxxxx").execute().body();
-        //框架封装了以上两个步骤
+        //框架封装了以上两个步骤!!!
         AuthRequest authRequest = getAuthRequest();
         AuthResponse res = authRequest.login(callback);
         Assert.isTrue(res.ok(), "gitee登录失败");
@@ -72,7 +73,7 @@ public class SocialOauth2Controller {
                 .build();
         String token = JWTUtil.createToken(map, "1234".getBytes());
         //携带token跳到jwolf.com的首页，jwolf前端从URL路由拿到token存入sessionStorage,前端全局请求拦截器从sessionStorage拿到token放请求头
-        response.sendRedirect("http://jwolf.com/index?token=" + token);
+        response.sendRedirect(AuthConstant.JWOLF_FRONTEND_INDEX + "?token=" + token);
 
     }
 

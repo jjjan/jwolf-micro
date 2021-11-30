@@ -26,7 +26,7 @@ public class TokenUtils {
     /**
      * JWT生成Token. JWT构成: header, payload, signature
      */
-    public static String createToken(String userId, int accessType) throws Exception {
+    public static String createToken(String userId, int accessType){
         Map<String, Object> map = Maps.newHashMap();
         map.put("alg", "HS256");
         map.put("typ", "JWT");

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-  swagger资源处理
+ * swagger资源处理
  */
 @Component
 @Primary
@@ -36,11 +36,11 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
                 .subscribe(route -> routeHosts.add(route.getUri().getHost()));
 
         return routeHosts.stream().distinct().map(appName -> {
-                    String url = "/" + appName.toLowerCase() + CUSTOM_SUFFIX;
-                    SwaggerResource swaggerResource = new SwaggerResource();
-                    swaggerResource.setUrl(url);
-                    swaggerResource.setName(appName);
-                    return swaggerResource;
-                }).collect(Collectors.toList());
+            String url = "/" + appName.toLowerCase() + CUSTOM_SUFFIX;
+            SwaggerResource swaggerResource = new SwaggerResource();
+            swaggerResource.setUrl(url);
+            swaggerResource.setName(appName);
+            return swaggerResource;
+        }).collect(Collectors.toList());
     }
 }

@@ -22,7 +22,7 @@ public class SwaggerHandler {
     @Autowired(required = false)
     private UiConfiguration uiConfiguration;
     @Autowired
-    private  SwaggerResourcesProvider resourcesProvider;
+    private SwaggerResourcesProvider resourcesProvider;
 
 
     @GetMapping("/configuration/security")

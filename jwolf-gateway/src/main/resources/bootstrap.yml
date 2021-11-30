@@ -5,6 +5,11 @@ spring:
     active: test
   main:
     allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9402/rsa/publicKey #配置RSA的公钥访问地址
   cloud:
     nacos:
       config:
@@ -39,4 +44,5 @@ spring:
             password: nacos
     loadbalancer:
       enabled: true
+
 

@@ -1,4 +1,3 @@
-
 server:
   port: 9402
 spring:
@@ -9,4 +8,4 @@ spring:
 security:
   oauth2:
     sso:
-      login-path: /mylogin  #默认走框架内部的 /login,不好看
+      login-path: /jwolfSSOLogin  #默认走框架内部的 /login,不好看

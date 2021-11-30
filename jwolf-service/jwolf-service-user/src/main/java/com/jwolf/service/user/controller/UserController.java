@@ -15,13 +15,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -40,22 +35,8 @@ public class UserController {
 
     @Operation(summary = "分页查询")
     @GetMapping("/page")
-    @PreAuthorize("hasAnyAuthority('super')")
     public ResultEntity<Page<User>> getPageList(BasePageSearch search) {
         return ResultEntity.success(userService.page(search.getPage()));
-    }
-    @Operation(summary = "用户详情测试,授权服务器返回的jwt token")
-    @GetMapping("/detail2")
-    public ResultEntity<User> getDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2AuthenticationDetails details =(OAuth2AuthenticationDetails) authentication.getDetails();
-        JSONObject claimsJson = JWT.create()
-                .setSigner(null, "dev".getBytes(StandardCharsets.UTF_8))
-                .parse(details.getTokenValue())
-                .getPayload()
-                .getClaimsJson();
-        System.out.println(JSON.toJSONString(claimsJson));
-        return ResultEntity.success(claimsJson);
     }
 
     @Operation(summary = "用户详情")
