@@ -1,5 +1,6 @@
 create schema if not exists jwolf_user collate utf8mb4_general_ci;
-
+use jwolf_user;
+SET NAMES utf8mb4;
 create table if not exists t_user
 (
 	id bigint auto_increment comment '主键'
@@ -14,9 +15,28 @@ create table if not exists t_user
 	sex tinyint null comment '性别',
 	role_id bigint null comment '角色id',
 	status tinyint null comment '状态',
-	update_time datetime null comment '修改时间',
-	create_time datetime null comment '创建时间',
+	update_time timestamp null comment '修改时间',
+	create_time timestamp null comment '创建时间',
 	deleted tinyint default 0 null comment '是否已删除'
 )
 comment '用户表';
+
+-- auto-generated definition
+create table undo_log
+(
+    id            bigint auto_increment
+        primary key,
+    branch_id     bigint       not null,
+    xid           varchar(100) not null,
+    context       varchar(128) not null,
+    rollback_info longblob     not null,
+    log_status    int          not null,
+    log_created   datetime     not null,
+    log_modified  datetime     not null,
+    constraint ux_undo_log
+        unique (xid, branch_id)
+)
+    comment 'Seata分布式事务';
+
+
 

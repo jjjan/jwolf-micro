@@ -17,9 +17,32 @@ services:
     user: root
     volumes:
       - /home/data/mysql:/var/lib/mysql
+      - /var/log/mysqld.log:/var/log/mysqld.log
       - /var/lib/mysql-files:/var/lib/mysql-files
       - /etc/localtime:/etc/localtime
       - /etc/my.cnf:/etc/mysql/my.cnf
+
+  mysql-slave:
+    image: mysql:8
+    container_name: mysql-slave
+    restart: always
+    networks:
+      - jwolf
+    ports:
+      - 3307:3307
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=123456
+    command: --default-authentication-plugin=mysql_native_password #解决MYSQL客户端工具无法远程连接等问题
+    user: root
+    volumes:
+      - /home/data/mysql-slave:/var/lib/mysql
+      - /var/log/mysqld-slave.log:/var/log/mysqld.log      #chmod a+w /var/log/mysqld-slave.log
+      - /var/lib/mysql-files-slave:/var/lib/mysql-files
+      - /etc/localtime:/etc/localtime
+      - /etc/my-slave.cnf:/etc/mysql/my.cnf
+
 
   nacos:
     image: nacos/nacos-server

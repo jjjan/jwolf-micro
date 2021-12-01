@@ -1,8 +1,11 @@
 [client]
 default-character-set = utf8mb4
+#必须配置socket否则mysql -uroot -p123456连接报错Can't connect to local MySQL server through socket
+socket=/var/lib/mysql/mysql.sock
 [mysql]
 default-character-set = utf8mb4
-
+#必须配置socket否则mysql -uroot -p123456连接报错Can't connect to local MySQL server through socket
+socket=/var/lib/mysql/mysql.sock
 [mysqld]
 character-set-client-handshake = FALSE
 character-set-server = utf8mb4
@@ -33,16 +36,14 @@ socket=/var/lib/mysql/mysql.sock
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
 
-log-error=/var/log/mysqld.log
+#log-error=/var/log/mysqld.log
 #pid-file=/var/run/mysqld/mysqld.pid
 
 # 关闭MYSQL的DNS的反向解析
 skip-name-resolve
 
-#主从复制-主
-log-bin=/var/lib/mysql/mysql-bin.log
-#bind_address=0.0.0.0
-binlog_do_db=jwolf_user
-binlog_do_db=jwolf_msg
-expire_logs_days=10
-server-id=1
+#主从复制-从
+port=3307
+server-id=2
+replicate-do-db=jwolf_user
+#replicate-do-db=jwolf_msg #即使master开启了binlog_do_db,slave不开启replicate-do-db是不能复制的；如果slave开启replicate-do-db，而主为开启binlog_do_db也不能复制（主根本没需要的binlog）

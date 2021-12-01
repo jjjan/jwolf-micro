@@ -1,12 +1,6 @@
-#
-# XXL-JOB v2.3.0-SNAPSHOT
-# Copyright (c) 2015-present, xuxueli.
-
 CREATE database if NOT EXISTS `jwolf_travel` default character set utf8mb4 collate utf8mb4_unicode_ci;
 use `jwolf_travel`;
-
 SET NAMES utf8mb4;
-
 create table t_tourist_spots
 (
 	id bigint not null,
@@ -28,4 +22,21 @@ create table t_tourist_spots
 )
 comment '旅游景点';
 
+
+-- auto-generated definition
+create table undo_log
+(
+    id            bigint auto_increment
+        primary key,
+    branch_id     bigint       not null,
+    xid           varchar(100) not null,
+    context       varchar(128) not null,
+    rollback_info longblob     not null,
+    log_status    int          not null,
+    log_created   datetime     not null,
+    log_modified  datetime     not null,
+    constraint ux_undo_log
+        unique (xid, branch_id)
+)
+    comment 'Seata分布式事务';
 
