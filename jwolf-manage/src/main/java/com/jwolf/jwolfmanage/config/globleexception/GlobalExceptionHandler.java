@@ -1,7 +1,7 @@
 package com.jwolf.jwolfmanage.config.globleexception;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.jwolf.common.entity.ResultEntity;
+import com.jwolf.common.bean.ResultEntity;
 import com.jwolf.common.constant.ErrorEnum;
 import com.jwolf.common.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;

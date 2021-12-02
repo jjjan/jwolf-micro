@@ -1,4 +1,4 @@
-package com.jwolf.common.entity;
+package com.jwolf.common.bean;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Getter;

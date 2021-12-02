@@ -1,6 +1,6 @@
 package com.jwolf.common.aop.ACL;
 
-import com.jwolf.common.entity.ReqUser;
+import com.jwolf.common.bean.ReqUser;
 import com.jwolf.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

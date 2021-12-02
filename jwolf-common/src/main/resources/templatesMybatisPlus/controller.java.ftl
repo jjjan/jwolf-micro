@@ -6,8 +6,8 @@ package ${package.Controller};
     import org.springframework.stereotype.Controller;
 </#if>
 
-import com.jwolf.common.entity.BasePageSearch;
-import com.jwolf.common.entity.ResultEntity;
+import com.jwolf.common.bean.BasePageSearch;
+import com.jwolf.common.bean.ResultEntity;
 
 import com.jwolf.service.${package.ModuleName}.api.entity.${entity};
 import com.jwolf.service.${package.ModuleName}.service.I${entity}Service;

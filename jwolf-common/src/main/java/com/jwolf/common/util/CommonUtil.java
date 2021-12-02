@@ -1,6 +1,6 @@
 package com.jwolf.common.util;
 
-import com.jwolf.common.entity.ReqUser;
+import com.jwolf.common.bean.ReqUser;
 import com.jwolf.common.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;

@@ -2,7 +2,7 @@ package com.jwolf.common.aop.log;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.jwolf.common.entity.ResultEntity;
+import com.jwolf.common.bean.ResultEntity;
 import com.jwolf.common.config.CommonAutoRefreshConfig;
 import com.jwolf.common.exception.CommonException;
 import io.micrometer.core.instrument.ImmutableTag;

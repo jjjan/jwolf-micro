@@ -1,4 +1,4 @@
-package com.jwolf.common.entity;
+package com.jwolf.common.bean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

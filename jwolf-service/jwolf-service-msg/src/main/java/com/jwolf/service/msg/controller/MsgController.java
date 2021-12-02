@@ -1,8 +1,8 @@
 package com.jwolf.service.msg.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jwolf.common.entity.BasePageSearch;
-import com.jwolf.common.entity.ResultEntity;
+import com.jwolf.common.bean.BasePageSearch;
+import com.jwolf.common.bean.ResultEntity;
 import com.jwolf.service.msg.api.entity.Msg;
 import com.jwolf.service.msg.service.IMsgService;
 import com.jwolf.service.user.api.entity.User;

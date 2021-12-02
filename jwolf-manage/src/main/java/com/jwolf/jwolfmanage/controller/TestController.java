@@ -3,7 +3,7 @@ package com.jwolf.jwolfmanage.controller;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import com.alibaba.fastjson.JSON;
-import com.jwolf.common.entity.ResultEntity;
+import com.jwolf.common.bean.ResultEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

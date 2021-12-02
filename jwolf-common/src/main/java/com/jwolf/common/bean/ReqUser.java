@@ -1,4 +1,4 @@
-package com.jwolf.common.entity;
+package com.jwolf.common.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
