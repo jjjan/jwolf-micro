@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * @version 1.0
  * @date 2021-11-21 20:59
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, RedisAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, RedisAutoConfiguration.class})//暂时保留DB 与Redis，后期很可能用
 @EnableAuthorizationServer
 @EnableWebSecurity
 @EnableDiscoveryClient
