@@ -1,0 +1,33 @@
+
+server:
+  port: 9402
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  application:
+    name: auth
+  profiles:
+    active: test
+  cloud:
+    nacos:
+      config:
+        file-extension: yml
+        server-addr: @package.host@:8848
+        shared-configs:
+          - data-id: common.yml                #配置所有工程共享的配置，注意里面的配置默认不能动态刷新，需要时可配置自动刷新
+            refresh: true
+        namespace: test
+        username: nacos
+        password: nacos
+      discovery:
+        server-addr: @package.host@:8848
+        namespace: test
+        username: nacos
+        password: nacos
+
+security:
+  oauth2:
+    sso:
+      login-path: /jwolfSSOLogin  #默认走框架内部的 /login,不好看

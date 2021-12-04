@@ -35,7 +35,11 @@
             <artifactId>JustAuth</artifactId>
             <version>${justAuth.version}</version>
         </dependency>
-
+        <!--nacos 启动先读取bootstrap.yml必须-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -12,4 +12,6 @@ public class AuthConstant {
     public static final int TOKEN__EXPIRE = 30;
     //jwolf前端主页url
     public static final String JWOLF_FRONTEND_INDEX = "http://jwolf.com/index";
+
+    public static final String JWOLF_MANAGE_CLIENTID="client1";
 }
