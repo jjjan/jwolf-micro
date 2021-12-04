@@ -24,17 +24,17 @@ public class MemberUserDetailsServiceImpl implements UserDetailsService {
      * 如果需要扩展字段implement UserDetails或extends User即可
      * @return
      */
-    private List<User> selectUserFromDB() {
-        List<User> userList = new ArrayList<>(8);
-        userList.add(new User("memberuser1", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("lv1")));
-        userList.add(new User("memberuser2", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("lv2")));
-        userList.add(new User("memberuser3", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("lv3")));
+    private List<MemberUser> selectUserFromDB() {
+        List<MemberUser> userList = new ArrayList<>(8);
+        userList.add(new MemberUser(1L,"memberuser1", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("lv1")));
+        userList.add(new MemberUser(2L,"memberuser2", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("lv2")));
+        userList.add(new MemberUser(3L,"memberuser3", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("lv3")));
         return userList;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = this.selectUserFromDB().stream().filter(item -> item.getUsername().equals(username)).findAny();
+        Optional<MemberUser> optionalUser = this.selectUserFromDB().stream().filter(item -> item.getUsername().equals(username)).findAny();
         if (!optionalUser.isPresent()) {
             throw new UsernameNotFoundException("用户名或密码错误");
         }

@@ -13,6 +13,8 @@ xxl:
 
 server:
   port: 8888
+  servlet:
+    context-path: /jwolf/manage
 spring:
   profiles:
     active: test
@@ -38,4 +40,4 @@ security:
         key-uri: ${oauth2-service-url}/oauth/token_key
         key-value: dev #对应认证服务器jwt key的签名
     sso:
-      login-path: /manager-index
+      login-path: /me #自动拼接server.servlet.context-path

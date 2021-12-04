@@ -2,7 +2,9 @@ package com.jwolf.jwolfauth.config;
 
 import com.google.common.collect.Lists;
 import com.jwolf.jwolfauth.constant.AuthConstant;
+import com.jwolf.jwolfauth.core.MemberUser;
 import com.jwolf.jwolfauth.core.MemberUserDetailsServiceImpl;
+import com.jwolf.jwolfauth.core.SysUser;
 import com.jwolf.jwolfauth.core.SysUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +13,6 @@ import org.springframework.core.io.PathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -50,7 +51,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .scopes("all")
                 .accessTokenValiditySeconds(10)
                 .refreshTokenValiditySeconds(10)
-                .redirectUris("http://localhost:8888/manager-index") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
+                .redirectUris("http://localhost:8888/jwolf/manage/me") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
                 .autoApprove(true)  // true则自动授权,跳过授权页面点击步骤
                 .and()
                 //第三方授权登录时可以再这里追加，如果要做到类似微信授权登录一样，就需要从DB读取client信息。
@@ -156,11 +157,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return (accessToken, authentication) -> {
             Map<String, Object> additionalInfo = new HashMap<>();
             Object principal = authentication.getUserAuthentication().getPrincipal();
-            //如果implement UserDetails或extends User，可以判断UserDetails具体类型加上不同自定义jwt field,这里暂不区分
-            if (principal instanceof UserDetails) {
-                UserDetails sysUserDetails = (UserDetails) principal;
-                additionalInfo.put("username", sysUserDetails.getUsername());
+            //如果implement UserDetails或extends User，可以判断UserDetails具体类型加上不同自定义jwt field
+            if (principal instanceof SysUser) {
+                SysUser sysUser = (SysUser) principal;
+                additionalInfo.put("userId", sysUser.getUserId());
 
+            }else {
+                MemberUser memberUser = (MemberUser) principal;
+                additionalInfo.put("userId", memberUser.getUserId());
             }
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
