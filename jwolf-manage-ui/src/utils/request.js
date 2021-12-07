@@ -43,12 +43,16 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    if(response.headers['content-type'].indexOf('text/html')!=-1  && response.request.responseURL){
+debugger
+        //return res
+        //window.location.href = response.request.responseURL+"?redirect=111"
+      }
     const res = response.data
-
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message({
-        message: res.message || 'Error',
+        message: res.message || 'Error 111',
         type: 'error',
         duration: 5 * 1000
       })
@@ -66,6 +70,7 @@ service.interceptors.response.use(
           })
         })
       }
+
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res

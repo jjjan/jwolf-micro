@@ -45,7 +45,7 @@ public class CustomAuthController {
      * @return
      */
     @RequestMapping("/jwolfSSOLogin")
-    public String gotoJwolfSSOLogin() {
+    public String gotoJwolfSSOLogin(HttpServletRequest request) {
         return "jwolfSSOLogin";
     }
 

@@ -8,11 +8,11 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
-    url: '/vue-admin-template/user/info',
+    url: '/jwolf/manage/user/me',
     method: 'get',
-    params: { token }
+
   })
 }
 

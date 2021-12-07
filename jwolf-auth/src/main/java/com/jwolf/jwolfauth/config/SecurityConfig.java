@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/jwolfLogin") //登录页view,默认/login
                 .loginProcessingUrl("/authentication/form")//与登录页form提交的url一致,
                 .successForwardUrl("/oauth/to-app")
-                .defaultSuccessUrl("/oauth/to-app", false)
+                .defaultSuccessUrl("/oauth/to-app", false)//如果是重定向到登录页则走回原路径，如果直接走登录页则走to-app
                 .and()
                 //SSO授权登录走该页面，不要定义successForwardUrl，因为SSO授权后要回调redirect_url
                 .formLogin().loginPage("/jwolfSSOLogin") //登录页view,默认/login
@@ -55,6 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+
 
 
     @Override
