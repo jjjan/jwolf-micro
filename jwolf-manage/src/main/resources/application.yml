@@ -51,7 +51,8 @@ server:
         # 防止cookie冲突，冲突会导致登录验证不通过，如果不同client端使用相同的cookie名会导致挤掉另一client授权的cookie被覆盖
         name: OAUTH2-CLIENT1-SESSIONID
         path: /
-oauth2-service-url: http://@package.host@:9402
+#oauth2-service-url: http://@package.host@:9402 #生产环境
+oauth2-service-url: http://localhost:9402      #开发环境
 security:
   oauth2:
     client:
@@ -61,7 +62,7 @@ security:
       access-token-uri: ${oauth2-service-url}/oauth/token
     resource:
       jwt:
-        key-uri: ${oauth2-service-url}/oauth/token_key
+        key-uri: ${oauth2-service-url}/o auth/token_key
         key-value: dev #对应认证服务器jwt key的签名
     sso:
       login-path: /login #自动拼接server.servlet.context-path,暂未使用

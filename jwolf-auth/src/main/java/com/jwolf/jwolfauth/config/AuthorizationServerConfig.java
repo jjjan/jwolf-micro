@@ -1,5 +1,6 @@
 package com.jwolf.jwolfauth.config;
 
+import cn.hutool.core.codec.Base64;
 import com.google.common.collect.Lists;
 import com.jwolf.jwolfauth.constant.AuthConstant;
 import com.jwolf.jwolfauth.core.MemberUser;
@@ -9,7 +10,7 @@ import com.jwolf.jwolfauth.core.SysUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -138,9 +139,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public KeyPair keyPair() {
-        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new PathResource("/home/jwolf.jks"), "123456".toCharArray());
+        //读取classpath,或绝对路径，或bytearray的keyStore
+        //String encode = Base64.encode(new File("c:/jwolf.jks"));
+        byte[] keyStore=Base64.decode(AuthConstant.BASE64_JWT_KEYSTORE);
+        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ByteArrayResource(keyStore), "123456".toCharArray());
         KeyPair keyPair = factory.getKeyPair("jwolf", "123456".toCharArray());
         return keyPair;
+
     }
 
     @Bean

@@ -50,7 +50,7 @@ service.interceptors.response.use(
     if(response.headers['content-type'].indexOf('text/html')!=-1  && response.request.responseURL){
       debugger
       console.log(response)
-      window.location.href = "http://192.168.154.143:80/jwolf/manage/user/login"
+      window.location.href = process.env.VUE_APP_BASE_API+"/jwolf/manage/user/login"
       return response;
       }
     const res = response.data
