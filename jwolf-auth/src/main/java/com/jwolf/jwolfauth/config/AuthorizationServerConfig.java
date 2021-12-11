@@ -56,10 +56,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                //client1为jwolf-manage授权登录的配置
+                //client1为jwolf-manage sso授权登录的配置,
                 .withClient(AuthConstant.JWOLF_MANAGE_CLIENTID)
                 .secret(passwordEncoder().encode("secret1"))
-                .authorizedGrantTypes("authorization_code", "refresh_token", "sms_code", "captcha")
+                .authorizedGrantTypes("authorization_code", "refresh_token", "captcha")
                 .scopes("all")
                 .accessTokenValiditySeconds(10)
                 .refreshTokenValiditySeconds(10)
@@ -69,10 +69,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 //第三方授权登录时可以再这里追加，如果要做到类似微信授权登录一样，就需要从DB读取client信息。
                 //并开放注册页面让用户注册，appId=clientId,appSecret=secret，并要求用户提供回调地址，这正是微信接入申请能拿到的三个核心参数
                 //从DB查询client信息，implement ClientDetailsService即可，略
-                //client2暂未使用
+
+                //client2 暂划给jwolf-member用户,请求/auth/token时携带自定义字段userType=memberuser,CustomDaoAuthenticationProvider根据该字段查询对应userDetail
+                //http://localhost:9402/oauth/token?grant_type=password&client_secret=secret2&client_id=client2&username=memberuser1&password=123456&userType=memberuser
                 .withClient("client2")
                 .secret(passwordEncoder().encode("secret2"))
-                .authorizedGrantTypes("refresh_token", "authorization_code")
+                .authorizedGrantTypes("refresh_token", "password","sms_code")
                 .scopes("all")
                 .accessTokenValiditySeconds(110)
                 .refreshTokenValiditySeconds(864000)

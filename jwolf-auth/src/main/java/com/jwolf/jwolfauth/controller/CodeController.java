@@ -27,7 +27,7 @@ public class CodeController {
 
     /**
      * 获取access_token与refresh_token
-     * http://localhost:9402/oauth/token?mobile=18111295017&code=666666&grant_type=sms_code&client_id=client1&client_secret=secret1
+     * http://localhost:9402/oauth/token?mobile=18111295017&code=666666&grant_type=sms_code&client_id=client2&client_secret=secret2
      *
      * @param mobile
      * @return
