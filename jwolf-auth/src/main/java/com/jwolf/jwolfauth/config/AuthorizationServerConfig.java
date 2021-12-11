@@ -51,7 +51,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .scopes("all")
                 .accessTokenValiditySeconds(10)
                 .refreshTokenValiditySeconds(10)
-                .redirectUris("http://localhost:8888/jwolf/manage/me") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
+                .redirectUris("http://localhost:8888/jwolf/manage/login","http://192.168.154.143:8888/jwolf/manage/login","http://192.168.154.143/jwolf/manage/login") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
                 .autoApprove(true)  // true则自动授权,跳过授权页面点击步骤
                 .and()
                 //第三方授权登录时可以再这里追加，如果要做到类似微信授权登录一样，就需要从DB读取client信息。
@@ -138,7 +138,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public KeyPair keyPair() {
-        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new PathResource("c:\\jwolf.jks"), "123456".toCharArray());
+        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new PathResource("/home/jwolf.jks"), "123456".toCharArray());
         KeyPair keyPair = factory.getKeyPair("jwolf", "123456".toCharArray());
         return keyPair;
     }

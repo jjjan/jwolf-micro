@@ -5,6 +5,7 @@ import cn.hutool.jwt.JWT;
 import com.alibaba.fastjson.JSON;
 import com.jwolf.common.bean.ResultEntity;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
  * @version 1.0
  * @date 2021-11-29 1:05
  */
+@Slf4j
 @RestController
 public class TestController {
 
@@ -38,10 +40,11 @@ public class TestController {
         System.out.println(JSON.toJSONString(claimsJson));
         return ResultEntity.success(claimsJson);
     }
-    @Operation(summary = "测试1")
-    @GetMapping("/manager-test1")
+    @Operation(summary = "login")
+    @GetMapping("/login")
     @PreAuthorize("hasAnyAuthority('super')")
-    public ResultEntity getTest1(int id) {
-        return ResultEntity.success(id);
+    public ResultEntity getTest1() {
+        log.info("？？？？？？该接口的作用？？");
+        return ResultEntity.success();
     }
 }

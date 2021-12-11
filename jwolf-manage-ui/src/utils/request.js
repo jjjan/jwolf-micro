@@ -43,14 +43,19 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    //没登录时xhr请求后端接口会重定向到auth登录页，返回的不是json而是text/html,但无法渲染，通过location.href=response.request.responseURL渲染出来但登录后无法redirect，
+    //故通过location.href请求/jwolf/manage/user/login，再转发到auth,登录后回调/jwolf/manage/user/login，
+    //该中转页面再location.href请求前端，但这里需要通过Nginx转发保证前后端同域，这样cookie jsessionid
+    //就可携带到前端页面了，如果前后端不分离则方便很多，也可以考虑vue项目打包放到后端resources
     if(response.headers['content-type'].indexOf('text/html')!=-1  && response.request.responseURL){
-debugger
-        //return res
-        //window.location.href = response.request.responseURL+"?redirect=111"
+      debugger
+      console.log(response)
+      window.location.href = "http://192.168.154.143:80/jwolf/manage/user/login"
+      return response;
       }
     const res = response.data
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    // 如果自定义状态码不是则弹框
+    if (res.code !== 200) {
       Message({
         message: res.message || 'Error 111',
         type: 'error',
