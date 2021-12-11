@@ -81,7 +81,7 @@ public class CustomAuthController {
     }
 
     /**
-     * 本地表单登录后走该path（sso授权登录是走/oauth/confirm_access到授权页面，同意后重定向到redirect_url）
+     * 直接访问auth登录表单页面，登录后走该path（sso授权登录是走/oauth/confirm_access到授权页面，同意后重定向到redirect_url）
      *
      * @param model
      * @param response

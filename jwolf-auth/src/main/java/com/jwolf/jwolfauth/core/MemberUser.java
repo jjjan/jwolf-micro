@@ -14,11 +14,13 @@ import java.util.Collection;
  * @date 2021-12-05 0:00
  */
 @Getter
-public class MemberUser extends User{
+public class MemberUser extends User {
     private Long userId;
+    private String mobile;
 
-    public MemberUser(Long userId,String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public MemberUser(Long userId, String mobile, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
-        this.userId=userId;
+        this.userId = userId;
+        this.mobile = mobile;
     }
 }

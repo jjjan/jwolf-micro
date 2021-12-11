@@ -18,16 +18,17 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-     /**
+    /**
      * 模拟从数据库查询,这里写死了3个测试用户——系统用户
      * 如果需要扩展字段implement UserDetails或extends User即可
+     *
      * @return
      */
     private List<SysUser> selectUserFromDB() {
         List<SysUser> userList = new ArrayList<>(8);
-        userList.add(new SysUser(1L,"sysuser1", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("super")));
-        userList.add(new SysUser(2L,"sysuser2", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("admin")));
-        userList.add(new SysUser(3L,"sysuser3", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("common")));
+        userList.add(new SysUser(1L, "sysuser1", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("super")));
+        userList.add(new SysUser(2L, "sysuser2", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("admin")));
+        userList.add(new SysUser(3L, "sysuser3", passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("common")));
         return userList;
     }
 

@@ -1,19 +1,26 @@
 package com.jwolf.jwolfauth.config;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.http.HttpStatus;
+import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
+import com.jwolf.common.bean.ResultEntity;
 import com.jwolf.jwolfauth.constant.AuthConstant;
 import com.jwolf.jwolfauth.core.MemberUser;
 import com.jwolf.jwolfauth.core.MemberUserDetailsServiceImpl;
 import com.jwolf.jwolfauth.core.SysUser;
 import com.jwolf.jwolfauth.core.SysUserDetailsServiceImpl;
+import com.jwolf.jwolfauth.extension.captcha.CaptchaTokenGranter;
+import com.jwolf.jwolfauth.extension.mobile.SmsCodeTokenGranter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -21,12 +28,14 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.security.KeyPair;
 import java.util.*;
@@ -40,6 +49,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private MemberUserDetailsServiceImpl memberUserDetailsService;
     @Autowired
     private SysUserDetailsServiceImpl sysUserDetailsService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     @Override
@@ -48,11 +59,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 //client1为jwolf-manage授权登录的配置
                 .withClient(AuthConstant.JWOLF_MANAGE_CLIENTID)
                 .secret(passwordEncoder().encode("secret1"))
-                .authorizedGrantTypes("authorization_code", "refresh_token")
+                .authorizedGrantTypes("authorization_code", "refresh_token", "sms_code", "captcha")
                 .scopes("all")
                 .accessTokenValiditySeconds(10)
                 .refreshTokenValiditySeconds(10)
-                .redirectUris("http://localhost:8888/jwolf/manage/login","http://192.168.154.143:8888/jwolf/manage/login","http://192.168.154.143/jwolf/manage/login") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
+                .redirectUris("http://localhost:8888/jwolf/manage/login", "http://192.168.154.143:8888/jwolf/manage/login", "http://192.168.154.143/jwolf/manage/login") // 授权成功后运行跳转的url，sso客户端默认/login，可在client端通过security.oauth2.sso.login-path修改为其它
                 .autoApprove(true)  // true则自动授权,跳过授权页面点击步骤
                 .and()
                 //第三方授权登录时可以再这里追加，如果要做到类似微信授权登录一样，就需要从DB读取client信息。
@@ -77,9 +88,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //注意jwtAccessTokenConverter一定要在其它增强链最后，它的作用是生成jwt字符串，指定加密算法，key等
         delegates.add(jwtAccessTokenConverter());
         tokenEnhancerChain.setTokenEnhancers(delegates);
+
+        // 获取原有默认授权模式(授权码模式、密码模式、客户端模式、简化模式)的授权者
+        List<TokenGranter> granterList = new ArrayList<>(Arrays.asList(endpoints.getTokenGranter()));
+
+        // 添加手机短信验证码授权模式的授权者
+        granterList.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), authenticationManager
+        ));
+        // 添加验证码授权模式授权者
+        granterList.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), authenticationManager, redisTemplate
+        ));
+
+        CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
+
+
         endpoints
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .authenticationManager(authenticationManager)
+                .tokenGranter(compositeTokenGranter)
                 .tokenEnhancer(tokenEnhancerChain)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .reuseRefreshTokens(true)
@@ -99,15 +127,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenEnhancer(tokenEnhancerChain);
         //tokenServices.setClientDetailsService(clientDetailsService);
-        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(authenticationToken -> {
-            if (AuthConstant.JWOLF_MANAGE_CLIENTID.equals(authenticationToken.getName())) { //jwolf-manger(client1)或其它公司内部其它内部管理系统单点登录的clientId也走系统内部用户认证
-                return sysUserDetailsService.loadUserByUsername(authenticationToken.getName());
-            } else {//其它公司系统Jwolf授权登录的clientId及jwolf会员用户走这里,当然其它公司要接入jwolf认证授权登录的条件是jwolf有微信，支付宝那样的用户量人家才会集成jwolf第三方登录
-                return memberUserDetailsService.loadUserByUsername(authenticationToken.getName());
-            }
-        });
-        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
         return tokenServices;
 
     }
@@ -116,8 +135,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
         security
-                // .tokenKeyAccess("permitAll()")
-                // .checkTokenAccess("permitAll()")
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("permitAll()")
                 .allowFormAuthenticationForClients();
     }
 
@@ -141,7 +160,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public KeyPair keyPair() {
         //读取classpath,或绝对路径，或bytearray的keyStore
         //String encode = Base64.encode(new File("c:/jwolf.jks"));
-        byte[] keyStore=Base64.decode(AuthConstant.BASE64_JWT_KEYSTORE);
+        byte[] keyStore = Base64.decode(AuthConstant.BASE64_JWT_KEYSTORE);
         KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ByteArrayResource(keyStore), "123456".toCharArray());
         KeyPair keyPair = factory.getKeyPair("jwolf", "123456".toCharArray());
         return keyPair;
@@ -167,7 +186,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 SysUser sysUser = (SysUser) principal;
                 additionalInfo.put("userId", sysUser.getUserId());
 
-            }else {
+            } else {
                 MemberUser memberUser = (MemberUser) principal;
                 additionalInfo.put("userId", memberUser.getUserId());
             }
@@ -176,4 +195,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         };
     }
 
+    /**
+     * 自定义认证异常响应数据
+     */
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, e) -> {
+            response.setStatus(HttpStatus.HTTP_OK);
+            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Cache-Control", "no-cache");
+            ResultEntity result = ResultEntity.fail(e.getMessage());
+            response.getWriter().print(JSONUtil.toJsonStr(result));
+            response.getWriter().flush();
+        };
+    }
 }
