@@ -20,6 +20,7 @@ tool->deployment->configuration
 
 ![](../doc-resource/python-ssh远程解释器2.png)
 
-# 4. debug执行本地python代码
+# 4. 指定远程解释器执行本地代码即可
 
+![](../doc-resource/指定远程解释器执行本地代码.png)
 
