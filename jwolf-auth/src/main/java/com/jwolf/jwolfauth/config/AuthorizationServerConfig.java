@@ -46,10 +46,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private MemberUserDetailsServiceImpl memberUserDetailsService;
-    @Autowired
-    private SysUserDetailsServiceImpl sysUserDetailsService;
-    @Autowired
     private RedisTemplate redisTemplate;
 
 

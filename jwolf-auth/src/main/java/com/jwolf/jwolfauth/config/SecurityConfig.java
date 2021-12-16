@@ -17,8 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private SysUserDetailsServiceImpl sysUserDetailsService;
     @Autowired
@@ -82,7 +81,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         CustomDaoAuthenticationProvider provider = new CustomDaoAuthenticationProvider();
         provider.setUserDetailsService(memberUserDetailsService,sysUserDetailsService);
-        provider.setPasswordEncoder(passwordEncoder);
         provider.setHideUserNotFoundExceptions(false);
         return provider;
     }
