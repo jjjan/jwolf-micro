@@ -29,14 +29,14 @@ public class UserController {
 
     /**
      * 前端请求接口时如果返回的是text/html的auth工程的SSO登录页面，前端location.href请求该接口
-     * 该接口再重定向到sso登录，登录后回调该接口，但该页面的地址是http://192.168.154.143:8888/jwolf/manage/user/login 与开发环境前端地址
-     * http://192.168.154.143:9528不同域，cookie无法传递，需要通过nginx将两者进行转发
+     * 该接口再重定向到sso登录，登录后回调该接口，但该页面的地址是http://192.168.1.18:8888/jwolf/manage/user/login 与开发环境前端地址
+     * http://192.168.1.18:9528不同域，cookie无法传递，需要通过nginx将两者进行转发
      *
      * #后台管理后端
      * server {
      *    listen       80;
      *    location ~ ^/jwolf/manage {
-     *     proxy_pass http://192.168.154.143:8888;
+     *     proxy_pass http://192.168.1.18:8888;
      *     }
      * #后台管理前端
      *   location / {
