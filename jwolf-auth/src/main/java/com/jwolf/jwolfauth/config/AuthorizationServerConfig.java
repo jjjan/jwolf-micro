@@ -47,6 +47,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -54,7 +56,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 //client1为jwolf-manage sso授权登录的配置,
                 .withClient(AuthConstant.JWOLF_MANAGE_CLIENTID)
-                .secret(passwordEncoder().encode("secret1"))
+                .secret(passwordEncoder.encode("secret1"))
                 .authorizedGrantTypes("authorization_code", "refresh_token", "captcha")
                 .scopes("all")
                 .accessTokenValiditySeconds(10)
@@ -69,7 +71,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 //client2 暂划给jwolf-member用户,请求/auth/token时携带自定义字段userType=memberuser,CustomDaoAuthenticationProvider根据该字段查询对应userDetail
                 //http://localhost:9402/oauth/token?grant_type=password&client_secret=secret2&client_id=client2&username=memberuser1&password=123456&userType=memberuser
                 .withClient("client2")
-                .secret(passwordEncoder().encode("secret2"))
+                .secret(passwordEncoder.encode("secret2"))
                 .authorizedGrantTypes("refresh_token", "password","sms_code")
                 .scopes("all")
                 .accessTokenValiditySeconds(110)
@@ -165,10 +167,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 
     /**

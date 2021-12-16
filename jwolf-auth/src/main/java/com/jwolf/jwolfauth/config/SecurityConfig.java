@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -81,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         CustomDaoAuthenticationProvider provider = new CustomDaoAuthenticationProvider();
         provider.setUserDetailsService(memberUserDetailsService,sysUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
         provider.setHideUserNotFoundExceptions(false);
         return provider;
     }
@@ -111,5 +113,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        provider.setHideUserNotFoundExceptions(false);
 //        return provider;
 //    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }
