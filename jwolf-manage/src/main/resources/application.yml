@@ -51,8 +51,8 @@ server:
         # 防止cookie冲突，冲突会导致登录验证不通过，如果不同client端使用相同的cookie名会导致挤掉另一client授权的cookie被覆盖
         name: OAUTH2-CLIENT1-SESSIONID
         path: /
-#oauth2-service-url: http://@package.host@:9402 #生产环境
-oauth2-service-url: http://localhost:9402      #开发环境
+oauth2-service-url: http://@package.host@:9402 #生产环境
+#oauth2-service-url: http://localhost:9402      #开发环境
 security:
   oauth2:
     client:
