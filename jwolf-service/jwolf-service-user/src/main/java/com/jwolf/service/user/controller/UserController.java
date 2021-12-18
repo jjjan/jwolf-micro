@@ -5,6 +5,7 @@ import cn.hutool.jwt.JWT;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jwof.basebusinessOSS.MinioService;
 import com.jwolf.common.bean.BasePageSearch;
 import com.jwolf.common.bean.ResultEntity;
 import com.jwolf.service.user.api.entity.User;
@@ -32,10 +33,13 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private MinioService minioService;
 
     @Operation(summary = "分页查询")
     @GetMapping("/page")
     public ResultEntity<Page<User>> getPageList(BasePageSearch search) {
+        
         return ResultEntity.success(userService.page(search.getPage()));
     }
 

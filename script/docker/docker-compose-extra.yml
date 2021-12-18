@@ -105,6 +105,22 @@ services:
     networks:
       - jwolf
 
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - 19000:9000   #web控制台
+      - 9001:9001   #web控制台
+    command: server /data --console-address ":9001"
+    environment:
+      - MINIO_ACCESS_KEY=admin
+      - MINIO_SECRET_KEY=admin123456
+    volumes:
+      - /home/data/minio:/data
+    networks:
+      - jwolf
+
+
 networks:
   jwolf:
     driver: bridge

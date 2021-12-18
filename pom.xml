@@ -24,6 +24,7 @@
         <module>jwolf-manage</module>
         <module>jwolf-service</module>
         <module>jwolf-service-api</module>
+        <module>jwolf-base-business</module>
     </modules>
 
     <properties>
@@ -48,6 +49,7 @@
         <guava.version>20.0</guava.version>
         <springcloud-oauth2.version>2.2.5.RELEASE</springcloud-oauth2.version>
         <justAuth.version>1.16.5</justAuth.version>
+        <minio.version>8.0.3</minio.version>
     </properties>
     <dependencyManagement>
         <dependencies>

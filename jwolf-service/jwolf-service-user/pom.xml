@@ -20,6 +20,11 @@
             <artifactId>jwolf-service-user-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.jwolf</groupId>
+            <artifactId>jwolf-base-business-OSS</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>

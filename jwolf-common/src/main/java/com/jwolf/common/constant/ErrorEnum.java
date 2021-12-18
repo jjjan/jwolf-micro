@@ -30,6 +30,7 @@ public enum ErrorEnum {
     ZUUL_BREAKER_ERROR("0513", "网关熔断器被打开——服务熔断"),
     FILE_TYPE_ERROR("0514", "文件格式不正确"),
     SMS_ERROR("0515", "短信发送失败，请联系管理员！"),
+    DOWNLOAD_ERROR("0516", "下载失败"),
     ;
     private String code;
     private String msg;

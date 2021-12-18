@@ -56,3 +56,10 @@ seata:
       log:
         exception-rate: 100 # 日志异常输出概率(默认 100)
 
+minio:
+  endpoint: "192.168.1.18"
+  port: 19000
+  accessKey: "admin"
+  secretKey: "admin123456"
+  secure: false
+
