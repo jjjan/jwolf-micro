@@ -20,6 +20,21 @@ spring:
         username: nacos
         password: nacos
 
+#  task:
+#    execution:
+#      pool:
+#        core-size: 8
+#        keep-alive: 60s
+#        queue-capacity: 10000
+#        max-size: 32
+#        allow-core-thread-timeout: true
+#      thread-name-prefix: jwolf-task-
+#    scheduling:
+#      pool:
+#        size: 1
+#      thread-name-prefix: jwolf-schedule-
+
+
 logging:
   config: classpath:logback.${spring.profiles.active}.xml
 #Seata配置,配置seata-server地址等

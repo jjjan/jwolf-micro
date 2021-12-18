@@ -1,9 +1,6 @@
 package com.jwolf.service.user.controller;
 
-import cn.hutool.json.JSONObject;
-import cn.hutool.jwt.JWT;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwof.basebusinessOSS.MinioService;
 import com.jwolf.common.bean.BasePageSearch;
@@ -16,9 +13,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户表 前端控制器
@@ -35,11 +36,17 @@ public class UserController {
     private IUserService userService;
     @Autowired
     private MinioService minioService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Operation(summary = "分页查询")
     @GetMapping("/page")
     public ResultEntity<Page<User>> getPageList(BasePageSearch search) {
-        
+        redisTemplate.opsForValue().set("testvalue", "1111", 100, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("testvalue2", new User().setId(11L).setCreateTime(LocalDateTime.now()), 100, TimeUnit.SECONDS);
+        //Map o = (Map) redisTemplate.opsForValue().get("testvalue2");
+        redisTemplate.opsForHash().put("testhash", "t1", 100);
+        redisTemplate.expire("testhash", 10, TimeUnit.SECONDS);
         return ResultEntity.success(userService.page(search.getPage()));
     }
 
@@ -50,8 +57,8 @@ public class UserController {
             blockHandlerClass = SentinelHandler.class,
             fallback = "fallbackHandler",
             fallbackClass = SentinelHandler.class)
-    public ResultEntity<User> getById(@Parameter(description="用户id")Long id) {
-        int a=1/0;
+    public ResultEntity<User> getById(@Parameter(description = "用户id") Long id) {
+        int a = 1 / 0;
         return ResultEntity.success(userService.getById(id));
     }
 
