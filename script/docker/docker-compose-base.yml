@@ -127,9 +127,9 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /etc/redis/redis.conf:/usr/local/etc/redis/redis.conf  #容器内不存在/usr/local/etc/redis/redis.conf 可手动创建/etc/redis/redis.conf 与之映射 command 指定该目录
+      - /etc/redis/redis.conf:/usr/local/etc/redis/redis.conf  #容器内无配置文件，可官网下载tar.gz包里面找来一个redis.conf
       - /home/data/redis-data:/data
-    command: "redis-server /usr/local/etc/redis/redis.conf"
+    command: "redis-server /usr/local/etc/redis/redis.conf" #不用配置文件：redis-server --bind 0.0.0.0 --notify-keyspace-events Ex
 
   nginx:
     image: nginx

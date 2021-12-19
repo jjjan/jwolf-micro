@@ -28,7 +28,6 @@ public class RedisKeyExpireListenerConfig {
     public RedisMessageListenerContainer container(RedisConnectionFactory factory) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(factory);
-        //container.setTopicSerializer(new StringRedisSerializer());
         container.addMessageListener((message, pattern) -> handleKeyExpire(message), new PatternTopic("__keyevent@" + redisDatabase + "__:expired")); //监听16库的key失效
         return container;
     }
