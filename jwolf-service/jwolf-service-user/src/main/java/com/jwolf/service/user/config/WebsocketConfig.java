@@ -19,8 +19,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(this.myHandler, "/ws/jwolf") //可以使用http://localhost:8881/index.html 或第三方网站测试http://coolaf.com/tool/chattest,不要配置【withSockJS()】
-                .setAllowedOrigins("*")
-                .addInterceptors(this.myHandshakeInterceptor) ;//添加拦截器
-                //.withSockJS();  //注意如果配置了该项，前端须socketjs,tompjs进行连接
+                .setAllowedOriginPatterns("*")
+                .addInterceptors(this.myHandshakeInterceptor);//添加拦截器
+        //.withSockJS();  //不要配置，SockJS版本websockt操作才需要
     }
 }

@@ -21,7 +21,7 @@ public class MyHandshakeInterceptor implements HandshakeInterceptor {
             response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
         //解析token，将用户id放入socket处理器的会话(WebSocketSession)中等可以再握手前处理
         HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
-        attributes.put("uid", "xxx");//属性值不能为null
+        attributes.put("userId", servletRequest.getParameter("userId"));//属性值不能为null
         System.out.println("开始握手。。。。。。。");
         return true;
     }
