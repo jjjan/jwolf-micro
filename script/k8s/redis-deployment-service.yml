@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+  prometheus:
+    image: bitnami/prometheus
+    container_name: prometheus
+    restart: on-failure
+    volumes:
+      - /home/data/prometheus:/opt/bitnami/prometheus/data  # chmod 774 /home/data/prometheus -R
+      - /etc/monitor/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml  # docker cp prometheus:/opt/bitnami/prometheus/conf/prometheus.yml /etc/monitor/prometheus.yml
+    #            - /etc/monitor/alert.yml:/etc/prometheus/alert.yml
+    ports:
+      - 9090:9090
+    networks:
+      - monitor
+
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: on-failure
+    user: root
+    volumes:
+      - /etc/monitor/defaults.ini:/usr/share/grafana/conf/defaults.ini  #docker cp grafana:/usr/share/grafana/conf/defaults.ini  /etc/monitor/defaults.ini
+      - /home/data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=123456
+    ports:
+      - 3000:3000
+    networks:
+      - monitor
+
+  node-exporter:
+    image: bitnami/node-exporter
+    container_name: node-exporter
+    restart: on-failure
+    ports:
+      - 9100:9100
+    networks:
+      - monitor
+
+networks:
+  monitor:
+    driver: bridge
