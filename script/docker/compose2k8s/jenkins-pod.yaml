@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-extra.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/jwolf: "true"
+    io.kompose.service: jenkins
+  name: jenkins
+spec:
+  containers:
+    - image: jenkins/jenkins:lts
+      name: jenkins
+      ports:
+        - containerPort: 8080
+        - containerPort: 50000
+      resources: {}
+      volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins-claim0
+  restartPolicy: OnFailure
+  volumes:
+    - name: jenkins-claim0
+      persistentVolumeClaim:
+        claimName: jenkins-claim0
+status: {}

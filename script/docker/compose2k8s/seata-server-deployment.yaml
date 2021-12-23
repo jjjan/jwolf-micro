@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-base.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: seata-server
+  name: seata-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: seata-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-base.yml convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/jwolf: "true"
+        io.kompose.service: seata-server
+    spec:
+      containers:
+        - image: seataio/seata-server
+          name: seata
+          ports:
+            - containerPort: 8091
+          resources: {}
+          volumeMounts:
+            - mountPath: /seata-server/resources
+              name: seata-server-claim0
+      restartPolicy: Always
+      volumes:
+        - name: seata-server-claim0
+          persistentVolumeClaim:
+            claimName: seata-server-claim0
+status: {}

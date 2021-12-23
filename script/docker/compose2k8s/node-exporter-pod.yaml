@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-monitor.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/monitor: "true"
+    io.kompose.service: node-exporter
+  name: node-exporter
+spec:
+  containers:
+    - image: bitnami/node-exporter
+      name: node-exporter
+      ports:
+        - containerPort: 9100
+      resources: {}
+  restartPolicy: OnFailure
+status: {}

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-extra.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/jwolf: "true"
+    io.kompose.service: zookeeper
+  name: zookeeper
+spec:
+  containers:
+    - env:
+        - name: ALLOW_ANONYMOUS_LOGIN
+          value: "yes"
+      image: bitnami/zookeeper
+      name: zookeeper
+      ports:
+        - containerPort: 2181
+      resources: {}
+  restartPolicy: OnFailure
+status: {}

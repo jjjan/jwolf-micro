@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-base.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-slave
+  name: mysql-slave
+spec:
+  ports:
+    - name: "3307"
+      port: 3307
+      targetPort: 3307
+  selector:
+    io.kompose.service: mysql-slave
+status:
+  loadBalancer: {}

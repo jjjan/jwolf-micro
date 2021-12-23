@@ -1,43 +1,68 @@
-version: '3.2'
-services:
-  prometheus:
-    image: bitnami/prometheus
-    container_name: prometheus
-    restart: on-failure
-    volumes:
-      - /home/data/prometheus:/opt/bitnami/prometheus/data  # chmod 774 /home/data/prometheus -R
-      - /etc/monitor/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml  # docker cp prometheus:/opt/bitnami/prometheus/conf/prometheus.yml /etc/monitor/prometheus.yml
-    #            - /etc/monitor/alert.yml:/etc/prometheus/alert.yml
-    ports:
-      - 9090:9090
-    networks:
-      - monitor
+#0. kubectl create namespace jwolf
+#1.先创建configmap: kubectl create configmap redis-configmap --from-file=/etc/redis/redis.conf -n jwolf
+#2.创建：kubectl apply -f redis-deployment.yml ，按文件删除资源：kubectl delete -f redis-deployment.ym
+#3.查看各资源状态：kubectl get all --all-namespaces -o wide
 
-
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    restart: on-failure
-    user: root
-    volumes:
-      - /etc/monitor/defaults.ini:/usr/share/grafana/conf/defaults.ini  #docker cp grafana:/usr/share/grafana/conf/defaults.ini  /etc/monitor/defaults.ini
-      - /home/data/grafana:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=123456
-    ports:
-      - 3000:3000
-    networks:
-      - monitor
-
-  node-exporter:
-    image: bitnami/node-exporter
-    container_name: node-exporter
-    restart: on-failure
-    ports:
-      - 9100:9100
-    networks:
-      - monitor
-
-networks:
-  monitor:
-    driver: bridge
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    name: redis
+  name: redis
+  namespace: jwolf    #使用自定义namespace
+spec:
+  type: NodePort
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: 6379
+      nodePort: 30020
+  selector:
+    name: redis
+---
+apiVersion: apps/v1  #注意v1版本不支持Deployment
+kind: Deployment
+metadata:
+  name: redis
+  namespace: jwolf    #使用自定义namespace
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      name: redis
+  template:
+    metadata:
+      labels:
+         name: redis
+    spec:
+      nodeSelector:
+        mynodelable: node1
+      containers:
+      - name: redis-container
+        image: redis:6.2.6
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: myconfigmap     #与volumes的name对应
+          mountPath: "/usr/local/etc"   #与vomums的key为redis.conf的path拼接得到容器内redis配置文件绝对路径
+        - name: redis-data             #容器内挂载点名称
+          mountPath: /data    #容器内data保持路径，该路径在redis.conf配置了
+        command:
+          - "redis-server"   #启动命令
+        args:
+          - "/usr/local/etc/redis/redis.conf"  #带配置文件启动
+        ports:
+             - containerPort: 6379
+               name: redis
+               protocol: TCP
+      volumes:
+      - name: myconfigmap
+        configMap:
+          name: redis-configmap  #指定使用的configmap
+          items:
+            - key: redis.conf  #该值为configmap创建--from-file的文件名
+              path: redis/redis.conf
+      - name: redis-data          #数据卷名称，需要与容器内挂载点名称一致
+        hostPath:
+           path: /home/data/redis-data   #将容器挂载点名称相同的path挂载到宿主机path（但这种方式有局限性，pod分配到其它node数据就丢失了，需要挂载到NFS文件系统？）
+      

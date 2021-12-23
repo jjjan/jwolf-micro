@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-monitor.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/monitor: "true"
+    io.kompose.service: prometheus
+  name: prometheus
+spec:
+  containers:
+    - image: bitnami/prometheus
+      name: prometheus
+      ports:
+        - containerPort: 9090
+      resources: {}
+      volumeMounts:
+        - mountPath: /opt/bitnami/prometheus/data
+          name: prometheus-claim0
+        - mountPath: /opt/bitnami/prometheus/conf/prometheus.yml
+          name: prometheus-claim1
+  restartPolicy: OnFailure
+  volumes:
+    - name: prometheus-claim0
+      persistentVolumeClaim:
+        claimName: prometheus-claim0
+    - name: prometheus-claim1
+      persistentVolumeClaim:
+        claimName: prometheus-claim1
+status: {}

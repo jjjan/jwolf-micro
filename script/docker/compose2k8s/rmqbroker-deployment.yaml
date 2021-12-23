@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-extra.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rmqbroker
+  name: rmqbroker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rmqbroker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-extra.yml convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/jwolf: "true"
+        io.kompose.service: rmqbroker
+    spec:
+      containers:
+        - args:
+            - mqbroker
+            - -c
+            - /etc/rocketmq/broker.conf
+          env:
+            - name: JAVA_OPTS
+              value: ' -Duser.home=/opt'
+            - name: JAVA_OPT_EXT
+              value: -server -Xms128m -Xmx128m -Xmn80m
+            - name: NAMESRV_ADDR
+              value: rmqnamesrv:9876
+          image: foxiswho/rocketmq:broker
+          name: rmqbroker
+          ports:
+            - containerPort: 10909
+            - containerPort: 10911
+          resources: {}
+          volumeMounts:
+            - mountPath: /opt/logs
+              name: rmqbroker-claim0
+            - mountPath: /opt/store
+              name: rmqbroker-claim1
+            - mountPath: /etc/rocketmq/broker.conf
+              name: rmqbroker-claim2
+      restartPolicy: Always
+      volumes:
+        - name: rmqbroker-claim0
+          persistentVolumeClaim:
+            claimName: rmqbroker-claim0
+        - name: rmqbroker-claim1
+          persistentVolumeClaim:
+            claimName: rmqbroker-claim1
+        - name: rmqbroker-claim2
+          persistentVolumeClaim:
+            claimName: rmqbroker-claim2
+status: {}

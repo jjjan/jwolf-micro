@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-extra.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rmqconsole
+  name: rmqconsole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rmqconsole
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-extra.yml convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/jwolf: "true"
+        io.kompose.service: rmqconsole
+    spec:
+      containers:
+        - env:
+            - name: JAVA_OPTS
+              value: -Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
+          image: styletang/rocketmq-console-ng
+          name: rmqconsole
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}

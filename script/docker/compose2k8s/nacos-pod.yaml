@@ -1,0 +1,41 @@
+sd ，。。。。。。。。。。。。。。。。。。。。。。。，，apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-base.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/jwolf: "true"
+    io.kompose.service: nacos
+  name: nacos
+spec:
+  containers:
+    - env:
+        - name: MODE
+          value: standalone
+        - name: MYSQL_SERVICE_DB_NAME
+          value: nacos
+        - name: MYSQL_SERVICE_HOST
+          value: mysql
+        - name: MYSQL_SERVICE_PASSWORD
+          value: "123456"
+        - name: MYSQL_SERVICE_PORT
+          value: "3306"
+        - name: MYSQL_SERVICE_USER
+          value: root
+        - name: NACOS_AUTH_ENABLE
+          value: "true"
+        - name: PREFER_HOST_MODE
+          value: ip
+        - name: SPRING_DATASOURCE_PLATFORM
+          value: mysql
+      image: nacos/nacos-server
+      name: nacos
+      ports:
+        - containerPort: 8848
+        - containerPort: 9848
+        - containerPort: 9849
+      resources: {}
+  restartPolicy: OnFailure
+status: {}

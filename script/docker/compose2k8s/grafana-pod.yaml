@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64-1.exe -f docker-compose-monitor.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/monitor: "true"
+    io.kompose.service: grafana
+  name: grafana
+spec:
+  containers:
+    - env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "123456"
+      image: grafana/grafana
+      name: grafana
+      ports:
+        - containerPort: 3000
+      resources: {}
+      volumeMounts:
+        - mountPath: /usr/share/grafana/conf/defaults.ini
+          name: grafana-claim0
+        - mountPath: /var/lib/grafana
+          name: grafana-claim1
+  restartPolicy: OnFailure
+  volumes:
+    - name: grafana-claim0
+      persistentVolumeClaim:
+        claimName: grafana-claim0
+    - name: grafana-claim1
+      persistentVolumeClaim:
+        claimName: grafana-claim1
+status: {}
