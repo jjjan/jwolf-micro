@@ -1,0 +1,74 @@
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    name: nacos
+  name: nacos
+  namespace: jwolf    #使用自定义namespace
+spec:
+  type: NodePort
+  ports:
+    - name: "8848"
+      port: 8848
+      targetPort: 8848
+      nodePort: 8848
+    - name: "9848"
+      port: 9848
+      targetPort: 9848
+    - name: "9849"
+      port: 9849
+      targetPort: 9849
+  selector:
+    name: nacos
+
+---
+
+apiVersion: apps/v1  #注意v1版本不支持Deployment
+kind: Deployment
+metadata:
+  name: nacos
+  namespace: jwolf    #使用自定义namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nacos
+  template:
+    metadata:
+      labels:
+         name: nacos
+    spec:
+      nodeSelector:
+        mynodelable: node1
+      containers:
+        - env:
+            - name: MODE
+              value: standalone
+            - name: MYSQL_SERVICE_DB_NAME
+              value: nacos
+            - name: MYSQL_SERVICE_HOST
+              value: mysql.jwolf.svc.cluster.local
+            - name: MYSQL_SERVICE_PASSWORD
+              value: "123456"
+            - name: MYSQL_SERVICE_PORT
+              value: "3306"
+            - name: MYSQL_SERVICE_USER
+              value: root
+            - name: NACOS_AUTH_ENABLE
+              value: "true"
+            - name: PREFER_HOST_MODE
+              value: ip
+            - name: SPRING_DATASOURCE_PLATFORM
+              value: mysql
+          image: nacos/nacos-server
+          name: nacos
+          ports:
+            - containerPort: 8848
+            - containerPort: 9848
+            - containerPort: 9849
+
+          resources: {}
+
+
+

@@ -3,66 +3,106 @@
 #2.创建：kubectl apply -f redis-deployment.yml ，按文件删除资源：kubectl delete -f redis-deployment.ym
 #3.查看各资源状态：kubectl get all --all-namespaces -o wide
 
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    name: mysql
+  name: mysql
+  namespace: jwolf    #使用自定义namespace
+spec:
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+  selector:
+    name: mysql
+
 ---
 kind: Service
 apiVersion: v1
 metadata:
   labels:
-    name: redis
-  name: redis
+    name: mysql
+  name: mysqlNodePort
   namespace: jwolf    #使用自定义namespace
 spec:
   type: NodePort
   ports:
-    - name: redis
-      port: 6379
-      targetPort: 6379
-      nodePort: 30020
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+      nodePort: 3306
   selector:
-    name: redis
+    name: mysql
+
 ---
+
 apiVersion: apps/v1  #注意v1版本不支持Deployment
 kind: Deployment
 metadata:
-  name: redis
+  name: mysql
   namespace: jwolf    #使用自定义namespace
 spec:
-  replicas: 1 
+  replicas: 1
   selector:
     matchLabels:
-      name: redis
+      name: mysql
   template:
     metadata:
       labels:
-         name: redis
+         name: mysql
     spec:
       nodeSelector:
         mynodelable: node1
       containers:
-      - name: redis-container
-        image: redis:6.2.6
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-        - name: myconfigmap     #与volumes的name对应
-          mountPath: "/usr/local/etc"   #与vomums的key为redis.conf的path拼接得到容器内redis配置文件绝对路径
-        - name: redis-data             #容器内挂载点名称
-          mountPath: /data    #容器内data保持路径，该路径在redis.conf配置了
-        command:
-          - "redis-server"   #启动命令
-        args:
-          - "/usr/local/etc/redis/redis.conf"  #带配置文件启动
-        ports:
-             - containerPort: 6379
-               name: redis
-               protocol: TCP
+        - args:
+            - --default-authentication-plugin=mysql_native_password
+          env:
+            - name: MYSQL_PASSWORD
+              value: "123456"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456"
+            - name: MYSQL_USER
+              value: test
+          image: mysql:8
+          name: mysql
+          ports:
+            - containerPort: 3306
+              name: mysql
+
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-claim0
+            - mountPath: /var/log/mysqld.log
+              name: mysql-claim1
+            - mountPath: /var/lib/mysql-files
+              name: mysql-claim2
+            - mountPath: /etc/localtime
+              name: mysql-claim3
+            - mountPath: /etc/mysql/my.cnf
+              name: mysql-claim4
+      restartPolicy: Always
       volumes:
-      - name: myconfigmap
-        configMap:
-          name: redis-configmap  #指定使用的configmap
-          items:
-            - key: redis.conf  #该值为configmap创建--from-file的文件名
-              path: redis/redis.conf
-      - name: redis-data          #数据卷名称，需要与容器内挂载点名称一致
-        hostPath:
-           path: /home/data/redis-data   #将容器挂载点名称相同的path挂载到宿主机path（但这种方式有局限性，pod分配到其它node数据就丢失了，需要挂载到NFS文件系统？）
-      
+        - name: mysql-claim0
+          hostPath:
+            path: /home/data/mysql
+        - name: mysql-claim1
+          hostPath:
+            path: /var/log/mysqld.log
+        - name: mysql-claim2
+          hostPath:
+            path: /var/lib/mysql-files
+        - name: mysql-claim3
+          hostPath:
+            path: /etc/localtime
+        - name: mysql-claim4
+          hostPath:
+            path: /etc/my.cnf
+
+
+
+
+
