@@ -2,6 +2,7 @@
 如mysql的目录挂载需要修改为映射主机目录
 
 ### 2.解除NodePort类型service端口必须大于30000限制
+```bash
 [root@master k8s]# vim /etc/kubernetes/manifests/
 etcd.yaml                     kube-apiserver.yaml           kube-controller-manager.yaml  kube-scheduler.yaml           
 apiVersion: v1
@@ -17,7 +18,9 @@ spec:
   containers:
   - command:
     - kube-apiserver
-    - --service-node-port-range=1-65535
+    - --service-node-port-range=1-65535  #新增
     - --advertise-address=192.168.1.18
     - --allow-privileged=true
     ...
+
+```
