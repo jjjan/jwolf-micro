@@ -1,31 +1,9 @@
-#0. kubectl create namespace jwolf
-#1.先创建configmap: kubectl create configmap redis-configmap --from-file=/etc/redis/redis.conf -n jwolf
-#2.创建：kubectl apply -f redis-deployment.yml ，按文件删除资源：kubectl delete -f redis-deployment.ym
-#3.查看各资源状态：kubectl get all --all-namespaces -o wide
-
-
 kind: Service
 apiVersion: v1
 metadata:
   labels:
     name: mysql
   name: mysql
-  namespace: jwolf    #使用自定义namespace
-spec:
-  ports:
-    - name: mysql
-      port: 3306
-      targetPort: 3306
-  selector:
-    name: mysql
-
----
-kind: Service
-apiVersion: v1
-metadata:
-  labels:
-    name: mysql
-  name: mysqlNodePort
   namespace: jwolf    #使用自定义namespace
 spec:
   type: NodePort
@@ -36,6 +14,8 @@ spec:
       nodePort: 3306
   selector:
     name: mysql
+
+---
 
 ---
 

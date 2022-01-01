@@ -48,7 +48,7 @@ spec:
             - name: MYSQL_SERVICE_DB_NAME
               value: nacos
             - name: MYSQL_SERVICE_HOST
-              value: mysql.jwolf.svc.cluster.local
+              value: mysql.jwolf.svc.cluster.local  #集群内部容器访问 ：Service的metadata.name+命名空间+svc.cluster.local
             - name: MYSQL_SERVICE_PASSWORD
               value: "123456"
             - name: MYSQL_SERVICE_PORT

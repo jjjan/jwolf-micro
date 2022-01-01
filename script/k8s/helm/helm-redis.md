@@ -6,7 +6,7 @@
 # 自己写部署文件redis-deployment-service.yml
 > 说明：这里是更具docker-compose文件自己翻译过来的，这里用的Deployment,存储卷用的hostpath不好合适，最好的方案的使用statefulSet+nfs/glusterfs等持久卷（后面的heml安装即用该方式），
 由于使用hostpath挂载redis的data,固使用了node打label方式让redis pod只调度到指定的node
-- 1.创建命名空间，不建议用默认的default：kubectl create namespace jwolf
+- 1.准备 kubectl create namespace jwolf ; kubectl label node node1 mynodelable=node1 ; kubectl label node node2 mynodelable=node2
 - 2.先创建configmap用于存放redis配置: kubectl create configmap redis-configmap --from-file=/etc/redis/redis.conf -n jwolf
 - 3.创建：kubectl apply -f redis-deployment-service.yml 
 - 4.查看各资源状态：kubectl get all -A -o wide
@@ -207,7 +207,7 @@ pod状态为CrashLoopBackOff，kubectl logs -f pod/redis-master-0 -n jwolf报错
 ##进入容器验证,无论走IP还是DNS，主从能互相访问说明集群通信就OK了
 kubectl exec -it pod/redis-master-0 bash -n jwolf 
 
-curl redis-master.jwolf.svc.cluster.local:6379
+curl redis-master.jwolf.svc.cluster.local:6379  域名拼接规则:Service的metadata.name+命名空间+svc.cluster.local
 
 curl redis-master-0:6379
 
