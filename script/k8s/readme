@@ -1,9 +1,0 @@
-1.kompose-windows-amd64.exe -f docker-compose-xx.yml convert 转换的k8s部署文件可能无法直接使用，
-如mysql的目录挂载需要修改为映射主机目录
-
-2.解除NodePort类型service端口必须大于30000限制
-
-
-
-
-3.
