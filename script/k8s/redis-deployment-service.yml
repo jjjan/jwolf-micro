@@ -21,13 +21,13 @@ spec:
   selector:
     name: redis
 ---
-apiVersion: apps/v1  #注意v1版本不支持Deployment
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
   namespace: jwolf    #使用自定义namespace
 spec:
-  replicas: 1 
+  replicas: 1
   selector:
     matchLabels:
       name: redis
@@ -63,6 +63,8 @@ spec:
             - key: redis.conf  #该值为configmap创建--from-file的文件名
               path: redis/redis.conf
       - name: redis-data          #数据卷名称，需要与容器内挂载点名称一致
+       # persistentVolumeClaim:
+       #   claimName: redis-datadir-pvc-1
         hostPath:
            path: /home/data/redis-data   #将容器挂载点名称相同的path挂载到宿主机path（但这种方式有局限性，pod分配到其它node数据就丢失了，需要挂载到NFS文件系统？）
-      
+
