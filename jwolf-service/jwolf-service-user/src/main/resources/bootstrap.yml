@@ -78,3 +78,16 @@ minio:
   secretKey: "admin123456"
   secure: false
 
+---
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    click:
+      driverClassName: com.clickhouse.jdbc.ClickHouseDriver
+      url: jdbc:clickhouse://192.168.1.18:8123/jwolf
+      username: root
+      password: root
+      initialSize: 3
+      maxActive: 10
+      minIdle: 3
+      maxWait: 6000

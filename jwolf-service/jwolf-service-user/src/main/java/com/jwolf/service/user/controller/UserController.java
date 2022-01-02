@@ -1,6 +1,7 @@
 package com.jwolf.service.user.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwof.basebusinessOSS.MinioService;
 import com.jwolf.common.bean.BasePageSearch;
@@ -34,7 +35,7 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-    @Autowired
+    @Autowired(required = false)
     private MinioService minioService;
     @Autowired
     private RedisTemplate redisTemplate;
@@ -66,7 +67,9 @@ public class UserController {
             fallback = "fallbackHandler",
             fallbackClass = SentinelHandler.class)
     public ResultEntity<User> getById(@Parameter(description = "用户id") Long id) {
-        int a = 1 / 0;
+        // int a = 1 / 0
+        //测试clickhouse,增加t_user(字段username,deleted即可)
+        //userService.getOne(new QueryWrapper<User>().select("username"))
         return ResultEntity.success(userService.getById(id));
     }
 

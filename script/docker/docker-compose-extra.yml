@@ -120,6 +120,34 @@ services:
     networks:
       - jwolf
 
+  clickhouse_server:
+    image: yandex/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "29009:9009"
+      - "29000:9000"
+    environment:
+      - ulimit="nofile=262144:262144"
+    volumes:
+      - /home/data/clickhouse:/var/lib/clickhouse:rw
+      - /etc/clickhouse/users.xml:/etc/clickhouse-server/users.xml   #先不挂载配置启动copy容器的配置到宿主机docker cp clickhouse-server:/etc/clickhouse-server /etc/clickhouse，default用户增加密码123456，profile改为readonly,users节点新增root用户：
+      - /etc/clickhouse/config.xml:/etc/clickhouse-server/config.xml
+      - /var/log/clickhouse/log:/var/log/clickhouse-server:rw
+    networks:
+        - jwolf
+
+#users.xml users节点新增的root用户如下，密码明文root,sha256_hex密码生成：echo -n root | sha256sum | tr -d '-'
+#<root>
+#         <password_sha256_hex>4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2</password_sha256_hex>
+#         <networks incl="networks" replace="replace">
+#                <ip>::/0</ip></networks>
+#        <profile>default</profile>
+#        <quota>default</quota>
+#</root>
+# idea datasourse插件连接clickhouse进行基本操作，基本操作类似mysql
+
+
+
 
 networks:
   jwolf:

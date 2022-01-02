@@ -16,9 +16,11 @@ spec:
     - name: "9848"
       port: 9848
       targetPort: 9848
+      nodePort: 9848
     - name: "9849"
       port: 9849
       targetPort: 9849
+      nodePort: 9849
   selector:
     name: nacos
 

@@ -126,7 +126,11 @@
                 <artifactId>jwolf-service-payment-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.jwolf</groupId>
+                <artifactId>jwolf-base-business-OSS</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
