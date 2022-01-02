@@ -200,7 +200,7 @@ kubectl logs -f --tail 222 pod/redis-master-0 -n jwolf 并无日志说明容器�
  固replica暂时禁用pvc,使用的是临时卷emptyDir
 
 5.最终启动命令
-helm install   redis ./redis   --set replica.replicaCount=1,master.persistence.existingClaim=redis-datadir-pvc-1,replica.persistence.enabled=false,master.service.nodePort=6379,master.service.type=NodePort,auth.password='jwolf' -n jwolf
+helm install   redis ./redis   --set replica.replicaCount=1,master.persistence.existingClaim=redis-datadir-pvc-1,replica.persistence.enabled=false,master.service.nodePort=6379,master.service.type=NodePort,replica.service.nodePort=16379,replica.service.type=NodePort,auth.password='jwolf' -n jwolf
 pod状态为CrashLoopBackOff，kubectl logs -f pod/redis-master-0 -n jwolf报错【 Can't open the append-only file: Permission denied】，挂在点加个写权限即可chmod 664 /home/data/k8s-data/redis/datadir-pv-1/* -R
 ```
 # 验证

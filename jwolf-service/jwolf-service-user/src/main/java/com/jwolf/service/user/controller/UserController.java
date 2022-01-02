@@ -68,7 +68,7 @@ public class UserController {
             fallbackClass = SentinelHandler.class)
     public ResultEntity<User> getById(@Parameter(description = "用户id") Long id) {
         // int a = 1 / 0
-        //测试clickhouse,增加t_user(字段username,deleted即可)
+        //测试clickhouse,clickhouse增加db jwolf,增加t_user(字段username,deleted即可)
         //userService.getOne(new QueryWrapper<User>().select("username"))
         return ResultEntity.success(userService.getById(id));
     }

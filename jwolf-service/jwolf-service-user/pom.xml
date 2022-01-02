@@ -47,7 +47,12 @@
             <artifactId>clickhouse-jdbc</artifactId>
             <version>0.3.2</version>
         </dependency>
-
+        <!--redission springboot starter集成过多不必要的东西-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>${redission.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

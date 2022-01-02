@@ -50,6 +50,8 @@
         <springcloud-oauth2.version>2.2.5.RELEASE</springcloud-oauth2.version>
         <justAuth.version>1.16.5</justAuth.version>
         <minio.version>8.0.3</minio.version>
+        <redission.version>3.16.7</redission.version>
+
     </properties>
     <dependencyManagement>
         <dependencies>
