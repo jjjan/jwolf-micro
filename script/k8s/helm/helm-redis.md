@@ -30,7 +30,7 @@ spec:
       targetPort: 6379
       nodePort: 6379
   selector:
-    name: redis
+    name: redis #指明哪些 label 的 pod 作为 service 的后端
 ---
 apiVersion: apps/v1  
 kind: Deployment
@@ -47,15 +47,17 @@ spec:
       labels:
          name: redis
     spec:
+      #strategy: 
+      #  RollingUpdate #pod滚动升级策略,一般业务应用depolyment才使用，可详细设置时间等；滚动升级保证平稳过渡，类似金丝雀发布，过程中有问题立即回滚
       nodeSelector:
         mynodelable: node1
-      containers:
+      containers:  #Pod中容器列表，可多个
       - name: redis-container
         image: redis:6.2.6
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: myconfigmap     #与volumes的name对应
-          mountPath: "/usr/local/etc"   #与vomums的key为redis.conf的path拼接得到容器内redis配置文件绝对路径
+          mountPath: "/usr/local/etc"   #与vomums的key为redis.conf的path拼接得到容器内redis配置文件绝对路径/usr/local/etc/redis/redis.conf
         - name: redis-data             #容器内挂载点名称
           mountPath: /data    #容器内data保存路径，该路径在redis.conf配置了
         command:
@@ -204,6 +206,7 @@ kubectl logs -f --tail 222 pod/redis-master-0 -n jwolf 并无日志说明容器�
 5.最终启动命令
 helm install   redis ./redis   --set replica.replicaCount=1,master.persistence.existingClaim=redis-datadir-pvc-1,replica.persistence.enabled=false,master.service.nodePort=6379,master.service.type=NodePort,replica.service.nodePort=16379,replica.service.type=NodePort,auth.password='jwolf' -n jwolf
 pod状态为CrashLoopBackOff，kubectl logs -f pod/redis-master-0 -n jwolf报错【 Can't open the append-only file: Permission denied】，挂在点加个写权限即可chmod 664 /home/data/k8s-data/redis/datadir-pv-1/* -R
+6.查看pod详情kubectl get pod/redis-master-0 -n jwolf -o yaml
 ```
 # 验证
 ##进入容器验证,无论走IP还是DNS，主从能互相访问说明集群通信就OK了

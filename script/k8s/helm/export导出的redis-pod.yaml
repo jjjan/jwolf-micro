@@ -1,0 +1,164 @@
+
+#导出方式 kubectl get pod redis-master-0 --export -o yaml -n jwolf > redis-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    checksum/configmap: 3c7a85407ba541f457d3bdc93077dfe3dac665ff8f22b526f9e4676c9a27645b
+    checksum/health: 6d05aeb49db0f20971d76314301cbca2ee87fe6ea97238898d38d474538558d6
+    checksum/scripts: 0da13d37da249d058d291eab8b530d18c2b2496c12f67b6e9113a83e438d79b8
+    checksum/secret: 00b946d95d3307b37e1a1bc4bbc587d61f1d44f1274a0e27d59c006c3c94271c
+  creationTimestamp: null
+  generateName: redis-master-
+  labels:
+    app.kubernetes.io/component: master
+    app.kubernetes.io/instance: redis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: redis
+    controller-revision-hash: redis-master-685985b857
+    helm.sh/chart: redis-15.6.8
+    statefulset.kubernetes.io/pod-name: redis-master-0
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: StatefulSet
+    name: redis-master
+    uid: 48589101-40f7-4557-8db1-02c50b7ceea2
+  selfLink: /api/v1/namespaces/jwolf/pods/redis-master-0
+spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: master
+              app.kubernetes.io/instance: redis
+              app.kubernetes.io/name: redis
+          namespaces:
+          - jwolf
+          topologyKey: kubernetes.io/hostname
+        weight: 1
+  containers:
+  - args:
+    - -c
+    - /opt/bitnami/scripts/start-scripts/start-master.sh
+    command:
+    - /bin/bash
+    env:
+    - name: BITNAMI_DEBUG
+      value: "false"
+    - name: REDIS_REPLICATION_MODE
+      value: master
+    - name: ALLOW_EMPTY_PASSWORD
+      value: "no"
+    - name: REDIS_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: redis-password
+          name: redis
+    - name: REDIS_TLS_ENABLED
+      value: "no"
+    - name: REDIS_PORT
+      value: "6379"
+    image: docker.io/bitnami/redis:6.2.6-debian-10-r53
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      exec:
+        command:
+        - sh
+        - -c
+        - /health/ping_liveness_local.sh 5
+      failureThreshold: 5
+      initialDelaySeconds: 20
+      periodSeconds: 5
+      successThreshold: 1
+      timeoutSeconds: 6
+    name: redis
+    ports:
+    - containerPort: 6379
+      name: redis
+      protocol: TCP
+    readinessProbe:
+      exec:
+        command:
+        - sh
+        - -c
+        - /health/ping_readiness_local.sh 1
+      failureThreshold: 5
+      initialDelaySeconds: 20
+      periodSeconds: 5
+      successThreshold: 1
+      timeoutSeconds: 2
+    resources: {}
+    securityContext:
+      runAsUser: 1001
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /opt/bitnami/scripts/start-scripts
+      name: start-scripts
+    - mountPath: /health
+      name: health
+    - mountPath: /data
+      name: redis-data
+    - mountPath: /opt/bitnami/redis/mounted-etc
+      name: config
+    - mountPath: /opt/bitnami/redis/etc/
+      name: redis-tmp-conf
+    - mountPath: /tmp
+      name: tmp
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: redis-token-4ds8t
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostname: redis-master-0
+  nodeName: node2
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1001
+  serviceAccount: redis
+  serviceAccountName: redis
+  subdomain: redis-headless
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - configMap:
+      defaultMode: 493
+      name: redis-scripts
+    name: start-scripts
+  - configMap:
+      defaultMode: 493
+      name: redis-health
+    name: health
+  - configMap:
+      defaultMode: 420
+      name: redis-configuration
+    name: config
+  - emptyDir: {}
+    name: redis-tmp-conf
+  - emptyDir: {}
+    name: tmp
+  - name: redis-data
+    persistentVolumeClaim:
+      claimName: redis-datadir-pvc-1
+  - name: redis-token-4ds8t
+    secret:
+      defaultMode: 420
+      secretName: redis-token-4ds8t
+status:
+  phase: Pending
+  qosClass: BestEffort
