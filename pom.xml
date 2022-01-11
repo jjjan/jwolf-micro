@@ -25,6 +25,7 @@
         <module>jwolf-service</module>
         <module>jwolf-service-api</module>
         <module>jwolf-base-business</module>
+        <module>jwolf-bigdata</module>
     </modules>
 
     <properties>
