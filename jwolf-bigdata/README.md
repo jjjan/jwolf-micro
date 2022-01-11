@@ -22,3 +22,28 @@
 # 四、参考
  [1.大数据架构与组件优缺点](https://blog.csdn.net/leveretz/article/details/113846380)
  [2.实时数据处理](https://blog.csdn.net/qq_24084925/article/details/80842534)
+ 
+# 五‘组件
+## hbase2.1.3 
+###1.docker [安装与测试](https://hub.docker.com/r/harisekhon/hbase)
+>  docker run --name hbase --net=host  harisekhon/hbase,进入容器执行命令（hbase shell）进入交互界面
+ ```bash
+HBase Shell
+Use "help" to get list of supported commands.
+Use "exit" to quit this interactive shell.
+For Reference, please visit: http://hbase.apache.org/2.0/book.html#shell
+Version 2.1.3, rda5ec9e4c06c537213883cca8f3cc9a7c19daf67, Mon Feb 11 15:45:33 CST 2019
+Took 0.0061 seconds                                                                                                                                                       
+hbase(main):001:0> create 'person','info'
+Created table person
+Took 2.0373 seconds                                                                                                                                                       
+=> Hbase::Table - person
+hbase(main):002:0> list
+TABLE                                                                                                                                                                     
+person                                                                                                                                                                    
+1 row(s)
+Took 0.0622 seconds                                                                                                                                                       
+=> ["person"]
+
+```
+###2.java连接操作时有网络问题待解决,详见HbaseTest.java
