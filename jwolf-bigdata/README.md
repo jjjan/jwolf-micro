@@ -25,8 +25,9 @@
  
 # 五‘组件
 ## hbase2.1.3 
-###1.docker [安装与测试](https://hub.docker.com/r/harisekhon/hbase)
+###1.docker [安装](https://hub.docker.com/r/harisekhon/hbase)
 ```bash
+#因为hash过多端口，过这里直接使用host网络
 docker run --name hbase --net=host -v /etc/hbase/conf:/hbase-2.1.3/conf -v /home/data/hbase:/hbase-data  harisekhon/hbase
 ```
 ###2.修改hbase-sit.xml配置的hbase.master.hostname，hbase.regionserver.hostname，否则开发环境无法连接到hbase。因为开发环境项目的hbase java client

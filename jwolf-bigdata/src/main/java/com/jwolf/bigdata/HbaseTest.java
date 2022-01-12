@@ -24,6 +24,7 @@ public class HbaseTest {
     @SneakyThrows
     public static void main(String[] args) {
         org.apache.hadoop.conf.Configuration configuration = HBaseConfiguration.create();
+        //这里只指定了ZK的连接参数
         configuration.set("hbase.zookeeper.quorum", "192.168.1.19");
         configuration.set("hbase.zookeeper.port", "2181");
         configuration.set("hbase.zookeeper.znode", "/hbase");
