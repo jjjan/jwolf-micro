@@ -4,8 +4,6 @@ import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.ml.classification.LinearSVC;
-import org.apache.spark.ml.classification.LogisticRegression;
-import org.apache.spark.ml.classification.LogisticRegressionModel;
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
 import org.apache.spark.ml.feature.PCA;
 import org.apache.spark.ml.feature.PCAModel;
@@ -15,10 +13,12 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+import java.io.IOException;
+
 /**
  * 参考scala版本改写的java版本
  * https://blog.csdn.net/weixin_41512727/article/details/89851692
- *
+ * <p>
  * 数据集：https://github.com/Great1414/spark_ml_learn/tree/master/data
  * spark ml算法官方示例：https://spark.apache.org/docs/latest/ml-classification-regression.html
  *
@@ -26,9 +26,9 @@ import org.apache.spark.sql.SparkSession;
  * @version 1.0
  * @date 2022-01-12 22:45
  */
-public class SparkMLTest {
+public class SparkmlSvmLrTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //创建SparkSession
         SparkSession session = SparkSession
                 .builder()
@@ -37,7 +37,7 @@ public class SparkMLTest {
                 .getOrCreate();
 
         //读取数据集
-        Dataset<Row> data = session.read().format("libsvm").load("D:\\mysoft\\jwolf-micro\\jwolf-bigdata\\src\\main\\resources\\dataset\\sample_libsvm_data.txt");
+        Dataset<Row> data = session.read().format("libsvm").load("jwolf-bigdata/dataset/sample_libsvm_data.txt");
         data.show(5, 100);
         //数据归一化
         StandardScaler scaler = new StandardScaler()
@@ -86,13 +86,15 @@ public class SparkMLTest {
                 .setMetricName("accuracy");
         double accuracy = evaluator.evaluate(res);
         System.out.println(String.format("Accuracy = %s", accuracy));
-        session.stop();
-        // spark-libml类似python sklearn,能实现传统机器学习算法,部分业务可以直接使用；一些业务可能还得python tensorflow/pytorch/mindspore等DL框架才能满足
-
-        //模型保存起来
-
+        //模型保存起来,供直接加载使用（一些业务可能还得python tensorflow/pytorch/mindspore等DL框架才能满足,如果要使用，建议使用sparklib下的一些算法，训练出来的模型可以存为.pmml格式,能够与python sklearn等异构使用）
+        //注意window需要配置如下变量并在C:\Windows\System32加入hadoop-3.2.1/bin里面的hadoop.dll，winutils下载地址https://github.com/cdarlint/winutils
+        System.setProperty("hadoop.home.dir", "./tool/hadoop-3.2.1");
+        model.write().overwrite().save("./jwolf-bigdata/model/sparkml_svm_model");
+        PipelineModel sameModel = PipelineModel.load("./jwolf-bigdata/model/sparkml_svm_model");
+        Dataset<Row> sameRes = sameModel.transform(testData.limit(3)).select("prediction", "label");
+        sameRes.show(10, 100);
         //使用spark-streaming获取数据实时预测或sparkCore/sql离线分析批量预测等,下游mysql/redis/ES/websocket等
-
+        session.stop();
     }
 
 }

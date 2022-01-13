@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.2">
+    <Header description="k-means clustering">
+        <Application name="Apache Spark MLlib" version="3.2.0"/>
+        <Timestamp>2022-01-14T01:50:44</Timestamp>
+    </Header>
+    <DataDictionary numberOfFields="10">
+        <DataField name="field_0" optype="continuous" dataType="double"/>
+        <DataField name="field_1" optype="continuous" dataType="double"/>
+        <DataField name="field_2" optype="continuous" dataType="double"/>
+        <DataField name="field_3" optype="continuous" dataType="double"/>
+        <DataField name="field_4" optype="continuous" dataType="double"/>
+        <DataField name="field_5" optype="continuous" dataType="double"/>
+        <DataField name="field_6" optype="continuous" dataType="double"/>
+        <DataField name="field_7" optype="continuous" dataType="double"/>
+        <DataField name="field_8" optype="continuous" dataType="double"/>
+        <DataField name="field_9" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <ClusteringModel modelName="k-means" functionName="clustering" modelClass="centerBased" numberOfClusters="3">
+        <MiningSchema>
+            <MiningField name="field_0" usageType="active"/>
+            <MiningField name="field_1" usageType="active"/>
+            <MiningField name="field_2" usageType="active"/>
+            <MiningField name="field_3" usageType="active"/>
+            <MiningField name="field_4" usageType="active"/>
+            <MiningField name="field_5" usageType="active"/>
+            <MiningField name="field_6" usageType="active"/>
+            <MiningField name="field_7" usageType="active"/>
+            <MiningField name="field_8" usageType="active"/>
+            <MiningField name="field_9" usageType="active"/>
+        </MiningSchema>
+        <ComparisonMeasure kind="distance">
+            <squaredEuclidean/>
+        </ComparisonMeasure>
+        <ClusteringField field="field_0" compareFunction="absDiff"/>
+        <ClusteringField field="field_1" compareFunction="absDiff"/>
+        <ClusteringField field="field_2" compareFunction="absDiff"/>
+        <ClusteringField field="field_3" compareFunction="absDiff"/>
+        <ClusteringField field="field_4" compareFunction="absDiff"/>
+        <ClusteringField field="field_5" compareFunction="absDiff"/>
+        <ClusteringField field="field_6" compareFunction="absDiff"/>
+        <ClusteringField field="field_7" compareFunction="absDiff"/>
+        <ClusteringField field="field_8" compareFunction="absDiff"/>
+        <ClusteringField field="field_9" compareFunction="absDiff"/>
+        <Cluster name="cluster_0">
+            <Array n="10" type="real">5.0 1.0 3.0 5.0 5.0 5.0 5.0 5.0 6.0 5.0</Array>
+        </Cluster>
+        <Cluster name="cluster_1">
+            <Array n="10" type="real">1.0 1.0 1.5 1.3 1.9000000000000001 1.2 1.1 1.0 1.0 1.0</Array>
+        </Cluster>
+        <Cluster name="cluster_2">
+            <Array n="10" type="real">5.4 5.7 3.7 5.9 5.4 5.3 5.4 5.8 6.3 5.4</Array>
+        </Cluster>
+    </ClusteringModel>
+</PMML>

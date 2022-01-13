@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>jwolf-micro</artifactId>
@@ -29,6 +29,11 @@
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming_2.13</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-mllib_2.13</artifactId>
             <version>${spark.version}</version>
         </dependency>
         <dependency>
@@ -81,10 +86,15 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
-            <plugin>
+            <!--打出的包可能会有问题，如libsvm.defaultResourse not found-->
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.0.0</version>
@@ -94,7 +104,7 @@
                         <manifest>
                             <mainClass>com.jwolf.bigdata.HbaseTest</mainClass>
                             程序入口
-                            <!--<mainClass>com.jwolf.bigdata.HbaseTest</mainClass>  程序入口-->
+                            &lt;!&ndash;<mainClass>com.jwolf.bigdata.HbaseTest</mainClass>  程序入口&ndash;&gt;
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -110,8 +120,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
         </plugins>
     </build>
 </project>
