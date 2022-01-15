@@ -1,5 +1,6 @@
 package com.jwolf.bigdata;
 
+import com.jwolf.bigdata.test.SparkmlSvmLrTest;
 import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.support.ApplicationObjectSupport;

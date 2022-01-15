@@ -1,4 +1,4 @@
-package com.jwolf.bigdata;
+package com.jwolf.bigdata.test;
 
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
@@ -36,7 +36,7 @@ public class SparkmlSvmLrTest {
                 .master("local")
                 .getOrCreate();
 
-        //读取数据集
+        //读取数据集(libsvm是一种特殊的数据集，可通过项目目录tool下的工具制作)
         Dataset<Row> data = session.read().format("libsvm").load("jwolf-bigdata/dataset/sample_libsvm_data.txt");
         data.show(5, 100);
         //数据归一化

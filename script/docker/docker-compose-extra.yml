@@ -147,6 +147,41 @@ services:
 # idea datasourse插件连接clickhouse进行基本操作，基本操作类似mysql
 
 
+# https://hub.docker.com/r/singularities/hadoop
+#命令测试：进入namenode或datanode
+#  hadoop fs -mkdir -p /hdfs/d1/d2
+#  echo "hello hdfs" >>local.txt
+#  hadoop fs -put local.txt /hdfs/d1/d2
+# 该版本为2.8.3 spark连接时访问不了
+  namenode:
+    image: singularities/hadoop
+    command: start-hadoop namenode
+    hostname: namenode
+    container_name: namenode
+    environment:
+      HDFS_USER: hdfsuser
+    ports:
+      - "8020:8020"
+      - "14000:14000"
+      - "50070:50070"   # web ui端口
+      - "50075:50075"
+      - "10020:10020"
+      - "13562:13562"
+      - "19888:19888"
+    networks:
+        - jwolf
+
+  datanode:
+    image: singularities/hadoop
+    command: start-hadoop datanode namenode
+    container_name: datanode
+    environment:
+      HDFS_USER: hdfsuser
+    volumes:
+      - /home/data/hadoop/hdfs:/opt/hdfs
+    networks:
+        - jwolf
+
 
 
 networks:

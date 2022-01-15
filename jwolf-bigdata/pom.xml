@@ -102,9 +102,9 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>com.jwolf.bigdata.HbaseTest</mainClass>
+                            <mainClass>com.jwolf.bigdata.test.HbaseTest</mainClass>
                             程序入口
-                            &lt;!&ndash;<mainClass>com.jwolf.bigdata.HbaseTest</mainClass>  程序入口&ndash;&gt;
+                            &lt;!&ndash;<mainClass>com.jwolf.bigdata.test.HbaseTest</mainClass>  程序入口&ndash;&gt;
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,4 +1,4 @@
-package com.jwolf.bigdata;
+package com.jwolf.bigdata.test;
 
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
@@ -69,14 +69,15 @@ public class SparkmllibKmeansTest {
         int predict2 = sameModel.predict(Vectors.dense(2, 5, 5, 5, 5, 5, 6, 6, 2, 1));
         int predict3 = sameModel.predict(Vectors.dense(8, 5, 9, 9, 9, 9, 9, 6, 8, 1));
         System.out.println(String.format("%s|%s|%s", predict1, predict2, predict3));
-        //保存为.pmml格式，方便与python sklearn等异构使用
+        //保存为.pmml格式(一种通用的Predictive Model Markup Language)
         File file = new File("./jwolf-bigdata/model/KMeansModelPMML.pmml");
         FileOutputStream out = FileUtils.openOutputStream(file);
         PMMLUtil.marshal(new KMeansPMMLModelExport(clusters).getPmml(), out);
         IOUtils.closeQuietly(out, e -> e.printStackTrace());
         FileInputStream in = FileUtils.openInputStream(file);
         PMML pmml = PMMLUtil.unmarshal(in);
-        //pmml无法导入？官方也只说明了导出，没导入
+        //pmml无法导入？官方也只说明了导出，没导入;无法使用python导出的pmml文件；
+        //经测试python版本不同，使用spark mllib导出的pmml也可能出现问题
         IOUtils.closeQuietly(in, e -> e.printStackTrace());
 
     }

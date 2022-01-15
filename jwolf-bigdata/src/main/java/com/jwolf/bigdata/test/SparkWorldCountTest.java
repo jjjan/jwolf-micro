@@ -1,7 +1,8 @@
-package com.jwolf.bigdata;
+package com.jwolf.bigdata.test;
 
 import org.apache.hadoop.shaded.org.eclipse.jetty.util.ajax.JSON;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -14,16 +15,19 @@ import java.util.List;
 import java.util.Properties;
 
 
-public class SparkTest {
+public class SparkWorldCountTest {
     public static void main(String[] args) {
+
         //输入文件与输出文件可以通过启动命令传入：args[0]
         String input = args.length >= 2 ? args[0] : "D:/test.txt";
         String output = args.length >= 2 ? args[1] : "D:/result";
         SparkConf conf = new SparkConf()
                 .setMaster("local")  //linux设置为dashboard的master地址即可被监控，设置错也不会报错
-                .setAppName(SparkTest.class.getSimpleName());
+                .setAppName(SparkWorldCountTest.class.getSimpleName());
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
-        //测试1：读取文件wordcount后输出
+        JavaRDD<String> textFile = sparkContext.textFile("hdfs://192.168.1.18:9000///hdfs/d1/d2/local.txt");
+
+        //测试1：读取文件wordcount后输出32
         List<Tuple2<Integer, String>> topK = sparkContext.textFile(input)
                 .flatMap(str -> Arrays.asList(str.split("\n| ")).iterator())
                 .mapToPair(word -> new Tuple2<String, Integer>(word, 1))

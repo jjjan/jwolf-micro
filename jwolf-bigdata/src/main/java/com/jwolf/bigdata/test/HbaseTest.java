@@ -1,4 +1,4 @@
-package com.jwolf.bigdata;
+package com.jwolf.bigdata.test;
 
 import lombok.SneakyThrows;
 import org.apache.hadoop.hbase.HBaseConfiguration;
