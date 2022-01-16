@@ -1,6 +1,6 @@
 # 一、大数据常见业务流程
-## 1.常见数据来源:flume采集，kafka direct等
-## 2.常见sink:hbase（快）,其它如hdfs,hive（可整合python脚本做ETL,老项目用得多）,也可以local-file,采集到kafka一般是做实时计算
+## 1.常见数据来源:flume采集，kafka direct等,常见的有前端埋点采集的用户行为数据，后台业务数据
+## 2.常见sink:hbase（大数据量时随机读写性能好）,其它如hdfs,hive（老项目用得多，一般元数据存mysql,数据文件存hdfs,利用MapReduce进行计算，可整合python脚本做ETL）,也可以local-file,采集到kafka一般是做实时计算
 ## 3.spark-core,spark-sql实现统计聚合,数据挖掘等;spark-stream/flink用于实时处理kafka数据;结果存入mysql/redis/ES
 ## 4.websocket推送或http接口传到前端，利用echart,highchart展示
 # 二、一些架构图

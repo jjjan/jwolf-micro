@@ -79,8 +79,9 @@ jwolf-micro是基于最新主流技术栈实现的一套全栈微服务开源学
 - 2021/12/12 V2分支【V2.1
   基于oauth2设计的登录系统,支持多用户体系登录,SSO,手机验证码,社交登录, 权限验证等】
 - 2022/01/01 V2分支【V2.2 docker-compose->k8s部署架构升级——redis,mysql,nacos】
-- 2022/xx/xx V2分支【V2 一个有灵魂的jwolf——加入核心业务】 TODO
-- 2022/xx/xx V3分支【V3 AI智能化,核心组件源码分析】 TODO
+- 2022/01/01 V2分支【V2.3 AI-tensorflow2,大数据-spark demo程序案例与常见架构，套路】
+- 2022/xx/xx V3分支【V3 一个有灵魂的jwolf——加入核心业务】 TODO
+- 2022/xx/xx V4分支【V4 AI智能化,核心组件源码分析】 TODO
 # 六、quickstart
 - [1.开发环境](doc/1-项目说明/运行环境.md)
 
