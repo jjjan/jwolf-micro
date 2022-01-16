@@ -1,7 +1,15 @@
-<span style="color:red;font:bold 50">jwolf-micro v1.0.0</span>
-# 一、项目简介
-jwolf-micro是基于最新主流技术栈实现的一套全栈微服务开源学习型项目。
 
+<span style="color:red;font:bold 50">jwolf-micro v1.0.0</span>
+
+# 一、项目简介
+- jwolf-micro是基于最新主流技术栈实现的一套全栈微服务开源学习型项目,Java部分还会拓深,前端,AI,大数据只会基于后期jwolf-micro必须业务适当拓展。
+- 目前项目已集成Java界绝大多少中间件,[编写了一键部署的docker-compose文件,（部分k8s部署）](./script),各技术栈已作测试。
+- 后期计划做一些核心业务,并深入一些核心技术栈源码实现。
+- 部分文档可能不够详细,敬请原谅,后期有时间再补充,建议细读代码中的注释
+- 源码地址
+[Github](https://github.com/jwolf123456/jwolf-micro)
+[Gitee](https://gitee.com/jwolf-space/jwolf-micro)
+欢迎提issue,PR及技术讨论
 # 二、系统架构
 ![系统架构图](./doc/doc-resource/系统架构图.png)
 ## 1.后端技术架构
@@ -34,7 +42,7 @@ jwolf-micro是基于最新主流技术栈实现的一套全栈微服务开源学
 ```
 1.fat-jar+shell 
 2.docker+jenkins
-3.k8s（2022实现）
+3.k8s
 ```
 ![部署架构图](./doc/doc-resource/jenkis-docker-cicd.png)
 
