@@ -1,4 +1,4 @@
-package juc;
+package multi_thread;
 
 import cn.hutool.core.thread.ThreadUtil;
 import lombok.SneakyThrows;
@@ -32,11 +32,11 @@ public class T1VolatileTest {
             ThreadUtil.sleep(3000);
             count++;
         }, "AAA").start();
-        //如不保证可进行,此处将死循环
+        //如不保证可见性,此处将死循环
         while (count == 0) {
             //空转
         }
-        System.out.println("有数据了");
+        System.out.println("xxxxxxxxxxxxxx");
 
         //2.测试原子性,volitile不保证原子性,可通过锁或原子类保证线程安全
         // 这里可以使用重入锁，写锁（读锁不具有排他性，可多个线程同时读，这里不能保证线程安全），同步锁，原子类来保证线程安装

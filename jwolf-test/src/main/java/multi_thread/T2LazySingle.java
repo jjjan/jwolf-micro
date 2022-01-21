@@ -1,4 +1,4 @@
-package juc;
+package multi_thread;
 
 
 /**
