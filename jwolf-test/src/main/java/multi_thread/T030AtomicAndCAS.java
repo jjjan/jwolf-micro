@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicStampedReference;
  * @version 1.0
  * @date 2022-01-18 22:14
  */
-public class T3AtomicAndCAS {
+public class T030AtomicAndCAS {
     public static void main(String[] args) {
         //CAS缺点: 1.ABA问题；2.轻量，但如果并发过高，CAS会长时间自旋导致CPU消耗高 3.只能保证单个成员变量原子性，同时操作多个变量还是得用锁
         //内置原子类仅AtomicInteger，底层依赖CAS，volatile，原子类很有限，可以自定义类型的原子类AtomicInference<V>包装

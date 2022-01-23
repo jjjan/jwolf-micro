@@ -9,10 +9,10 @@ import java.util.concurrent.locks.LockSupport;
 /**
  * LockSupport与中断
  */
-public class T9LockSupport extends AbstractMultiThreadTask {
+public class T090LockSupport extends AbstractMultiThreadTask {
 
     public static void main(String[] args) {
-        new T9LockSupport().doTask();
+        new T090LockSupport().doTask();
     }
 
     @Override

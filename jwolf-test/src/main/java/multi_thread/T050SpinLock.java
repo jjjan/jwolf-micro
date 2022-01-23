@@ -6,34 +6,15 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 自定义自旋锁及测试
  */
-public class T5SpinLock  {
+public class T050SpinLock {
     //自旋锁
 
     AtomicReference<Thread> atomicReference = new AtomicReference<>();
 
-    //加锁
-    public void myLock() {
-        Thread thread = Thread.currentThread();
-        System.out.println(Thread.currentThread().getName()+"尝试获取锁");
-        while (!atomicReference.compareAndSet(null, thread)) {
-            System.out.println("有线程占用中");
-        }
-        System.out.println("获得锁了");
-    }
-
-
-    //解锁
-    public void myUnLock() {
-        Thread thread = Thread.currentThread();
-        System.out.println(Thread.currentThread().getName()+"准备释放锁" );
-        atomicReference.compareAndSet(thread, null);
-         System.out.println("已释放锁");
-    }
-
-     public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
 //        ReentrantLock reentrantLock = new ReentrantLock();
 
-        T5SpinLock spinLock = new T5SpinLock();
+        T050SpinLock spinLock = new T050SpinLock();
         new Thread(() -> {
             spinLock.myLock();
             try {
@@ -46,7 +27,7 @@ public class T5SpinLock  {
 
         }, "T1").start();
 
-         TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1);
 
         new Thread(() -> {
             spinLock.myLock();
@@ -60,5 +41,23 @@ public class T5SpinLock  {
 
         }, "T2").start();
 
+    }
+
+    //加锁
+    public void myLock() {
+        Thread thread = Thread.currentThread();
+        System.out.println(Thread.currentThread().getName() + "尝试获取锁");
+        while (!atomicReference.compareAndSet(null, thread)) {
+            System.out.println("有线程占用中");
+        }
+        System.out.println("获得锁了");
+    }
+
+    //解锁
+    public void myUnLock() {
+        Thread thread = Thread.currentThread();
+        System.out.println(Thread.currentThread().getName() + "准备释放锁");
+        atomicReference.compareAndSet(thread, null);
+        System.out.println("已释放锁");
     }
 }

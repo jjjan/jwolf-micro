@@ -14,10 +14,10 @@ import java.util.concurrent.Executors;
  * 2.CyclicBarrier阻塞子线程，全部就绪后执行回调方法，然后继续各个子线程之后的逻辑；循环栅栏
  * 3.线程池关闭，sleep的线程能捕获中断异常，CountDownLatch,CyclicBarrier的wait不会自动解除阻塞,不同于 LockSupport
  */
-public class T8CycleBarrier extends AbstractMultiThreadTask {
+public class T080CycleBarrier extends AbstractMultiThreadTask {
 
     public static void main(String[] args) {
-        new T8CycleBarrier().doTask();
+        new T080CycleBarrier().doTask();
     }
 
     @Override

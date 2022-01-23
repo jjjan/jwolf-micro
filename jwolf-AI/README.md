@@ -9,3 +9,8 @@ pip install -r requirements.txt
 ```
 
 #3.参考github tensorflow/examples, tensorflow2_tutorials_chinese,运行案例
+
+#4.了解java版本DL 
+[deeplearning4j](https://github.com/eclipse/deeplearning4j)
+
+[deeplearning4j-examples](https://github.com/eclipse/deeplearning4j-examples)

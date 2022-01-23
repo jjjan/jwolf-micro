@@ -10,10 +10,10 @@ import java.util.concurrent.CountDownLatch;
  * 1.CountDownLatch，计数到0后主解除阻塞
  * 2.CyclicBarrier阻塞子线程，全部就绪后执行回调方法，然后继续各个子线程之后的逻辑
  */
-public class T7CountDownLatch extends AbstractMultiThreadTask {
+public class T070CountDownLatch extends AbstractMultiThreadTask {
 
     public static void main(String[] args) {
-        new T7CountDownLatch().doTask();
+        new T070CountDownLatch().doTask();
     }
 
     @Override
@@ -29,8 +29,8 @@ public class T7CountDownLatch extends AbstractMultiThreadTask {
         for (int i = 0; i < 5; i++) {
             int finalI = i;
             taskExecutor.submit(() -> {
-                if (finalI==1) {
-           int aa=1/0;
+                if (finalI == 1) {
+                    int aa = 1 / 0;
                 }
                 try {
                     Thread.sleep(444);
