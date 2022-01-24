@@ -22,19 +22,17 @@ public class T080CycleBarrier extends AbstractMultiThreadTask {
 
     @Override
     public void taskContent(ThreadPoolTaskExecutor taskExecutor) throws Exception {
-        int n = taskExecutor.getCorePoolSize();
-        CyclicBarrier barrier = new CyclicBarrier(41, () -> {
+        CyclicBarrier barrier = new CyclicBarrier(4, () -> {
             System.out.println("全部就绪");
         });
         // spring的taskExecutor会报错
-        ExecutorService threadPool = Executors.newFixedThreadPool(n);
+        ExecutorService threadPool = Executors.newFixedThreadPool(4);
         new Thread(() -> {
-            ThreadUtil.sleep(1111);
-
+            ThreadUtil.sleep(3000);
             System.out.println("准备停止线程池");
             threadPool.shutdownNow();
         }).start();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < 10; i++) {
             threadPool.submit(() -> {
                 System.out.println(Thread.currentThread().getName() + "is coming");
                 try {

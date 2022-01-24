@@ -7,7 +7,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * 1.CountDownLatch，计数到0后主解除阻塞
+ * 1.CountDownLatch，计数到0后所有await的线程解除阻塞
  * 2.CyclicBarrier阻塞子线程，全部就绪后执行回调方法，然后继续各个子线程之后的逻辑
  */
 public class T070CountDownLatch extends AbstractMultiThreadTask {
@@ -28,7 +28,7 @@ public class T070CountDownLatch extends AbstractMultiThreadTask {
 
         for (int i = 0; i < 5; i++) {
             int finalI = i;
-            taskExecutor.submit(() -> {
+            taskExecutor.execute(() -> {
                 if (finalI == 1) {
                     int aa = 1 / 0;
                 }
@@ -39,12 +39,23 @@ public class T070CountDownLatch extends AbstractMultiThreadTask {
                 }
                 System.out.println(finalI + "xxxx");
                 countDownLatch.countDown();
+                System.out.println(11);
             });
 
         }
         //线程池被关闭，提交的线程池任务抛出中断异常并解除阻塞，继续进行后续任务，不会立即终止
+        new Thread(() -> {
+            try {
+                System.out.println("AAA阻塞前");
+                countDownLatch.await();
+                System.out.println("AAA阻塞后");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"AAA").start();
+        System.out.println("main阻塞前");
         countDownLatch.await();
-        System.out.println("main已解除阻塞");
+        System.out.println("main阻塞后");
 
     }
 
