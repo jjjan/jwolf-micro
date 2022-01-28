@@ -3,55 +3,55 @@ package algorithm;
 import java.util.Arrays;
 
 /**
- * 快排
+ * Description: 快排——递归、分治法
  *
  * @author majun
  * @version 1.0
- * @date 2022-01-26 23:51
+ * @date 2022-01-29 01:11
  */
 public class T014QuickSort {
     public static void main(String[] args) {
-        int[] arr = {1, 4, 6, 2, 3, 5, 24, 2, 6};
+        int[] arr = {2, 4, 6, 1, 3, 7, 9, 8, 5};
         quickSort(arr, 0, arr.length - 1);
-        Arrays.stream(arr).forEach(System.out::println);
+        System.out.println(Arrays.toString(arr));
     }
 
-
-    private static void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
-            // 找寻基准数据的正确索引
-            int index = getIndex(arr, low, high);
-
-            // 进行迭代对index之前和之后的数组进行相同的操作使整个数组变成有序
-            //quickSort(arr, 0, index - 1); 之前的版本，这种姿势有很大的性能问题，谢谢大家的建议
-            quickSort(arr, low, index - 1);
-            quickSort(arr, index + 1, high);
+    public static void quickSort(int[] arr, int startIndex, int endIndex) {
+        if (startIndex < endIndex) {
+            //找出基准
+            int partition = partition(arr, startIndex, endIndex);
+            //分成两边递归进行
+            quickSort(arr, startIndex, partition - 1);
+            quickSort(arr, partition + 1, endIndex);
         }
-
     }
 
-    private static int getIndex(int[] arr, int low, int high) {
-        // 基准数据
-        int tmp = arr[low];
-        while (low < high) {
-            // 当队尾的元素大于等于基准数据时,向前挪动high指针
-            while (low < high && arr[high] >= tmp) {
-                high--;
+    //找基准
+    private static int partition(int[] arr, int startIndex, int endIndex) {
+        int pivot = arr[startIndex];
+        int left = startIndex;
+        int right = endIndex;
+        while (left != right) {
+            while (left < right && arr[right] > pivot) {
+                right--;
             }
-            // 如果队尾元素小于tmp了,需要将其赋值给low
-            arr[low] = arr[high];
-            // 当队首元素小于等于tmp时,向前挪动low指针
-            while (low < high && arr[low] <= tmp) {
-                low++;
+            while (left < right && arr[left] <= pivot) {
+                left++;
             }
-            // 当队首元素大于tmp时,需要将其赋值给high
-            arr[high] = arr[low];
-
+            //找到left比基准大，right比基准小，进行交换
+            if (left < right) {
+                swap(arr, left, right);
+            }
         }
-        // 跳出循环时low和high相等,此时的low或high就是tmp的正确索引位置
-        // 由原理部分可以很清楚的知道low位置的值并不是tmp,所以需要将tmp赋值给arr[low]
-        arr[low] = tmp;
-        return low; // 返回tmp的正确位置
+        //left=right时第一轮完成，让left和right重合的位置和基准交换，返回基准的位置
+        swap(arr, startIndex, left);
+        return left;
     }
 
+    //两数交换
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 }

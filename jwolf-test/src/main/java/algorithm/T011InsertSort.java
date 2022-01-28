@@ -19,11 +19,11 @@ public class T011InsertSort {
     public static void main(String[] args) {
         int[] arr = {1, 6, 2, 4, 3, 5};
         //int[] sort = insertSort(arr);
-        int[] sort = insertSortWithBinarySearch(arr);
-        Arrays.stream(sort).forEach(System.out::println);
+        insertSortWithBinarySearch(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
-    private static int[] insertSort(int[] arr) {
+    private static void insertSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             int tmp = arr[i];
             int j;
@@ -36,7 +36,6 @@ public class T011InsertSort {
             }
             arr[j + 1] = tmp; //在坑位插入tmp
         }
-        return arr;
     }
 
 

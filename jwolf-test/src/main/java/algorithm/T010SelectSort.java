@@ -18,11 +18,11 @@ import java.util.Arrays;
 public class T010SelectSort {
     public static void main(String[] args) {
         int[] arr = {1, 4, 6, 2, 3, 5};
-        int[] sort = selectSort(arr);
-        Arrays.stream(sort).forEach(System.out::println);
+        selectSort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
-    private static int[] selectSort(int[] arr) {
+    private static void selectSort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int min = arr[i];
             for (int j = i + 1; j < arr.length; j++) {
@@ -34,6 +34,5 @@ public class T010SelectSort {
             }
             arr[i] = min;
         }
-        return arr;
     }
 }

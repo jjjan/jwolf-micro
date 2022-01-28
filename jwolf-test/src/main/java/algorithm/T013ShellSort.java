@@ -13,22 +13,25 @@ import java.util.Arrays;
 public class T013ShellSort {
     public static void main(String[] args) {
         int[] arr = {1, 4, 6, 2, 3, 5, 24, 2, 6};
-        int[] sort = shellSort(arr);
-        Arrays.stream(sort).forEach(System.out::println);
+        shellSort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
-    private static int[] shellSort(int[] arr) {
-        int d = arr.length / 2;//自定义增量，常用数组长度一半
-        while (d >= 1) {
-            for (int i = 0; i + d < arr.length; i += d) {
-                if (arr[i + d] < arr[i]) {
-                    int tmp = arr[i + 1];
-                    arr[i + 1] = arr[i];
-                    arr[i] = tmp;
+    private static void shellSort(int[] arr) {
+        int gap= arr.length / 2;//自定义增量，常用数组长度一半
+        while (gap >= 1) {
+           for (int i = gap; i < arr.length; i++) {
+               int tmp=arr[i];
+               int j;//找到待插入的坑位j
+               for (j = i; j >= gap && tmp<arr[j - gap]; j -= gap) {
+                    arr[j] = arr[j - gap];//后移 ,每次移动步长为gap
                 }
-            }
-            d /= 2;//逐步缩小增量
+                arr[j] = tmp;//在j坑位插入tmp
+
+           }
+
+            gap /= 2;//逐步缩小增量，最后一次gap=1相当于进行一次简单插入排序
         }
-        return arr;
     }
+
 }
