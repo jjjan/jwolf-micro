@@ -3,8 +3,7 @@ package algorithm;
 import java.util.Arrays;
 
 /**
- * 希尔排序：指定增量并逐步减少增量直到1时排序完成，增量步长越小排序越精确但更耗时
- * 排序结果是趋势递增的，固为不稳定排序方法
+ * 希尔排序：指定增量并逐步减少增量直到1时排序完成
  *
  * @author majun
  * @version 1.0
