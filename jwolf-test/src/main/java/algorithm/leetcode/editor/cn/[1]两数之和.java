@@ -49,7 +49,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution1 {
     /**
      * 暴力解法 最惨情况需要遍历n*（n-1）次，即O（n^2）
      * @param nums
@@ -88,7 +88,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        int[] twoSum = new Solution().twoSum(new int[]{3, 2, 4}, 6);
+        int[] twoSum = new Solution1().twoSum(new int[]{3, 2, 4}, 6);
         System.out.println(Arrays.toString(twoSum));
     }
 }
