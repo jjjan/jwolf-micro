@@ -9,6 +9,7 @@ import java.util.Scanner;
  * Description: 泊松分酒-穷举法
  * 版本1（无限制版本，即该案例）：https://www.cnblogs.com/Marcusyang/p/13011581.html
  * 版本2：https://blog.csdn.net/update_java/article/details/46051493
+ *
  * @author majun
  * @version 1.0
  * @date 2022-01-29 01:11
@@ -20,6 +21,21 @@ public class T030PossionTransferWineExhaustive {
     public static int[] N = new int[3];
     public static int target;
     public static int count = 0;
+
+    public static void main(String[] args) {
+        T030PossionTransferWineExhaustive test = new T030PossionTransferWineExhaustive();
+        Scanner in = new Scanner(System.in);
+        String S = in.next();
+        String[] arrayS = S.split(",");
+        for (int i = 0; i < 3; i++)
+            maxN[i] = Integer.valueOf(arrayS[i]);
+        for (int i = 3; i < 6; i++)
+            N[i - 3] = Integer.valueOf(arrayS[i]);
+        target = Integer.valueOf(arrayS[6]);
+        String str = String.format("%s,%s,%s", N[0], N[1], N[2]);
+        containersUsedStr.add(str);
+        test.getResult();
+    }
 
     //idx1倒入idx2
     public void transfer(int idx1, int idx2) {
@@ -46,7 +62,6 @@ public class T030PossionTransferWineExhaustive {
         }
     }
 
-    
     public boolean isContainTarget() {
         boolean anyMatch = Arrays.stream(N).anyMatch(i -> i == target);
         if (anyMatch) {
@@ -93,20 +108,5 @@ public class T030PossionTransferWineExhaustive {
                 return;
             }
         }
-    }
-
-    public static void main(String[] args) {
-        T030PossionTransferWineExhaustive test = new T030PossionTransferWineExhaustive();
-        Scanner in = new Scanner(System.in);
-        String S = in.next();
-        String[] arrayS = S.split(",");
-        for (int i = 0; i < 3; i++)
-            maxN[i] = Integer.valueOf(arrayS[i]);
-        for (int i = 3; i < 6; i++)
-            N[i - 3] = Integer.valueOf(arrayS[i]);
-        target = Integer.valueOf(arrayS[6]);
-        String str = String.format("%s,%s,%s", N[0], N[1], N[2]);
-        containersUsedStr.add(str);
-        test.getResult();
     }
 }

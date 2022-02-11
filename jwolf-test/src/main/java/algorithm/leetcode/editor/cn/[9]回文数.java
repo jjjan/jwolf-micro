@@ -51,8 +51,17 @@ package algorithm.leetcode.editor.cn;//给你一个整数 x ，如果 x 是一�
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution9 {
+    public static void main(String[] args) {
+        System.out.println(new Solution9().isPalindrome(-111));
+        System.out.println(new Solution9().isPalindrome(111));
+        System.out.println(new Solution9().isPalindrome(112));
+
+
+    }
+
     /**
      * 这样比较简洁,还可考虑拿到各个数位的值
+     *
      * @param x
      * @return
      */
@@ -60,14 +69,6 @@ class Solution9 {
         String str = x + "";
         String reverse = new StringBuilder(str).reverse().toString();
         return reverse.equals(str);
-
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Solution9().isPalindrome(-111));
-        System.out.println(new Solution9().isPalindrome(111));
-        System.out.println(new Solution9().isPalindrome(112));
-
 
     }
 }

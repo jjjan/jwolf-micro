@@ -124,7 +124,7 @@ public class T060BinaryTree {
     }
 
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<>(Arrays.asList(new Integer[]{1, 2, null, 4, null, null, 3, 5, null, null, 6, null, null}));
+        LinkedList<Integer> list = new LinkedList<>(Arrays.asList(1, 2, null, 4, null, null, 3, 5, null, null, 6, null, null));
         /**
          * 左、右孩子如果没有用null代替，以便构造二叉树
          *

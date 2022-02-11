@@ -2,6 +2,7 @@ package algorithm;
 
 import java.math.BigInteger;
 import java.util.Scanner;
+
 /**
  * Description: 阶乘-递归
  *
